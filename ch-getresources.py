@@ -94,11 +94,17 @@ def get_old_snapshots(snap_list):
                 snap_ami = ''
                 snap_start = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d %H:%M:%S UTC')
                 snap_date = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d')
+
                 if 'CreateImage' in snap_desc:
                     snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
 
                 if snap_date < three_month_cutoff_date:
                     snap_count += 1
+
+                    """
+                    Filter out any snapshots created for an existing AMI; if an AMI no longer exists, the 
+                    corresponding snapshot will be added to the report
+                    """
                     if snap_id not in snap_list:
                         row = [snap_id, snap_start, snap_ami]
                         writer.writerows([row])
