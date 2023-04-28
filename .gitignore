@@ -1,0 +1,4 @@
+*.csv
+aws-azure-login-notepad.txt
+venv/
+.idea/
