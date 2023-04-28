@@ -21,6 +21,7 @@ def get_old_images():
     valid_old_images = []
     is_next = None
     with open(f'{profile_name}-{region_name}-old-images.csv', 'w') as csvfile:
+        # TODO: add Image Name
         fields = ['Image Id', 'Image Age']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
@@ -117,6 +118,8 @@ def get_old_snapshots(snap_list):
 # ec2.describe_volumes
 
 
+# TODO: add Aurora cluster snapshots
+# describe_db_cluster_snapshots
 def get_old_rds_snaps():
     global owner_id
     global three_month_cutoff_date
@@ -128,25 +131,23 @@ def get_old_rds_snaps():
         writer.writerow(fields)
         while True:
             if marker:
-                # response = rds.describe_db_snapshots(DBSnapshotIdentifier='argentina-setup-2-final-snapshot')
                 response = rds.describe_db_snapshots(Marker=marker)
             else:
                 # response = rds.describe_db_snapshots(DBSnapshotIdentifier='argentina-setup-2-final-snapshot')
                 response = rds.describe_db_snapshots()
 
             db_snapshots = response['DBSnapshots']
-            print(f"Response contains {len(db_snapshots)} snapshots.")
+            # print(f"Response contains {len(db_snapshots)} snapshots.")
 
             for db_snap in db_snapshots:
                 db_snap_id = db_snap['DBSnapshotIdentifier']
-                print(db_snap_id)
-                # db_snap_desc = db_snap['Description']
+                # print(db_snap_id)
                 db_snap_start = datetime.datetime.strftime(db_snap['SnapshotCreateTime'], '%Y-%m-%d %H:%M:%S UTC')
                 db_snap_date = datetime.datetime.strftime(db_snap['SnapshotCreateTime'], '%Y-%m-%d')
-                print(db_snap_date)
+                # print(db_snap_date)
 
                 if db_snap_date < three_month_cutoff_date:
-                    print('Old snapshot!')
+                    # print('Old snapshot!')
                     db_snap_count += 1
                     row = [db_snap_id, db_snap_start]
                     writer.writerows([row])
@@ -171,6 +172,3 @@ def get_old_rds_snaps():
 
 db_snapshot_count = get_old_rds_snaps()
 print(f'Number of valid old snapshots for {profile_name} in {region_name}: {db_snapshot_count}')
-
-# response = rds.describe_db_snapshots(DBSnapshotIdentifier='argentina-setup-2-final-snapshot')
-# print(response)
