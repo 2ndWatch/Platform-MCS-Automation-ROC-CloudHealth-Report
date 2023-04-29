@@ -2,9 +2,9 @@ import boto3
 import datetime
 import csv
 
-profile_name = "cypherworxmain"
-region_name = "us-east-1"
-owner_id = '372356060901'
+profile_name = "uiwombat"
+region_name = "us-east-2"
+owner_id = '010949642540'
 
 three_month_cutoff_date = '2023-01-24'
 
@@ -14,6 +14,12 @@ rds = session.client('rds')
 
 
 def get_old_images():
+    """
+    Gets all images in a region. Writes image properties to a .csv file if an image is older than the cutoff date and
+    was not created by AWS Backup.
+    :return: list of all old image IDs; list of valid old image IDs; list of all EBS snapshot IDs associated with old
+    images (regardless of whether they were created by AWS Backup)
+    """
     global owner_id
     global three_month_cutoff_date
     all_old_images = []
@@ -21,20 +27,16 @@ def get_old_images():
     valid_old_images = []
     is_next = None
     with open(f'{profile_name}-{region_name}-old-images.csv', 'w') as csvfile:
-        # TODO: add Image Name
-        fields = ['Image Id', 'Image Age']
+        fields = ['Image Id', 'Image Name', 'Image Age']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
         while True:
             if is_next:
-                # response = ec2.describe_images(Owners=[owner_id], ImageIds=['ami-0dcee45efbc07e5ce'])
                 response = ec2.describe_images(Owners=[owner_id], MaxResults=400, NextToken=is_next)
             else:
-                # response = ec2.describe_images(Owners=[owner_id], ImageIds=['ami-0dcee45efbc07e5ce'])
                 response = ec2.describe_images(Owners=[owner_id], MaxResults=400)
 
             images = response['Images']
-            # print(f"Response contains {len(images)} images.")
 
             for image in images:
                 image_id = image['ImageId']  # string
@@ -45,14 +47,12 @@ def get_old_images():
 
                 if image_date < three_month_cutoff_date:
                     all_old_images.append(image_id)
-                    # assuming we filter out snaps from old aws backups; else, move this loop into the next `if` block
                     if image_storage:
-                        for device in image_storage:
-                            if 'Ebs' in device.keys():
-                                image_snapshots.append(device['Ebs']['SnapshotId'])
+                        image_snapshots = [device['Ebs']['SnapshotId'] for device in image_storage
+                                           if 'Ebs' in device.keys()]
                     if 'AwsBackup' not in image_name:
                         valid_old_images.append(image_id)
-                        row = [image_id, image_start]
+                        row = [image_id, image_name, image_start]
                         writer.writerows([row])
 
             try:
@@ -70,6 +70,12 @@ def get_old_images():
 
 
 def get_old_snapshots(snap_list):
+    """
+    Takes a list of snapshot IDs. Gets all snapshots in a region. Writes snapshot properties to a .csv if a snapshot is
+    older than the cutoff date and is not in the list of snapshot IDs.
+    :param snap_list: list of EBS snapshot IDs
+    :return: count of all old snapshots; count of valid old snapshots
+    """
     global owner_id
     global three_month_cutoff_date
     snap_count = 0
@@ -86,7 +92,6 @@ def get_old_snapshots(snap_list):
                 response = ec2.describe_snapshots(OwnerIds=[owner_id], MaxResults=400)
 
             snapshots = response['Snapshots']
-            # print(f"Response contains {len(snapshots)} snapshots.")
 
             for snap in snapshots:
                 snap_id = snap['SnapshotId']
@@ -125,47 +130,76 @@ def get_old_snapshots(snap_list):
 
 
 # TODO: add Aurora cluster snapshots
-# describe_db_cluster_snapshots
 def get_old_rds_snaps():
+    """
+    Takes a list of snapshot IDs. Gets all RDS and Aurora cluster snapshots in a region. Writes snapshot properties to
+    a .csv if a snapshot is older than the cutoff date and is not in the list of snapshot IDs.
+    :return: count of valid old snapshots
+    """
     global owner_id
     global three_month_cutoff_date
     db_snap_count = 0
-    marker = None
+    aurora_snap_count = 0
+    rds_marker = None
+    aurora_marker = None
     with open(f'{profile_name}-{region_name}-rds-snaps.csv', 'w') as csvfile:
         fields = ['Snapshot Id', 'Create Date']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
         while True:
-            if marker:
-                response = rds.describe_db_snapshots(Marker=marker)
+            if rds_marker:
+                rds_response = rds.describe_db_snapshots(Marker=rds_marker)
             else:
-                # response = rds.describe_db_snapshots(DBSnapshotIdentifier='argentina-setup-2-final-snapshot')
-                response = rds.describe_db_snapshots()
+                rds_response = rds.describe_db_snapshots()
 
-            db_snapshots = response['DBSnapshots']
-            # print(f"Response contains {len(db_snapshots)} snapshots.")
+            db_snapshots = rds_response['DBSnapshots']
 
             for db_snap in db_snapshots:
                 db_snap_id = db_snap['DBSnapshotIdentifier']
-                # print(db_snap_id)
                 db_snap_start = datetime.datetime.strftime(db_snap['SnapshotCreateTime'], '%Y-%m-%d %H:%M:%S UTC')
                 db_snap_date = datetime.datetime.strftime(db_snap['SnapshotCreateTime'], '%Y-%m-%d')
-                # print(db_snap_date)
 
                 if db_snap_date < three_month_cutoff_date:
-                    # print('Old snapshot!')
                     db_snap_count += 1
                     row = [db_snap_id, db_snap_start]
                     writer.writerows([row])
 
             try:
-                marker = response['Marker']
+                rds_marker = rds_response['Marker']
             except KeyError:
                 break
 
+        print(f'RDS snapshots found: {db_snap_count}; getting Aurora cluster snapshots...')
+
+        while True:
+            if aurora_marker:
+                aurora_response = rds.describe_db_cluster_snapshots(Marker=aurora_marker)
+            else:
+                aurora_response = rds.describe_db_cluster_snapshots()
+
+            aurora_snapshots = aurora_response['DBClusterSnapshots']
+
+            for aurora_snap in aurora_snapshots:
+                aurora_snap_id = aurora_snap['DBClusterSnapshotIdentifier']
+                aurora_snap_start = datetime.datetime.strftime(aurora_snap['SnapshotCreateTime'],
+                                                               '%Y-%m-%d %H:%M:%S UTC')
+                aurora_snap_date = datetime.datetime.strftime(aurora_snap['SnapshotCreateTime'], '%Y-%m-%d')
+
+                if aurora_snap_date < three_month_cutoff_date:
+                    aurora_snap_count += 1
+                    row = [aurora_snap_id, aurora_snap_start]
+                    writer.writerows([row])
+
+            try:
+                aurora_marker = aurora_response['Marker']
+            except KeyError:
+                break
+
+        print(f'Aurora cluster snapshots found: {aurora_snap_count}')
+
     csvfile.close()
 
-    return db_snap_count
+    return db_snap_count + aurora_snap_count
 
 
 # all_old, valid_old, img_snaps = get_old_unused_images()
