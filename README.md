@@ -14,9 +14,9 @@ Actions:
 - Creates and writes to .csv files for each query
 
 To do:
-- add rds.describe_db_cluster_snapshots
 - add function for unused AMIs
 - add function for unattached EIPs
+- add function for unattached EBS volumes
 
 ## ch-parsley.py
 Work in progress!
