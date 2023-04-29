@@ -11,6 +11,12 @@ three_month_cutoff_date = '2023-01-24'
 session = boto3.Session(profile_name=profile_name, region_name=region_name)
 ec2 = session.client('ec2')
 rds = session.client('rds')
+ct = session.client('cloudtrail')
+
+# TODO: function for elastic IPs unattached for 4+ weeks (will require CloudTrail API call)
+# ec2.describe_addresses
+# ct.lookup_events
+# needs a wait condition for cloudtrail lookup_events API call (limit two calls per second)
 
 
 def get_old_images():
@@ -26,7 +32,7 @@ def get_old_images():
     image_snapshots = []
     valid_old_images = []
     is_next = None
-    with open(f'{profile_name}-{region_name}-old-images.csv', 'w') as csvfile:
+    with open(f'csv/{profile_name}-{region_name}-old-images.csv', 'w') as csvfile:
         fields = ['Image Id', 'Image Name', 'Image Age']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
@@ -81,7 +87,7 @@ def get_old_snapshots(snap_list):
     snap_count = 0
     valid_count = 0
     is_next = None
-    with open(f'{profile_name}-{region_name}-snapshots.csv', 'w') as csvfile:
+    with open(f'csv/{profile_name}-{region_name}-snapshots.csv', 'w') as csvfile:
         fields = ['Snapshot Id', 'Create Date', 'Image Id']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
@@ -127,6 +133,8 @@ def get_old_snapshots(snap_list):
 
 # TODO: function for volumes unattached for 4+ weeks (will require CloudTrail API call)
 # ec2.describe_volumes
+# ct.lookup_events
+# needs a wait condition for cloudtrail lookup_events API call (limit two calls per second)
 
 
 # TODO: add Aurora cluster snapshots
@@ -142,7 +150,7 @@ def get_old_rds_snaps():
     aurora_snap_count = 0
     rds_marker = None
     aurora_marker = None
-    with open(f'{profile_name}-{region_name}-rds-snaps.csv', 'w') as csvfile:
+    with open(f'csv/{profile_name}-{region_name}-rds-snaps.csv', 'w') as csvfile:
         fields = ['Snapshot Id', 'Create Date']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
@@ -210,5 +218,5 @@ def get_old_rds_snaps():
 # print(f'Number of old snapshots for {profile_name} in {region_name}: {snapshot_count}')
 # print(f'Number of valid old snapshots for {profile_name} in {region_name}: {valid_snapshot_count}')
 
-db_snapshot_count = get_old_rds_snaps()
-print(f'Number of valid old snapshots for {profile_name} in {region_name}: {db_snapshot_count}')
+# db_snapshot_count = get_old_rds_snaps()
+# print(f'Number of valid old snapshots for {profile_name} in {region_name}: {db_snapshot_count}')
