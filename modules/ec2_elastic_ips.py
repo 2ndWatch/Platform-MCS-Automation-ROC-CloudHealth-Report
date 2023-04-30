@@ -29,28 +29,29 @@ def get_old_unattached_eips(ec2_client, ct_client, report_date, profile_name, re
 
             all_ips = response['Addresses']  # list
 
-            for ip in all_ips:
-                ip_public = ip['PublicIp']
-                unattached_and_old = True
-                if 'AssociationId' in ip.keys():
-                    alloc_id = ip['AssociationId']
-
-                    # TODO: add parameters
-                    ct_response = ct_client.lookup_events()
-
-                    # TODO: parse response
-                    # yyy = xxx['eventTime'][:10]
-
-                    # TODO: figure out datetime to subtract 4 weeks from report date
-                    # if event_time > 'report date minus four weeks':
-                    #     unattached_and_old = False
-
-                    print('   CloudTrail API call for EIP made, waiting 31 seconds...')
-                    time.sleep(31)
-                if unattached_and_old:
-                    row = [ip_public]
-                    writer.writerows([row])
-                    valid_count += 1
+            # TODO: This may all be wrong. Still researching.
+            # for ip in all_ips:
+            #     ip_public = ip['PublicIp']
+            #     unattached_and_old = True
+            #     if 'AssociationId' in ip.keys():
+            #         alloc_id = ip['AssociationId']
+            #
+            #         # TODO: add parameters
+            #         ct_response = ct_client.lookup_events()
+            #
+            #         # TODO: parse response
+            #         # yyy = xxx['eventTime'][:10]
+            #
+            #         # TODO: figure out datetime to subtract 4 weeks from report date
+            #         # if event_time > 'report date minus four weeks':
+            #         #     unattached_and_old = False
+            #
+            #         print('   CloudTrail API call for EIP made, waiting 31 seconds...')
+            #         time.sleep(31)
+            #     if unattached_and_old:
+            #         row = [ip_public]
+            #         writer.writerows([row])
+            #         valid_count += 1
 
             try:
                 is_next = response['NextToken']
