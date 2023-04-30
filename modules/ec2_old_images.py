@@ -39,8 +39,9 @@ def get_old_images(client, owner_id, cutoff, profile_name, region_name):
                 if image_date < cutoff:
                     all_old_images.append(image_id)
                     if image_storage:
-                        image_snapshots = [device['Ebs']['SnapshotId'] for device in image_storage
-                                           if 'Ebs' in device.keys()]
+                        for device in image_storage:
+                            if 'Ebs' in device.keys():
+                                image_snapshots.append(device['Ebs']['SnapshotId'])
                     if 'AwsBackup' not in image_name:
                         valid_old_images.append(image_id)
                         row = [image_id, image_name, image_start]
