@@ -36,3 +36,5 @@ The script verifies if info from Cypherworx-RAW.xlsx sheet 'main-us-east-1-old-i
 ## Installation/authentication/usage
 
 Before running any scripts, install the required non-default Python packages: `pip install -r /path/to/requirements.txt`
+
+Authentication will be through `aws-azure-login`. Instructions coming soon.
