@@ -5,9 +5,9 @@ from modules import rds_old_snapshots as rsnap
 from modules import ec2_unused_amis as euna
 from modules import ec2_unattached_volumes as euvo
 
-profile_name = "cypherworxmain"
-region_name = "us-east-1"
-account_number = '372356060901'
+profile_name = "eomain"
+region_name = "us-east-2"
+account_number = '269180092429'
 
 report_date = '2023-04-24'
 three_month_cutoff_date = '2023-01-24'
@@ -23,28 +23,30 @@ ct = session.client('cloudtrail')
 # needs a wait condition for cloudtrail lookup_events API call (limit two calls per second)
 
 print(f'Starting Cloud Health validation for {profile_name} in {region_name}.\n')
-# print('Getting EC2 images older than 3 months...')
-# all_old, valid_old, img_snaps = eold.get_old_images(ec2, account_number, three_month_cutoff_date,
-#                                                     profile_name, region_name)
-# print(f'   Number of old images: {len(all_old)}')
-# print(f'   Number of valid old images: {len(valid_old)}')
+print('Getting EC2 images older than 3 months...')
+valid_old, img_snaps = eold.get_old_images(ec2, account_number, three_month_cutoff_date, profile_name, region_name)
+print(f'   Number of valid old images: {len(valid_old)}')
+print(f'   Number of AMI-associated snapshots: {len(img_snaps)}')
 
-# print('Getting EBS snapshots older than 3 months...')
-# snapshot_count, valid_snapshot_count = esnap.get_old_snapshots(ec2, img_snaps, account_number,
-#                                                                three_month_cutoff_date, profile_name, region_name)
-# print(f'   Number of old EBS snapshots: {snapshot_count}')
-# print(f'   Number of valid old EBS snapshots: {valid_snapshot_count}')
-#
-# print('Getting RDS snapshots older than 3 months...')
-# db_snapshot_count = rsnap.get_old_rds_snaps(rds, three_month_cutoff_date, profile_name, region_name)
-# print(f'   Number of valid old RDS snapshots: {db_snapshot_count}')
-#
-# print('Getting unused EC2 images...')
-# unused_image_count = euna.get_unused_images(ec2, account_number, valid_old, profile_name, region_name)
-# print(f'   Number of valid unused images: {unused_image_count}')
+print('Getting EBS snapshots older than 3 months...')
+snapshot_count, valid_snapshot_count = esnap.get_old_snapshots(ec2, img_snaps, account_number,
+                                                               three_month_cutoff_date, profile_name, region_name)
+print(f'   Number of old EBS snapshots: {snapshot_count}')
+print(f'   Number of valid old EBS snapshots: {valid_snapshot_count}')
+
+print('Getting RDS and Aurora snapshots older than 3 months...')
+db_snapshot_count, aurora_snapshot_count = rsnap.get_old_rds_snaps(rds, three_month_cutoff_date,
+                                                                   profile_name, region_name)
+print(f'   Number of valid old RDS snapshots: {db_snapshot_count}')
+print(f'   Number of valid old Aurora snapshots: {aurora_snapshot_count}')
+
+print('Getting unused EC2 images...')
+unused_image_count = euna.get_unused_images(ec2, account_number, valid_old, profile_name, region_name)
+print(f'   Number of valid unused images: {unused_image_count}')
 
 print('Getting unattached EC2 volumes...')
-unatt_volume_count, valid_volume_count = euvo.get_old_unattached_volumes(ec2, ct, report_date, profile_name, region_name)
+unatt_volume_count, valid_volume_count = euvo.get_old_unattached_volumes(ec2, ct, report_date,
+                                                                         profile_name, region_name)
 print(f'   Number of unattached volumes: {unatt_volume_count}')
 print(f'   Number of valid unattached volumes: {valid_volume_count}')
 

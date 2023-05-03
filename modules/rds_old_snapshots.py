@@ -37,6 +37,7 @@ def get_old_rds_snaps(client, cutoff, profile_name, region_name):
                     db_snap_date = datetime.datetime.strftime(db_snap['SnapshotCreateTime'], '%Y-%m-%d')
 
                     if db_snap_date < cutoff:
+                        print(f'   {db_snap_id} is older than 3 months.')
                         db_snap_count += 1
                         row = [db_snap_id, db_snap_start]
                         writer.writerows([row])
@@ -46,7 +47,7 @@ def get_old_rds_snaps(client, cutoff, profile_name, region_name):
             except KeyError:
                 break
 
-        print(f'   RDS snapshots found: {db_snap_count}; getting Aurora cluster snapshots...')
+        print(f'   All old RDS snapshots found; getting Aurora cluster snapshots...')
 
         while True:
             if aurora_marker:
@@ -63,6 +64,7 @@ def get_old_rds_snaps(client, cutoff, profile_name, region_name):
                 aurora_snap_date = datetime.datetime.strftime(aurora_snap['SnapshotCreateTime'], '%Y-%m-%d')
 
                 if aurora_snap_date < cutoff:
+                    print(f'   {aurora_snap_id} is older than 3 months.')
                     aurora_snap_count += 1
                     row = [aurora_snap_id, aurora_snap_start]
                     writer.writerows([row])
@@ -72,8 +74,8 @@ def get_old_rds_snaps(client, cutoff, profile_name, region_name):
             except KeyError:
                 break
 
-        print(f'   Aurora cluster snapshots found: {aurora_snap_count}')
+        print(f'   All old Aurora cluster snapshots found.')
 
     csvfile.close()
 
-    return db_snap_count + aurora_snap_count
+    return db_snap_count, aurora_snap_count

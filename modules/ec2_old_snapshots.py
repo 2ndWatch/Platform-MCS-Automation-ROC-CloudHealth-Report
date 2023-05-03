@@ -36,17 +36,16 @@ def get_old_snapshots(client, snap_list, owner_id, cutoff, profile_name, region_
                 snap_start = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d %H:%M:%S UTC')
                 snap_date = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d')
 
-                if 'CreateImage' in snap_desc:
-                    snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
-
                 if snap_date < cutoff:
+                    print(f'   {snap_id} is older than 3 months.')
                     snap_count += 1
 
-                    """
-                    Filter out any snapshots created for an existing AMI; if an AMI no longer exists, the 
-                    corresponding snapshot will be added to the report
-                    """
-                    if snap_id not in snap_list:
+                    if snap_id in snap_list:
+                        print(f'      Excluded from results (associated with an old AMI).')
+                    else:
+                        print(f'      Not associated with an AMI on the old AMIs list.')
+                        if 'CreateImage' in snap_desc:
+                            snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
                         row = [snap_id, snap_start, snap_ami]
                         writer.writerows([row])
                         valid_count += 1

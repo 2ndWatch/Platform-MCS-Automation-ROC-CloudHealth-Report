@@ -4,3 +4,4 @@ aws-azure-login-notepad.txt
 venv/
 .idea/
 __pycache__
+output/

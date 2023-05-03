@@ -44,25 +44,24 @@ def get_unused_images(client, owner_id, old_images, profile_name, region_name):
 
             images = response['Images']
 
-            # TODO: implement function logic
-            # steps:
-            # get list of all images (describe_images)
-            # filter unused images based on filter criteria below
-
             # filter criteria:
+            # not in use by an existing instance
             # not created by aws backup (AWSBackup in image name)
             # not already in list of old images
-            # not deleted by aws backup? (cloudtrail call for DeregisterImage?) - implement after testing first filter
-            # and assessing results
 
             for image in images:
                 image_id = image['ImageId']
                 image_name = image['Name']
 
-                if image_id not in images_in_use and image_id not in old_images and 'AwsBackup' not in image_name:
-                    unused_images += 1
-                    row = [image_id, image_name]
-                    writer.writerows([row])
+                if image_id not in images_in_use:
+                    print(f'   {image_id} is not in use')
+                    if image_id in old_images or 'AwsBackup' in image_name:
+                        print('      Excluded from results (already an old image or created by AWS Backup.')
+                    else:
+                        print('      Valid unused image.')
+                        unused_images += 1
+                        row = [image_id, image_name]
+                        writer.writerows([row])
 
             try:
                 is_next = response['NextToken']
