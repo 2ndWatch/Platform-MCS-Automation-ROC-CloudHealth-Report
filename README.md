@@ -45,7 +45,11 @@ The script verifies if info from Cypherworx-RAW.xlsx sheet 'main-us-east-1-old-i
 
 ## Installation
 
-Before running any scripts, install the required non-default Python packages: `pip install -r /path/to/requirements.txt`. This is best done in a separate virtual environment for this script, so that these packages don't mess with any other packages in your OS.
+Prerequisites:
+- AWS CLI: [Installing the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- Python: [Download Python](https://www.python.org/downloads/) 
+
+Before running any scripts, install the required non-default Python packages: `pip install -r /path/to/requirements.txt`. This is best done in a separate virtual environment for this script, so that these packages don't mess with any other packages in your OS. Don't go down the dependencies rabbit hole, it's not a good place to be.
 
 Set up a local text document to store information for the accounts into which you will be authenticating. You will need at least a profile name, account number, Tenant ID and App ID URI for each AWS account you intend to access.
 
@@ -54,7 +58,7 @@ _The ARN may not be needed._
 
 Authentication will be through `aws-azure-login`. Perform these steps from the terminal in your IDE; I use PyCharm and the Git Bash terminal because I'm weird, but this should work fine in VS Code and a Powershell/command prompt terminal too. You could even run these commands in a standalone terminal window from within the folder that contains these scripts, and use a basic text editor where needed, but are you _really_ that kind of heathen? 
 
-- Follow the installation instructions at https://github.com/aws-azure-login/aws-azure-login#installation:
+- Follow the `aws-azure-login` [installation instructions](https://github.com/aws-azure-login/aws-azure-login#installation):
   - You will need to install Node.js
   - If installing on Windows, you probably don't need the Node.js optional extra packages like Chocolatey
   - You will probably also not need the `puppeteer` dependency mentioned in the `aws-azure-login` installation instructions
