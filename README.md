@@ -12,7 +12,7 @@
 
 This repository contains helper scripts for the 2nd Watch ROC Cloud Health project. These scripts are meant to speed up the process of verifying information gathered by the Cloud Health policies. Some clients have thousands of resources to be verified - ain't nobody got time for that.
 
-![img.png](src/img_4.png)
+![img.png](src/img_4.png)<br>
 _Working on it... but not by hand._
 
 ## ch-getresources.py
@@ -48,7 +48,9 @@ The script verifies if info from Cypherworx-RAW.xlsx sheet 'main-us-east-1-old-i
 Before running any scripts, install the required non-default Python packages: `pip install -r /path/to/requirements.txt`. This is best done in a separate virtual environment for this script, so that these packages don't mess with any other packages in your OS.
 
 Set up a local text document to store information for the accounts into which you will be authenticating. You will need at least a profile name, account number, Tenant ID and App ID URI for each AWS account you intend to access.
-![img_2.png](src/img_2.png)
+
+![img_2.png](src/img_2.png)<br>
+_The ARN may not be needed._
 
 Authentication will be through `aws-azure-login`. Perform these steps from the terminal in your IDE; I use PyCharm and the Git Bash terminal because I'm weird, but this should work fine in VS Code and a Powershell/command prompt terminal too. You could even run these commands in a standalone terminal window from within the folder that contains these scripts, and use a basic text editor where needed, but are you _really_ that kind of heathen? 
 
@@ -63,8 +65,10 @@ Authentication will be through `aws-azure-login`. Perform these steps from the t
   - Use the command `aws-azure-login --configure --profile foo`; replace 'foo' with some name you will remember (for example, 'cypherworxmain').
   - You will need the Azure Tenant ID and App ID URI. For many/most of our clients, start typing their name or enter the appropriate account number in the search bar in My Apps. When you find the correct account, click the three dots on the right to get the popup menu (_don't_ click on the account like you normally would to log into the AWS console) and click on `Copy link`:
     ![img.png](src/img.png)
+    _Seriously, don't click on the account name._  
   - Paste the link in your local account information document. The Tenant ID will be after `?tenantId=` and the App ID URI is between `signin/` and `?tenantId=`:
     ![img_1.png](src/img_1.png)
+    _If you can't at least find the Tenant ID, there's no hope for you._
   - It can be helpful to know the ARN of the role you assume when you log in to the account you're setting up, but it shouldn't be necessary. If you encounter errors, repeat this process after finding the ARN.
   - Note that this information is account-specific; multiple AWS accounts for the same client will have different Tenant IDs and App ID URIs. As such, a separate `aws-azure-login` profile will need to be configured for every account.
   - You will only need to configure the profile for any given AWS account once; the configuration information will be stored in your local `.aws/config` file.
@@ -80,6 +84,7 @@ At this point, you are almost ready to use the `ch-getresources.py` script. With
 - `region_name`
 - `account_number`
 
-![img_3.png](src/img_3.png)
+![img_3.png](src/img_3.png)<br>
+_This may change to become more automated in the future._
 
 Once those variables match the account you are in, run the script with your IDE's run function, or in the terminal with `python ch-getresources.py`. The script will generate `.csv` files in the directory in which the script resides.
