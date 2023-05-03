@@ -52,7 +52,7 @@ Set up a local text document to store information for the accounts into which yo
 
 Authentication will be through `aws-azure-login`. Perform these steps from the terminal in your IDE; I use PyCharm and the Git Bash terminal because I'm weird, but this should work fine in VS Code and a Powershell/command prompt terminal too. You could even run these commands in a standalone terminal window from within the folder that contains these scripts, and use a basic text editor where needed, but are you _really_ that kind of heathen? 
 
-- Follow the installation instructions here: https://github.com/aws-azure-login/aws-azure-login#installation:
+- Follow the installation instructions at https://github.com/aws-azure-login/aws-azure-login#installation:
   - You will need to install Node.js
   - If installing on Windows, you probably don't need the Node.js optional extra packages like Chocolatey
   - You will probably also not need the `puppeteer` dependency mentioned in the `aws-azure-login` installation instructions
