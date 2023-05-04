@@ -15,8 +15,13 @@ This repository contains helper scripts for the 2nd Watch ROC Cloud Health proje
 ![img.png](src/img_4.png)<br>
 _Working on it... but not by hand._
 
-## ch-getresources.py
+## main.py
 Work in progress!
+
+This is the primary user interface for this suite of scripts. From the root directory of the project, run `python main.py` and follow the prompts.
+
+## ch-getresources.py
+Work in progress! _This will be moving to the modules directory soon._
 
 Complete functions:
 - Old AMIs
@@ -29,7 +34,7 @@ In progress:
 - Unattached EIPs
 
 ## ch-parsley.py
-Work in progress!
+Work in progress! _This will be moving to the modules directory soon._
 
 Actions:
 - Reads from cypherworxmain-us-east-1-old-images.csv and makes Cypherworx-RAW.xlsx
@@ -51,6 +56,8 @@ Prerequisites:
 
 Before running any scripts, install the required non-default Python packages: `pip install -r /path/to/requirements.txt`. This is best done in a separate virtual environment for this script, so that these packages don't mess with any other packages in your OS. Don't go down the dependencies rabbit hole, it's not a good place to be.
 
+_This text doc will proabbly not be needed._
+
 Set up a local text document to store information for the accounts into which you will be authenticating. You will need at least a profile name, account number, Tenant ID and App ID URI for each AWS account you intend to access.
 
 ![img_2.png](src/img_2.png)<br>
@@ -61,9 +68,14 @@ Authentication will be through `aws-azure-login`. Perform these steps from the t
 - Follow the `aws-azure-login` [installation instructions](https://github.com/aws-azure-login/aws-azure-login#installation):
   - You will need to install Node.js
   - If installing on Windows, you probably don't need the Node.js optional extra packages like Chocolatey
-  - You will probably also not need the `puppeteer` dependency mentioned in the `aws-azure-login` installation instructions
+  - You will probably also not need the `puppeteer` dependency mentioned in the `aws-azure-login` installation instructions, as this is for a GUI interface.
 
 ## Authentication 
+
+### This section will soon be deprecated as login and account information data passing is automated.
+
+Reminder for AE:<br>
+_Add a note about HISTIGNORE for AZURE_DEFAULT_PASSWORD_
 
 - Create configuration profiles (as needed):
   - Use the command `aws-azure-login --configure --profile foo`; replace 'foo' with some name you will remember (for example, 'cypherworxmain').
@@ -82,6 +94,8 @@ Authentication will be through `aws-azure-login`. Perform these steps from the t
   - Assuming you entered your password correctly, you will be sent an approval push notification via Microsoft Authenticator. Approve the sign-in, and you will be authenticated into the account.
 
 ## Usage
+
+### This section will soon be deprecated as login and account information data passing is automated.
 
 At this point, you are almost ready to use the `ch-getresources.py` script. Within the script, near the top, you will need to change three pieces of information:
 - `profile_name`
