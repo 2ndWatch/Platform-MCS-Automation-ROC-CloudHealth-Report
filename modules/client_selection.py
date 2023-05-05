@@ -1,13 +1,15 @@
+from src import clients
+
 # replace eventually with a function or something to read the clients from some other data source
-clients = {
-    'a': 'CKE',
-    'b': 'Cypherworx',
-    'c': 'Edmund Optics',
-    'd': 'Utilities International',
-    'e': 'VNS Health',
-    'done': 'multiple clients',
-    None: 'None'
-}
+# clients = {
+#     'a': 'CKE',
+#     'b': 'Cypherworx',
+#     'c': 'Edmund Optics',
+#     'd': 'Utilities International',
+#     'e': 'VNS Health',
+#     'done': 'multiple clients',
+#     None: 'None'
+# }
 
 
 def client_selection():
