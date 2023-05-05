@@ -1,5 +1,4 @@
 import subprocess
-from src import clients
 
 
 def azure_login(profile_names):
