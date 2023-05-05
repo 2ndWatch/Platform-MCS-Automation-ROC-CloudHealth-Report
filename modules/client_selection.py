@@ -11,13 +11,11 @@ def client_selection():
     selected_client = 'None'
     selected_clients = []
 
-    print(banner)
-    print('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
     number_of_clients = input('How many clients do you want to run the script for? Enter:\n'
                               '   a to run for one client\n'
                               '   b to run for multiple clients\n'
                               '   c to run for all clients\n'
-                              '   or enter "exit" to quit the program.\n'
+                              '   or enter "exit" to exit the program.\n'
                               'Your selection: ')
     while number_of_clients not in ['a', 'b', 'c', 'exit']:
         print(f'\n{number_of_clients} is not a valid input.')
@@ -63,6 +61,6 @@ def client_selection():
         for client in selected_clients:
             print(client)
     else:
-        print('\nYou have quit the program. Goodbye!')
+        print('\nYou have exited the program. Goodbye!')
 
     return clients[selected_client]["name"], selected_clients
