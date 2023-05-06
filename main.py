@@ -3,6 +3,7 @@ from modules import login_config as lcon
 from modules import aws_azure_login as aws
 from src.banner import banner
 from getpass import getpass
+import os
 
 
 def main():
@@ -13,27 +14,29 @@ def main():
     password = getpass('Please enter your Azure password [input is hidden]: ')
     lcon.export_username_password(username, password)
 
+    # Profile configuration needs to be changed. Just writing the file apparently doesn't work.
+    # Hopefully this isn't a deal-breaker.
     print('Configuring client profiles...')
     clients_dict = lcon.configure_login_credentials()
     print('Client profile configuration complete.\n')
 
-    client, clients_to_report = cs.client_selection(clients_dict)
+    selected_client, client_keys, clients_to_report = cs.client_selection(clients_dict)
 
     # TODO: make sure azure_login references clients.txt
-    for client_name in clients_to_report:
-        # TODO: have to figure out which dict item to use based on client_name, using client here doesn't work for
-        #  multiple client selection. This also allows passing in a profile name to the azure_login function
-        if len(clients_dict[client]['profiles']) > 1:
-            # TODO: iterate through each profile in multi-profile clients
+    for key in client_keys:
+        profile_names = []
+        if len(clients_dict[key]['profiles']) > 1:
+            # iterate through list of profile_names
             continue
         else:
-            logged_in = aws.azure_login(client_name)
+            logged_in = aws.azure_login(client_keys, clients_dict[key]['profiles'][0]['profile_name'])
             if logged_in:
-                print(f'You have been logged into the ')
+                print(f'\nYou have been logged into the {selected_client} account.')
 
-    return client, clients_to_report
+    return selected_client, client_keys, clients_to_report
 
 
-cl, cl_list = main()
+cl, cl_keys, cl_list = main()
 print(f'client: {cl}')
+print(f'client keys: {cl_keys}')
 print(f'client list: {cl_list}')

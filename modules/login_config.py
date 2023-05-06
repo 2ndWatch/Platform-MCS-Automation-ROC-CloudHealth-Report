@@ -9,6 +9,7 @@ def export_username_password(username, password):
     print('\nUsername and password have been set.')
 
 
+# This doesn't work. Apparently need to run 'aws_azure_login --configure --profile foo' for each profile.
 def configure_login_credentials():
     with open('src/clients.txt') as cl:
         cl_txt = cl.read()
@@ -18,9 +19,9 @@ def configure_login_credentials():
     with open('src/config', 'w') as conf:
         conf.write('[default] \n \n')
 
-        for key, account in clients.items():
-            if len(account['profiles']) > 1:
-                for profile in account['profiles']:
+        for key, client in clients.items():
+            if len(client['profiles']) > 1:
+                for profile in client['profiles']:
                     write_data = [f'[profile {profile["profile_name"]}] \n',
                                   f'azure_tenant_id={profile["tenant_id"]} \n',
                                   f'azure_app_id_uri={profile["app_id_uri"]} \n',
@@ -30,10 +31,10 @@ def configure_login_credentials():
                                   'azure_default_remember_me=false \n \n']
                     for line in write_data:
                         conf.write(line)
-            elif account['profiles']:
-                write_data = [f'[profile {account["profiles"][0]["profile_name"]}] \n',
-                              f'azure_tenant_id={account["profiles"][0]["tenant_id"]} \n',
-                              f'azure_app_id_uri={account["profiles"][0]["app_id_uri"]} \n',
+            elif client['profiles']:
+                write_data = [f'[profile {client["profiles"][0]["profile_name"]}] \n',
+                              f'azure_tenant_id={client["profiles"][0]["tenant_id"]} \n',
+                              f'azure_app_id_uri={client["profiles"][0]["app_id_uri"]} \n',
                               f'azure_default_username={os.environ.get("AZURE_DEFAULT_USERNAME")} \n',
                               f'azure_default_role_arn= \n',
                               'azure_default_duration_hours=1 \n',

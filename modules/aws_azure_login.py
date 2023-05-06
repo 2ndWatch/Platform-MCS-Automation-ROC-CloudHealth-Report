@@ -1,15 +1,20 @@
 import subprocess
+# import json
+#
+# with open('src/clients.txt') as cl:
+#     cl_txt = cl.read()
+#
+# clients = json.loads(cl_txt)
 
-# needs to reference clients.txt to translate client_name into correct profile name
 
-def azure_login(client_name):
+def azure_login(client_keys, profile_name):
 
     is_logged_in = False
-    login = subprocess.Popen(['aws-azure-login', '--profile', client_name], shell=True)
+    login = subprocess.Popen(['aws-azure-login', '--profile', profile_name], shell=True)
     login.wait()
 
     # Verify login status
-    login_verify = subprocess.Popen(['aws', 'sts', 'get-caller-identity', '--profile', client_name], shell=True,
+    login_verify = subprocess.Popen(['aws', 'sts', 'get-caller-identity', '--profile', profile_name], shell=True,
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output, errors = login_verify.communicate()
     login_verify.wait()
