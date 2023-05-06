@@ -7,9 +7,7 @@ def azure_login():
 
     login = subprocess.Popen(['aws-azure-login', '--no-prompt'], shell=True,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    output, errors = login.communicate()
     login.wait()
-    # print(output)
 
     # Verify login status
     login_verify = subprocess.Popen(['aws', 'sts', 'get-caller-identity'], shell=True,
