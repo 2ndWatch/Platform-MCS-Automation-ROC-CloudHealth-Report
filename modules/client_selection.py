@@ -1,13 +1,12 @@
 import json
-from src.banner import banner
 
-with open('src/clients.txt') as cl:
-    cl_txt = cl.read()
+# with open('src/clients.txt') as cl:
+#     cl_txt = cl.read()
+#
+# clients = json.loads(cl_txt)
 
-clients = json.loads(cl_txt)
 
-
-def client_selection():
+def client_selection(clients):
     selected_client = 'None'
     selected_clients = []
 
@@ -32,8 +31,8 @@ def client_selection():
             selected_client = input('Your selection: ')
         print(f'\nThe script will be run for:')
         print(f'{clients[selected_client]["name"]}')
+        selected_clients.append(clients[selected_client]["name"])
     elif number_of_clients == 'b':
-        selected_clients = []
         selected_client = 'None'
         print('\nSelect a client. Enter:')
         for key, value in clients.items():
