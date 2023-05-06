@@ -4,6 +4,7 @@ from modules import ec2_old_snapshots as esnap
 from modules import rds_old_snapshots as rsnap
 from modules import ec2_unused_amis as euna
 from modules import ec2_unattached_volumes as euvo
+from modules import ec2_elastic_ips as eips
 
 
 def get_resources(profile, region, report_date, three_month_cutoff_date):
@@ -15,11 +16,6 @@ def get_resources(profile, region, report_date, three_month_cutoff_date):
     ec2 = session.client('ec2')
     rds = session.client('rds')
     ct = session.client('cloudtrail')
-
-    # TODO: function for elastic IPs unattached for 4+ weeks (will require CloudTrail API call)
-    # ec2.describe_addresses
-    # ct.lookup_events
-    # needs a wait condition for cloudtrail lookup_events API call (limit two calls per second)
 
     print(f'Starting Cloud Health validation for {profile_name} in {region_name}.\n')
     print('Getting EC2 images older than 3 months...')
@@ -48,5 +44,9 @@ def get_resources(profile, region, report_date, three_month_cutoff_date):
                                                                              profile_name, region_name)
     print(f'   Number of unattached volumes: {unatt_volume_count}')
     print(f'   Number of valid unattached volumes: {valid_volume_count}')
+
+    print('Getting unused elastic IPs...')
+    ip_count = eips.get_old_unattached_eips(ec2, profile_name, region_name)
+    print(f'   Number of unattached elastic IPs: {ip_count}')
 
     return
