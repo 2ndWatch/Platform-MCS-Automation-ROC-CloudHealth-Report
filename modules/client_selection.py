@@ -1,7 +1,7 @@
 def client_selection(clients):
     selected_client = 'None'
     client_keys = []
-    selected_clients = []
+    selected_profiles = []
 
     number_of_clients = input('How many clients do you want to run the script for? Enter:\n'
                               '   a to run for one client\n'
@@ -25,11 +25,14 @@ def client_selection(clients):
         print(f'\nThe script will be run for:')
         print(f'{clients[selected_client]["name"]}')
         client_keys.append(selected_client)
-        # TODO: assess if selected_clients list is no longer needed
-        selected_clients.append(clients[selected_client]["name"])
+        # if len(clients[selected_client]['profiles']) > 1:
+        #     for profile in clients[selected_client]['profiles']:
+        #         selected_profiles.append(profile['profile_name'])
+        # else:
+        #     selected_profiles.append(clients[selected_client]['profiles'][0]['profile_name'])
     elif number_of_clients == 'b':
         selected_client = 'None'
-        print('\nSelect a client. Enter:')
+        print('\nSelect multiple clients, one at a time. Enter:')
         for key, value in clients.items():
             if key == 'done' or key == 'None':
                 continue
@@ -39,26 +42,32 @@ def client_selection(clients):
             selected_client = input('Your selection: ')
             if selected_client != 'done' and selected_client in clients.keys():
                 client_keys.append(selected_client)
-                # maybe no longer needed
-                selected_clients.append(clients[selected_client]["name"])
+                # if len(clients[selected_client]['profiles']) > 1:
+                #     for profile in clients[selected_client]['profiles']:
+                #         selected_profiles.append(profile['profile_name'])
+                # else:
+                #     selected_profiles.append(clients[selected_client]['profiles'][0]['profile_name'])
             while selected_client != 'done' and selected_client not in clients.keys():
                 print(f'\n{selected_client} is not a valid input.')
                 selected_client = input('Your selection: ')
         print(f'\nThe script will be run for:')
-        for client in selected_clients:
+        for client in selected_profiles:
             print(f'{client}')
     elif number_of_clients == 'c':
         selected_client = 'done'
         for key, value in clients.items():
             if key == 'done' or key == 'None':
                 continue
-            client_keys.append(selected_client)
-            # maybe no longer needed
-            selected_clients.append(value["name"])
+            client_keys.append(key)
+            # if len(value['profiles']) > 1:
+            #     for profile in value['profiles']:
+            #         selected_profiles.append(profile['profile_name'])
+            # else:
+            #     selected_profiles.append(value['profiles'][0]['profile_name'])
         print('\nThe script will be run for all clients:')
-        for client in selected_clients:
+        for client in selected_profiles:
             print(client)
     else:
         print('\nYou have exited the program. Goodbye!')
 
-    return clients[selected_client]["name"], client_keys, selected_clients
+    return clients[selected_client]["name"], client_keys
