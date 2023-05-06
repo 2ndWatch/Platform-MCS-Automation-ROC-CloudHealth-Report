@@ -7,7 +7,8 @@ from modules import ec2_unattached_volumes as euvo
 from modules import ec2_elastic_ips as eips
 
 
-def get_resources(profile, region, report_date, three_month_cutoff_date):
+def get_resources(profile, region, report_date, three_month_cutoff_date,
+                  df_eips, df_oldami, df_ebssnaps, df_vol, df_unami, df_rdssnaps):
     profile_name = profile['profile_name']
     region_name = region
     account_number = profile['account_number']
