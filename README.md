@@ -18,23 +18,15 @@ _Working on it... but not by hand._
 ## main.py
 Work in progress!
 
-This is the primary user interface for this suite of scripts. From the root directory of the project, run `python main.py` and follow the prompts.
+This is the primary user interface for this suite of scripts.
 
-## ch-getresources.py
-Work in progress! _This will be moving to the modules directory soon._
+## getresources.py
+Work in progress!
 
-Complete functions:
-- Old AMIs
-- Unused AMIs
-- Old EBS snapshots
-- Old RDS/Aurora snapshots
-- Old unattached volumes
-
-In progress:
-- Unattached EIPs
+Mostly complete. Resources are collected into dataframes. Working on comparing resource data with Cloud Health data using pandas.
 
 ## ch-parsley.py
-Work in progress! _This will be moving to the modules directory soon._
+Work in progress!
 
 Actions:
 - Reads from cypherworxmain-us-east-1-old-images.csv and makes Cypherworx-RAW.xlsx
@@ -56,12 +48,7 @@ Prerequisites:
 
 Before running any scripts, install the required non-default Python packages: `pip install -r /path/to/requirements.txt`. This is best done in a separate virtual environment for this script, so that these packages don't mess with any other packages in your OS. Don't go down the dependencies rabbit hole, it's not a good place to be.
 
-_This text doc will proabbly not be needed._
 
-Set up a local text document to store information for the accounts into which you will be authenticating. You will need at least a profile name, account number, Tenant ID and App ID URI for each AWS account you intend to access.
-
-![img_2.png](src/img_2.png)<br>
-_The ARN may not be needed._
 
 Authentication will be through `aws-azure-login`. Perform these steps from the terminal in your IDE; I use PyCharm and the Git Bash terminal because I'm weird, but this should work fine in VS Code and a Powershell/command prompt terminal too. You could even run these commands in a standalone terminal window from within the folder that contains these scripts, and use a basic text editor where needed, but are you _really_ that kind of heathen? 
 
@@ -70,39 +57,36 @@ Authentication will be through `aws-azure-login`. Perform these steps from the t
   - If installing on Windows, you probably don't need the Node.js optional extra packages like Chocolatey
   - You will probably also not need the `puppeteer` dependency mentioned in the `aws-azure-login` installation instructions, as this is for a GUI interface.
 
-## Authentication 
 
-### This section will soon be deprecated as login and account information data passing is automated.
 
-Reminder for AE:<br>
-_Add a note about HISTIGNORE for AZURE_DEFAULT_PASSWORD_
-
-- Create configuration profiles (as needed):
-  - Use the command `aws-azure-login --configure --profile foo`; replace 'foo' with some name you will remember (for example, 'cypherworxmain').
-  - You will need the Azure Tenant ID and App ID URI. For many/most of our clients, start typing their name or enter the appropriate account number in the search bar in My Apps. When you find the correct account, click the three dots on the right to get the popup menu (_don't_ click on the account like you normally would to log into the AWS console) and click on `Copy link`:
-    ![img.png](src/img.png)
-    _Seriously, don't click on the account name._  
-  - Paste the link in your local account information document. The Tenant ID will be after `?tenantId=` and the App ID URI is between `signin/` and `?tenantId=`:
-    ![img_1.png](src/img_1.png)
-    _If you can't at least find the Tenant ID, there's no hope for you._
-  - It can be helpful to know the ARN of the role you assume when you log in to the account you're setting up, but it shouldn't be necessary. If you encounter errors, repeat this process after finding the ARN.
-  - Note that this information is account-specific; multiple AWS accounts for the same client will have different Tenant IDs and App ID URIs. As such, a separate `aws-azure-login` profile will need to be configured for every account.
-  - You will only need to configure the profile for any given AWS account once; the configuration information will be stored in your local `.aws/config` file.
-- Log into an account:
-  - Use the command `aws-azure-login --profile foo` and replace 'foo' with the appropriate account profile name (this is where it's helpful to have that doc with info for every profile).
-  - You will be prompted for a password. This is the same password you use to log into My Apps.
-  - Assuming you entered your password correctly, you will be sent an approval push notification via Microsoft Authenticator. Approve the sign-in, and you will be authenticated into the account.
 
 ## Usage
 
-### This section will soon be deprecated as login and account information data passing is automated.
+This program is best run in its own virtual environment, to keep environment variables and authentication information segregated from the rest of your operating system. I run it from the terminal in my IDE.
 
-At this point, you are almost ready to use the `ch-getresources.py` script. Within the script, near the top, you will need to change three pieces of information:
-- `profile_name`
-- `region_name`
-- `account_number`
+To start the program, make sure your terminal is in the root directory of the project. Enter `python main.py`.
 
-![img_3.png](src/img_3.png)<br>
-_This may change to become more automated in the future._
+![img.png](src/img.png)
+_Schmancy!_
 
-Once those variables match the account you are in, run the script with your IDE's run function, or in the terminal with `python ch-getresources.py`. The script will generate `.csv` files in the directory in which the script resides.
+Your username is what you log into My Apps with, minus the '@2ndwatch.com' part. 
+
+After entering your username, you will be prompted for a password. This is the same password you use to log into My Apps.
+
+![img_1.png](src/img_1.png)
+_No, you can't see my password. Nice try._
+
+At this point, you will be asked to select which client or clients you want to collect resource information for. You can also exit the program from here.
+
+If you choose option a, you will see the following prompt:
+
+![img_2.png](src/img_2.png)
+
+If you choose option b, you will see the following prompt:
+
+![img_3.png](src/img_3.png)
+_I selected some things._
+
+After you are done selecting clients, the program will attempt to log into client accounts, one by one. Each account login requires MFA approval, so you will need to watch for the approval push notification via Microsoft Authenticator. Approve the sign-in, and you will be authenticated into the account.
+
+The program will then automatically collect resources from every region specified in the clients.txt file for a given account, and will compile all the valid resources of a particular type from all of a given client's accounts into one dataframe. That dataframe is used to compare resources against those collected by Cloud Health. 
