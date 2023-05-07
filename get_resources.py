@@ -24,32 +24,32 @@ def get_resources(profile, region, report_date, three_month,
     df_eips, ip_count = eips.get_old_unattached_eips(ec2, account_name, account_number, region_name, df_eips)
     print(f'   Number of unattached elastic IPs: {ip_count}')
 
-    # print('Getting EC2 images older than 3 months...')
-    # df_oldimages, valid_old, img_snaps = eold.get_old_images(ec2, account_name, account_number, region_name,
-    #                                                          three_month, df_oldimages)
-    # print(f'   Number of valid old images: {len(valid_old)}')
-    # print(f'   Number of AMI-associated snapshots: {len(img_snaps)}')
+    print('Getting EC2 images older than 3 months...')
+    df_oldimages, valid_old, img_snaps = eold.get_old_images(ec2, account_name, account_number, region_name,
+                                                             three_month, df_oldimages)
+    print(f'   Number of valid old images: {len(valid_old)}')
+    print(f'   Number of AMI-associated snapshots: {len(img_snaps)}')
 
     # Dependent on running get_old_images because of img_snaps input
-    # print('\nGetting EBS snapshots older than 3 months...')
-    # df_ebssnaps, snapshot_count, valid_snapshot_count = esnap.get_old_snapshots(ec2, account_name, account_number,
-    #                                                                             region_name, img_snaps,
-    #                                                                             three_month, df_ebssnaps)
-    # print(f'   Number of old EBS snapshots: {snapshot_count}')
-    # print(f'   Number of valid old EBS snapshots: {valid_snapshot_count}')
+    print('\nGetting EBS snapshots older than 3 months...')
+    df_ebssnaps, snapshot_count, valid_snapshot_count = esnap.get_old_snapshots(ec2, account_name, account_number,
+                                                                                region_name, img_snaps,
+                                                                                three_month, df_ebssnaps)
+    print(f'   Number of old EBS snapshots: {snapshot_count}')
+    print(f'   Number of valid old EBS snapshots: {valid_snapshot_count}')
 
-    # print('\nGetting unattached EC2 volumes...')
-    # df_vol, unatt_volume_count, valid_volume_count = euvo.get_old_unattached_volumes(ec2, ct, account_name,
-    #                                                                                  account_number, region_name,
-    #                                                                                  report_date, df_vol)
-    # print(f'   Number of unattached volumes: {unatt_volume_count}')
-    # print(f'   Number of valid unattached volumes: {valid_volume_count}')
+    print('\nGetting unattached EC2 volumes...')
+    df_vol, unatt_volume_count, valid_volume_count = euvo.get_old_unattached_volumes(ec2, ct, account_name,
+                                                                                     account_number, region_name,
+                                                                                     report_date, df_vol)
+    print(f'   Number of unattached volumes: {unatt_volume_count}')
+    print(f'   Number of valid unattached volumes: {valid_volume_count}')
 
     # Dependent on get_old_images for valid_old input
-    # print('\nGetting unused EC2 images...')
-    # df_unami, unused_image_count = euna.get_unused_images(ec2, account_name, account_number, region_name,
-    #                                                       valid_old, df_unami)
-    # print(f'   Number of valid unused images: {unused_image_count}')
+    print('\nGetting unused EC2 images...')
+    df_unami, unused_image_count = euna.get_unused_images(ec2, account_name, account_number, region_name,
+                                                          valid_old, df_unami)
+    print(f'   Number of valid unused images: {unused_image_count}')
 
     print('\nGetting RDS and Aurora snapshots older than 3 months...')
     df_rdssnaps, db_snapshot_count, aurora_snapshot_count = rsnap.get_old_rds_snaps(rds, account_name, account_number,

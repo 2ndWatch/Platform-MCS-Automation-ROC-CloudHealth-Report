@@ -2,6 +2,8 @@ import pandas as pd
 from datetime import datetime, timedelta, timezone
 from dateutil import parser
 
+# -----Begin unneeded code
+
 # read the original CSV file and write to Excel
 csvDataframe = pd.read_csv('cypherworxmain-us-east-1-old-images.csv')
 resultExcelFile = pd.ExcelWriter("Cypherworx-RAW.xlsx")
@@ -37,6 +39,8 @@ for index, row in df.iterrows():
 with pd.ExcelWriter('Cypherworx-RAW.xlsx', mode='a') as writer:
     false_alarms_df.to_excel(writer, sheet_name="false-alarms", index=False)
     valid_alarms_df.to_excel(writer, sheet_name="valid-alarms", index=False)
+
+# -----End
 
 # read in the CloudHealth report and extract the Image Id column
 cloudhealth_df = pd.read_csv("policy-alert-2023-04-28-9345855749691.csv")

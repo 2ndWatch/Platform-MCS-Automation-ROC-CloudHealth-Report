@@ -36,7 +36,7 @@
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "d054ef79-3919-490e-9eb2-ff2174149e7d"
             }
-        ]
+		]
     },
     "d": {
         "name": "Utilities International",

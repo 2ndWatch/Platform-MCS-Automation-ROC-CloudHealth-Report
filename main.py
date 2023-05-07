@@ -1,8 +1,9 @@
 from modules import client_selection as cs
-from modules import login_config as lcon
+from modules import login_config as lcfg
 from modules import aws_azure_login as aws
 from modules import create_dataframes as cdf
-from getresources import get_resources
+import compare_resources as cr
+from get_resources import get_resources
 from src.banner import banner
 from getpass import getpass
 import json
@@ -22,7 +23,7 @@ def main(clients):
     # Set username and password as environment variables
     username = input('Please enter your 2nd Watch Azure username (ex. aeversmeyer): ')
     password = getpass('Please enter your Azure password [input is hidden]: ')
-    lcon.export_username_password(username, password)
+    lcfg.export_username_password(username, password)
 
     # Return a client name (if applicable), a list of dict keys, and a list of profile names
     selected_client, client_keys = cs.client_selection(clients)
@@ -37,7 +38,7 @@ def main(clients):
 
         if len(clients_dict[key]['profiles']) > 1:
             for profile in clients_dict[key]['profiles']:
-                lcon.set_login_credentials(profile)
+                lcfg.set_login_credentials(profile)
 
                 print(f'\nLogging in to {profile["profile_name"]}. Please approve the MFA push notification...')
                 logged_in = aws.azure_login()
@@ -61,7 +62,7 @@ def main(clients):
                                                                       df_unami, df_rdssnaps)
         else:
             profile = clients_dict[key]['profiles'][0]
-            lcon.set_login_credentials(profile)
+            lcfg.set_login_credentials(profile)
 
             print(f'\nLogging in to {profile["profile_name"]}. Please approve the MFA push notification...')
             logged_in = aws.azure_login()
@@ -84,7 +85,10 @@ def main(clients):
                                                                   df_eips, df_oldimages, df_ebssnaps, df_vol,
                                                                   df_unami, df_rdssnaps)
 
-    # send finished dataframes to function for conversion to csv or excel (or to parsley?)
+        df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
+        file_list = cr.create_file_list(clients_dict[key]['name'], report_date)
+
+        cr.compare_resources(clients_dict[key]['name'], df_list, file_list, report_date)
 
     return selected_client, client_keys
 
