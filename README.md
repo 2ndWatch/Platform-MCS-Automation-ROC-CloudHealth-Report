@@ -85,6 +85,7 @@ If you choose option a, you will see the following prompt:
 If you choose option b, you will see the following prompt:
 
 ![img_3.png](src/img_3.png)
+
 _I selected some things._
 
 After you are done selecting clients, the program will attempt to log into client accounts, one by one. Each account login requires MFA approval, so you will need to watch for the approval push notification via Microsoft Authenticator. Approve the sign-in, and you will be authenticated into the account.
