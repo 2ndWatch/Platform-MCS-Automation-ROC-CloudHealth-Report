@@ -1,13 +1,16 @@
 import csv
 
 
-def get_old_unattached_eips(ec2_client, profile_name, region_name):
+def get_old_unattached_eips(ec2_client, account_name, account_number, region_name, df_eips):
     """
 
     :return:
     """
+
+    # 'Account Name', 'Account Number', 'Region Name', 'Public IP'
+
     valid_count = 0
-    with open(f'{profile_name}-{region_name}-elastic-ips.csv', 'w') as csvfile:
+    with open(f'{account_name}-{region_name}-elastic-ips.csv', 'w') as csvfile:
         fields = ['Public IP']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
@@ -26,4 +29,4 @@ def get_old_unattached_eips(ec2_client, profile_name, region_name):
 
     csvfile.close()
 
-    return valid_count
+    return df_eips, valid_count

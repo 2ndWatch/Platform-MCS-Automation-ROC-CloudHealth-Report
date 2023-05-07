@@ -12,7 +12,7 @@ with open('src/clients.txt') as cl:
 clients_dict = json.loads(cl_txt)
 
 report_date = '2023-04-24'
-three_month_cutoff_date = '2023-01-24'
+three_months = '2023-01-24'
 
 
 def main(clients):
@@ -32,7 +32,8 @@ def main(clients):
     for key in client_keys:
 
         # Create 6 dataframes for the client
-        df_eips, df_oldami, df_ebssnaps, df_vol, df_unami, df_rdssnaps = cdf.create_dataframes()
+        # Move these around as a list? but maybe hard to reference in get_resources function
+        df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = cdf.create_dataframes()
 
         if len(clients_dict[key]['profiles']) > 1:
             for profile in clients_dict[key]['profiles']:
@@ -47,13 +48,29 @@ def main(clients):
                 if len(profile['region']) > 1:
                     for region in profile['region']:
                         print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                        get_resources(profile, region, report_date, three_month_cutoff_date,
-                                      df_eips, df_oldami, df_ebssnaps, df_vol, df_unami, df_rdssnaps)
+                        df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = get_resources(profile,
+                                                                                                          region,
+                                                                                                          report_date,
+                                                                                                          three_months,
+                                                                                                          df_eips,
+                                                                                                          df_oldimages,
+                                                                                                          df_ebssnaps,
+                                                                                                          df_vol,
+                                                                                                          df_unami,
+                                                                                                          df_rdssnaps)
                 else:
                     region = profile['region'][0]
                     print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                    get_resources(profile, region, report_date, three_month_cutoff_date,
-                                  df_eips, df_oldami, df_ebssnaps, df_vol, df_unami, df_rdssnaps)
+                    df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = get_resources(profile,
+                                                                                                      region,
+                                                                                                      report_date,
+                                                                                                      three_months,
+                                                                                                      df_eips,
+                                                                                                      df_oldimages,
+                                                                                                      df_ebssnaps,
+                                                                                                      df_vol,
+                                                                                                      df_unami,
+                                                                                                      df_rdssnaps)
         else:
             profile = clients_dict[key]['profiles'][0]
             lcon.set_login_credentials(profile)
@@ -67,13 +84,31 @@ def main(clients):
             if len(profile['region']) > 1:
                 for region in profile['region']:
                     print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                    get_resources(profile, region, report_date, three_month_cutoff_date,
-                                  df_eips, df_oldami, df_ebssnaps, df_vol, df_unami, df_rdssnaps)
+                    df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = get_resources(profile,
+                                                                                                      region,
+                                                                                                      report_date,
+                                                                                                      three_months,
+                                                                                                      df_eips,
+                                                                                                      df_oldimages,
+                                                                                                      df_ebssnaps,
+                                                                                                      df_vol,
+                                                                                                      df_unami,
+                                                                                                      df_rdssnaps)
             else:
                 region = profile['region'][0]
                 print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                get_resources(profile, region, report_date, three_month_cutoff_date,
-                              df_eips, df_oldami, df_ebssnaps, df_vol, df_unami, df_rdssnaps)
+                df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = get_resources(profile,
+                                                                                                  region,
+                                                                                                  report_date,
+                                                                                                  three_months,
+                                                                                                  df_eips,
+                                                                                                  df_oldimages,
+                                                                                                  df_ebssnaps,
+                                                                                                  df_vol,
+                                                                                                  df_unami,
+                                                                                                  df_rdssnaps)
+
+    # send finished dataframes to function for conversion to csv or excel (or to parsley?)
 
     return selected_client, client_keys
 

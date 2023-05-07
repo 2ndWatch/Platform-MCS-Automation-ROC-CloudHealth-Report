@@ -1,29 +1,30 @@
 import csv
 
 
-def get_old_images(client, owner_id, cutoff, profile_name, region_name):
+def get_old_images(client, account_name, account_number, region_name, cutoff, df_oldimages):
     """
     Gets all images in a region. Writes image properties to a .csv file if an image is older than the cutoff date and
     was not created by AWS Backup.
+    :param df_oldimages:
     :param client: boto3 client obj
-    :param owner_id: str
+    :param account_number: str
     :param cutoff: str
-    :param profile_name: str
+    :param account_name: str
     :param region_name: str
     :return: list of all old image IDs; list of all EBS snapshot IDs associated with old images
     """
     old_images = []
     image_snapshots = []
     is_next = None
-    with open(f'{profile_name}-{region_name}-old-images.csv', 'w') as csvfile:
+    with open(f'{account_name}-{region_name}-old-images.csv', 'w') as csvfile:
         fields = ['Image Id', 'Image Name', 'Image Age']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
         while True:
             if is_next:
-                response = client.describe_images(Owners=[owner_id], MaxResults=400, NextToken=is_next)
+                response = client.describe_images(Owners=[account_number], MaxResults=400, NextToken=is_next)
             else:
-                response = client.describe_images(Owners=[owner_id], MaxResults=400)
+                response = client.describe_images(Owners=[account_number], MaxResults=400)
 
             images = response['Images']
 
@@ -57,4 +58,4 @@ def get_old_images(client, owner_id, cutoff, profile_name, region_name):
 
     csvfile.close()
 
-    return old_images, image_snapshots
+    return df_oldimages, old_images, image_snapshots

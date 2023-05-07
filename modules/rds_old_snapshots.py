@@ -2,13 +2,15 @@ import datetime
 import csv
 
 
-def get_old_rds_snaps(client, cutoff, profile_name, region_name):
+def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff, df_rdssnaps):
     """
     Takes a list of snapshot IDs. Gets all RDS and Aurora cluster snapshots in a region. Writes snapshot properties to
     a .csv if a snapshot is older than the cutoff date and is not in the list of snapshot IDs.
+    :param df_rdssnaps:
+    :param account_number:
+    :param account_name:
     :param client: boto3 client obj
     :param cutoff: str
-    :param profile_name: str
     :param region_name: str
     :return: count of valid old snapshots
     """
@@ -16,7 +18,7 @@ def get_old_rds_snaps(client, cutoff, profile_name, region_name):
     aurora_snap_count = 0
     rds_marker = None
     aurora_marker = None
-    with open(f'{profile_name}-{region_name}-rds-snaps.csv', 'w') as csvfile:
+    with open(f'{account_name}-{region_name}-rds-snaps.csv', 'w') as csvfile:
         fields = ['Snapshot Id', 'Create Date']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
@@ -78,4 +80,4 @@ def get_old_rds_snaps(client, cutoff, profile_name, region_name):
 
     csvfile.close()
 
-    return db_snap_count, aurora_snap_count
+    return df_rdssnaps, db_snap_count, aurora_snap_count

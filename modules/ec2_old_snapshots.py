@@ -2,30 +2,31 @@ import csv
 import datetime
 
 
-def get_old_snapshots(client, snap_list, owner_id, cutoff, profile_name, region_name):
+def get_old_snapshots(client, account_name, account_number, region_name, snap_list, cutoff, df_ebssnaps):
     """
     Takes a list of snapshot IDs. Gets all snapshots in a region. Writes snapshot properties to a .csv if a snapshot is
     older than the cutoff date and is not in the list of snapshot IDs.
+    :param df_ebssnaps:
     :param client: boto3 client obj
     :param snap_list: list
-    :param owner_id: str
+    :param account_number: str
     :param cutoff: str
-    :param profile_name: str
+    :param account_name: str
     :param region_name: str
     :return: count of all old snapshots; count of valid old snapshots
     """
     snap_count = 0
     valid_count = 0
     is_next = None
-    with open(f'{profile_name}-{region_name}-snapshots.csv', 'w') as csvfile:
+    with open(f'{account_name}-{region_name}-snapshots.csv', 'w') as csvfile:
         fields = ['Snapshot Id', 'Create Date', 'Image Id']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
         while True:
             if is_next:
-                response = client.describe_snapshots(OwnerIds=[owner_id], MaxResults=400, NextToken=is_next)
+                response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400, NextToken=is_next)
             else:
-                response = client.describe_snapshots(OwnerIds=[owner_id], MaxResults=400)
+                response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400)
 
             snapshots = response['Snapshots']
 
@@ -57,4 +58,4 @@ def get_old_snapshots(client, snap_list, owner_id, cutoff, profile_name, region_
 
     csvfile.close()
 
-    return snap_count, valid_count
+    return df_ebssnaps, snap_count, valid_count

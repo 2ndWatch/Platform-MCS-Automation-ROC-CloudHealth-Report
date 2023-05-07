@@ -3,7 +3,8 @@ from datetime import datetime, timedelta
 import time
 
 
-def get_old_unattached_volumes(ec2_client, cloudtrail_client, report_date, profile_name, region_name):
+def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, account_number,
+                               region_name, report_date, df_vol):
     """
 
     :return:
@@ -11,7 +12,7 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, report_date, profi
     unatt_count = 0
     valid_count = 0
     is_next = None
-    with open(f'{profile_name}-{region_name}-unatt-volumes.csv', 'w') as csvfile:
+    with open(f'{account_name}-{region_name}-unatt-volumes.csv', 'w') as csvfile:
         fields = ['Volume Id']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
@@ -63,4 +64,4 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, report_date, profi
 
     csvfile.close()
 
-    return unatt_count, valid_count
+    return df_vol, unatt_count, valid_count

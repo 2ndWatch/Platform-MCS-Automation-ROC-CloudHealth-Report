@@ -7,9 +7,9 @@ from modules import ec2_unattached_volumes as euvo
 from modules import ec2_elastic_ips as eips
 
 
-def get_resources(profile, region, report_date, three_month_cutoff_date,
-                  df_eips, df_oldami, df_ebssnaps, df_vol, df_unami, df_rdssnaps):
-    profile_name = profile['profile_name']
+def get_resources(profile, region, report_date, three_month,
+                  df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps):
+    account_name = profile['account_name']
     region_name = region
     account_number = profile['account_number']
 
@@ -18,36 +18,41 @@ def get_resources(profile, region, report_date, three_month_cutoff_date,
     rds = session.client('rds')
     ct = session.client('cloudtrail')
 
-    print(f'Starting Cloud Health validation for {profile_name} in {region_name}.\n')
+    print(f'Starting Cloud Health validation for {account_name} in {region_name}.\n')
+
+    print('Getting unused elastic IPs...')
+    df_eips, ip_count = eips.get_old_unattached_eips(ec2, account_name, account_number, region_name, df_eips)
+    print(f'   Number of unattached elastic IPs: {ip_count}')
+
     print('Getting EC2 images older than 3 months...')
-    valid_old, img_snaps = eold.get_old_images(ec2, account_number, three_month_cutoff_date, profile_name, region_name)
+    df_oldimages, valid_old, img_snaps = eold.get_old_images(ec2, account_name, account_number, region_name,
+                                                             three_month, df_oldimages)
     print(f'   Number of valid old images: {len(valid_old)}')
     print(f'   Number of AMI-associated snapshots: {len(img_snaps)}')
 
     print('Getting EBS snapshots older than 3 months...')
-    snapshot_count, valid_snapshot_count = esnap.get_old_snapshots(ec2, img_snaps, account_number,
-                                                                   three_month_cutoff_date, profile_name, region_name)
+    snapshot_count, valid_snapshot_count = esnap.get_old_snapshots(ec2, account_name, account_number, region_name,
+                                                                   img_snaps, three_month, df_ebssnaps)
     print(f'   Number of old EBS snapshots: {snapshot_count}')
     print(f'   Number of valid old EBS snapshots: {valid_snapshot_count}')
 
     print('Getting RDS and Aurora snapshots older than 3 months...')
-    db_snapshot_count, aurora_snapshot_count = rsnap.get_old_rds_snaps(rds, three_month_cutoff_date,
-                                                                       profile_name, region_name)
+    df_rdssnaps, db_snapshot_count, aurora_snapshot_count = rsnap.get_old_rds_snaps(rds, account_name, account_number,
+                                                                                    region_name, three_month,
+                                                                                    df_rdssnaps)
     print(f'   Number of valid old RDS snapshots: {db_snapshot_count}')
     print(f'   Number of valid old Aurora snapshots: {aurora_snapshot_count}')
 
     print('Getting unused EC2 images...')
-    unused_image_count = euna.get_unused_images(ec2, account_number, valid_old, profile_name, region_name)
+    df_unami, unused_image_count = euna.get_unused_images(ec2, account_name, account_number, region_name,
+                                                          valid_old, df_unami)
     print(f'   Number of valid unused images: {unused_image_count}')
 
     print('Getting unattached EC2 volumes...')
-    unatt_volume_count, valid_volume_count = euvo.get_old_unattached_volumes(ec2, ct, report_date,
-                                                                             profile_name, region_name)
+    df_vol, unatt_volume_count, valid_volume_count = euvo.get_old_unattached_volumes(ec2, ct, account_name,
+                                                                                     account_number, region_name,
+                                                                                     report_date, df_vol)
     print(f'   Number of unattached volumes: {unatt_volume_count}')
     print(f'   Number of valid unattached volumes: {valid_volume_count}')
 
-    print('Getting unused elastic IPs...')
-    ip_count = eips.get_old_unattached_eips(ec2, profile_name, region_name)
-    print(f'   Number of unattached elastic IPs: {ip_count}')
-
-    return
+    return df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps

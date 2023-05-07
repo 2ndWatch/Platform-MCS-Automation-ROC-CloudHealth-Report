@@ -1,7 +1,7 @@
 import csv
 
 
-def get_unused_images(client, owner_id, old_images, profile_name, region_name):
+def get_unused_images(client, account_name, account_number, region_name, old_images, df_unami):
     """
 
     :return:
@@ -32,15 +32,15 @@ def get_unused_images(client, owner_id, old_images, profile_name, region_name):
 
     unused_images = 0
     is_next = None
-    with open(f'{profile_name}-{region_name}-unused-images.csv', 'w') as csvfile:
+    with open(f'{account_name}-{region_name}-unused-images.csv', 'w') as csvfile:
         fields = ['Image Id', 'Image Name']
         writer = csv.writer(csvfile)
         writer.writerow(fields)
         while True:
             if is_next:
-                response = client.describe_images(Owners=[owner_id], MaxResults=400, NextToken=is_next)
+                response = client.describe_images(Owners=[account_number], MaxResults=400, NextToken=is_next)
             else:
-                response = client.describe_images(Owners=[owner_id], MaxResults=400)
+                response = client.describe_images(Owners=[account_number], MaxResults=400)
 
             images = response['Images']
 
@@ -70,4 +70,4 @@ def get_unused_images(client, owner_id, old_images, profile_name, region_name):
 
     csvfile.close()
 
-    return unused_images
+    return df_unami, unused_images
