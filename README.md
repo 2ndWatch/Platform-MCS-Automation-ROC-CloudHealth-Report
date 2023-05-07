@@ -86,8 +86,6 @@ If you choose option b, you will see the following prompt:
 
 ![img_3.png](src/img_3.png)
 
-_I selected some things._
-
 After you are done selecting clients, the program will attempt to log into client accounts, one by one. Each account login requires MFA approval, so you will need to watch for the approval push notification via Microsoft Authenticator. Approve the sign-in, and you will be authenticated into the account.
 
 The program will then automatically collect resources from every region specified in the clients.txt file for a given account, and will compile all the valid resources of a particular type from all of a given client's accounts into one dataframe. That dataframe is used to compare resources against those collected by Cloud Health. 
