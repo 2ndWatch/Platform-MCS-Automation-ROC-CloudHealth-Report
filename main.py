@@ -48,29 +48,17 @@ def main(clients):
                 if len(profile['region']) > 1:
                     for region in profile['region']:
                         print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                        df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = get_resources(profile,
-                                                                                                          region,
-                                                                                                          report_date,
-                                                                                                          three_months,
-                                                                                                          df_eips,
-                                                                                                          df_oldimages,
-                                                                                                          df_ebssnaps,
-                                                                                                          df_vol,
-                                                                                                          df_unami,
-                                                                                                          df_rdssnaps)
+                        df_eips, df_oldimages, df_ebssnaps, \
+                            df_vol, df_unami, df_rdssnaps = get_resources(profile, region, report_date, three_months,
+                                                                          df_eips, df_oldimages, df_ebssnaps, df_vol,
+                                                                          df_unami, df_rdssnaps)
                 else:
                     region = profile['region'][0]
                     print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                    df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = get_resources(profile,
-                                                                                                      region,
-                                                                                                      report_date,
-                                                                                                      three_months,
-                                                                                                      df_eips,
-                                                                                                      df_oldimages,
-                                                                                                      df_ebssnaps,
-                                                                                                      df_vol,
-                                                                                                      df_unami,
-                                                                                                      df_rdssnaps)
+                    df_eips, df_oldimages, df_ebssnaps, \
+                        df_vol, df_unami, df_rdssnaps = get_resources(profile, region, report_date, three_months,
+                                                                      df_eips, df_oldimages, df_ebssnaps, df_vol,
+                                                                      df_unami, df_rdssnaps)
         else:
             profile = clients_dict[key]['profiles'][0]
             lcon.set_login_credentials(profile)
@@ -84,29 +72,17 @@ def main(clients):
             if len(profile['region']) > 1:
                 for region in profile['region']:
                     print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                    df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = get_resources(profile,
-                                                                                                      region,
-                                                                                                      report_date,
-                                                                                                      three_months,
-                                                                                                      df_eips,
-                                                                                                      df_oldimages,
-                                                                                                      df_ebssnaps,
-                                                                                                      df_vol,
-                                                                                                      df_unami,
-                                                                                                      df_rdssnaps)
+                    df_eips, df_oldimages, df_ebssnaps, \
+                        df_vol, df_unami, df_rdssnaps = get_resources(profile, region, report_date, three_months,
+                                                                      df_eips, df_oldimages, df_ebssnaps, df_vol,
+                                                                      df_unami, df_rdssnaps)
             else:
                 region = profile['region'][0]
                 print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = get_resources(profile,
-                                                                                                  region,
-                                                                                                  report_date,
-                                                                                                  three_months,
-                                                                                                  df_eips,
-                                                                                                  df_oldimages,
-                                                                                                  df_ebssnaps,
-                                                                                                  df_vol,
-                                                                                                  df_unami,
-                                                                                                  df_rdssnaps)
+                df_eips, df_oldimages, df_ebssnaps, \
+                    df_vol, df_unami, df_rdssnaps = get_resources(profile, region, report_date, three_months,
+                                                                  df_eips, df_oldimages, df_ebssnaps, df_vol,
+                                                                  df_unami, df_rdssnaps)
 
     # send finished dataframes to function for conversion to csv or excel (or to parsley?)
 

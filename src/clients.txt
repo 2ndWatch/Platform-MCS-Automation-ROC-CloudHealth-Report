@@ -58,48 +58,12 @@
                 "app_id_uri": "51a9fd48-6595-4799-b0c4-b6ffd229acb3"
             },
             {
-                "account_name": "customer-Wapa-dr",
-                "profile_name": "uiwapadr",
-                "account_number": "260667475419",
-                "region": ["us-east-2", "us-west-2"],
-                "tenant_id": "",
-                "app_id_uri": "",
-                "availability": "cannot access in MyApps"
-            },
-            {
-                "account_name": "customer-ElPaso-dr",
-                "profile_name": "uielpasodr",
-                "account_number": "300175269874",
-                "region": ["us-east-2", "us-west-2"],
-                "tenant_id": "",
-                "app_id_uri": "",
-                "availability": "cannot access in MyApps"
-            },
-            {
                 "account_name": "Wapa",
                 "profile_name": "uiwapa",
                 "account_number": "409793285578",
                 "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "ab1b1b5c-9758-4444-87be-cbdf00485c73"
-            },
-            {
-                "account_name": "customer-Evergy",
-                "profile_name": "uievergy",
-                "account_number": "410946731030",
-                "region": ["us-east-2", "us-west-2"],
-                "tenant_id": "",
-                "app_id_uri": "",
-                "availability": "cannot access in MyApps"
-            },
-            {
-                "account_name": "customer-Evergy-dr",
-                "profile_name": "uievergydr",
-                "account_number": "530801975448",
-                "region": ["us-east-2", "us-west-2"],
-                "tenant_id": "",
-                "app_id_uri": "",
-                "availability": "cannot access in MyApps"
             },
             {
                 "account_name": "customer-ElPaso",
@@ -116,15 +80,6 @@
                 "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "6c269b98-74c1-4490-8724-bfb06d4ab8b9"
-            },
-            {
-                "account_name": "wombat-dr",
-                "profile_name": "uiwombatdr",
-                "account_number": "635732022292",
-                "region": ["us-east-2", "us-west-2"],
-                "tenant_id": "",
-                "app_id_uri": "",
-                "availability": "cannot access in MyApps"
             },
             {
                 "account_name": "customers",
@@ -149,15 +104,6 @@
                 "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "70db8f1d-1e7b-4cb4-8f2f-f217de7f2b51"
-            },
-            {
-                "account_name": "customer-AustinEnergy-dr",
-                "profile_name": "uiaustindr",
-                "account_number": "890726708363",
-                "region": ["us-east-2", "us-west-2"],
-                "tenant_id": "",
-                "app_id_uri": "",
-                "availability": "cannot access in MyApps"
             },
             {
                 "account_name": "customer-bhe",

@@ -7,3 +7,4 @@ __pycache__
 output/
 src/config
 src/credentials
+src/ui_inaccessible.txt

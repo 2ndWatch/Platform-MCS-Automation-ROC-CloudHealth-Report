@@ -1,4 +1,4 @@
-import csv
+# import csv
 import datetime
 
 
@@ -17,45 +17,85 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
     """
     snap_count = 0
     valid_count = 0
+
     is_next = None
-    with open(f'{account_name}-{region_name}-snapshots.csv', 'w') as csvfile:
-        fields = ['Snapshot Id', 'Create Date', 'Image Id']
-        writer = csv.writer(csvfile)
-        writer.writerow(fields)
-        while True:
-            if is_next:
-                response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400, NextToken=is_next)
-            else:
-                response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400)
 
-            snapshots = response['Snapshots']
+    while True:
+        if is_next:
+            response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400, NextToken=is_next)
+        else:
+            response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400)
 
-            for snap in snapshots:
-                snap_id = snap['SnapshotId']
-                snap_desc = snap['Description']
-                snap_ami = ''
-                snap_start = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d %H:%M:%S UTC')
-                snap_date = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d')
+        snapshots = response['Snapshots']
 
-                if snap_date < cutoff:
-                    print(f'   {snap_id} is older than 3 months.')
-                    snap_count += 1
+        for snap in snapshots:
+            snap_id = snap['SnapshotId']
+            snap_desc = snap['Description']
+            snap_ami = ''
+            snap_start = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d %H:%M:%S UTC')
+            snap_date = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d')
 
-                    if snap_id in snap_list:
-                        print(f'      Excluded from results (associated with an old AMI).')
-                    else:
-                        print(f'      Not associated with an AMI on the old AMIs list.')
-                        if 'CreateImage' in snap_desc:
-                            snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
-                        row = [snap_id, snap_start, snap_ami]
-                        writer.writerows([row])
-                        valid_count += 1
+            if snap_date < cutoff:
+                print(f'   {snap_id} is older than 3 months.')
+                snap_count += 1
 
-            try:
-                is_next = response['NextToken']
-            except KeyError:
-                break
+                if snap_id in snap_list:
+                    print(f'      Excluded from results (associated with an old AMI).')
+                else:
+                    print(f'      Not associated with an AMI on the old AMIs list.')
+                    if 'CreateImage' in snap_desc:
+                        snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
+                    # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Create Date', 'Image Id'
+                    row = [account_name, account_number, region_name, snap_id, snap_start, snap_ami]
+                    # df.loc[len(df)] = list
+                    df_ebssnaps.loc[len(df_ebssnaps)] = row
+                    valid_count += 1
 
-    csvfile.close()
+        try:
+            is_next = response['NextToken']
+        except KeyError:
+            break
+
+    # with open(f'{account_name}-{region_name}-snapshots.csv', 'w') as csvfile:
+    #     fields = ['Snapshot Id', 'Create Date', 'Image Id']
+    #     writer = csv.writer(csvfile)
+    #     writer.writerow(fields)
+    #     while True:
+    #         if is_next:
+    #             response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400, NextToken=is_next)
+    #         else:
+    #             response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400)
+    #
+    #         snapshots = response['Snapshots']
+    #
+    #         for snap in snapshots:
+    #             snap_id = snap['SnapshotId']
+    #             snap_desc = snap['Description']
+    #             snap_ami = ''
+    #             snap_start = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d %H:%M:%S UTC')
+    #             snap_date = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d')
+    #
+    #             if snap_date < cutoff:
+    #                 print(f'   {snap_id} is older than 3 months.')
+    #                 snap_count += 1
+    #
+    #                 if snap_id in snap_list:
+    #                     print(f'      Excluded from results (associated with an old AMI).')
+    #                 else:
+    #                     print(f'      Not associated with an AMI on the old AMIs list.')
+    #                     if 'CreateImage' in snap_desc:
+    #                         snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
+    #                     row = [snap_id, snap_start, snap_ami]
+    #                     writer.writerows([row])
+    #                     valid_count += 1
+    #
+    #         try:
+    #             is_next = response['NextToken']
+    #         except KeyError:
+    #             break
+    #
+    # csvfile.close()
+
+    print(f'\n{df_ebssnaps}\n')
 
     return df_ebssnaps, snap_count, valid_count
