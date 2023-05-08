@@ -7,7 +7,7 @@ def client_selection(clients):
                               '   a to run for one client\n'
                               '   b to run for multiple clients\n'
                               '   c to run for all clients\n'
-                              '   or enter "exit" to exit the program.\n'
+                              '   or "exit" to exit the program.\n'
                               'Your selection: ')
     while number_of_clients not in ['a', 'b', 'c', 'exit']:
         print(f'\n{number_of_clients} is not a valid input.')
@@ -32,7 +32,7 @@ def client_selection(clients):
             if key == 'done' or key == 'None':
                 continue
             print(f'   {key} for {value["name"]}')
-        print('   or enter "done" to finish selecting clients.\n')
+        print('   or "done" to finish selecting clients.\n')
         while selected_client != 'done':
             selected_client = input('Your selection: ')
             if selected_client != 'done' and selected_client in clients.keys():
