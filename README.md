@@ -7,7 +7,7 @@
 
 ## Introduction
 
-This repository contains helper scripts for the 2nd Watch ROC Cloud Health project. These scripts are meant to speed up the process of verifying information gathered by the Cloud Health policies. Some clients have thousands of resources to be verified - ain't nobody got time for that.
+This repository contains a validator program for the 2nd Watch ROC Cloud Health project. It is meant to speed up the process of verifying information gathered by the Cloud Health policies. Some clients have thousands of resources to be verified - ain't nobody got time for that.
 
 ![img.png](src/img_4.png)<br>
 _Working on it... but not by hand._
@@ -28,6 +28,9 @@ Follow the `aws-azure-login` [installation instructions](https://github.com/aws-
 - You will probably also not need the `puppeteer` dependency mentioned in the `aws-azure-login` installation instructions, as this is for a GUI interface.
 
 ## Usage
+
+Downloaded Cloud Health reports should go in the `cloudhealth` directory. Those downloaded files must adhere to the following naming conventions:
+- _insert naming conventions_
 
 This program is best run in its own virtual environment, to keep environment variables and authentication information segregated from the rest of your operating system. I run it from the terminal in my IDE.
 
@@ -53,6 +56,13 @@ If you choose option b, you will see the following prompt:
 
 ![img_3.png](src/img_3.png)
 
-After you are done selecting clients, the program will attempt to log into client accounts, one by one. Each account login requires MFA approval, so you will need to watch for the approval push notification via Microsoft Authenticator. Approve the sign-in, and you will be authenticated into the account.
+After you are done selecting clients, the program attempts to log into client accounts, one by one. Each account login requires MFA approval, so you will need to watch for the approval push notification via Microsoft Authenticator. Approve the sign-in, and the program is authenticated into the account.
 
-The program will then automatically collect resources from every region specified in the clients.txt file for a given account, and will compile all the valid resources of a particular type from all of a given client's accounts into one dataframe. That dataframe is used to compare resources against those collected by Cloud Health. 
+The program automatically collects resource detailss from every region specified in the clients.txt file for the selected account(s), and compiles all the valid resources of a particular type from all of a given client's accounts into one dataframe. That dataframe is used to compare resources against those collected by Cloud Health. Finally, the program transforms the resource information into three sheets in an Excel file:
+- matched resources that both Cloud Health and this program have identified as wasted spend;
+- unmatched resources that this program has identified that were not picked up by Cloud Health;
+- excluded resources that Cloud Health identified but do not/no longer meet the filtering criteria.
+
+The Excel files are created in the root directory of the program.
+
+The program also outputs a fair amount of test to the terminal as it runs. This text can be used for debugging, if needed, or simplyto monitor the program's progress.
