@@ -27,6 +27,7 @@ def client_selection(clients):
         client_keys.append(selected_client)
     elif number_of_clients == 'b':
         selected_client = 'None'
+        selected_check = []
         print('\nSelect multiple clients, one at a time. Enter:')
         for key, value in clients.items():
             if key == 'done' or key == 'None':
@@ -35,11 +36,13 @@ def client_selection(clients):
         print('   or "done" to finish selecting clients.\n')
         while selected_client != 'done':
             selected_client = input('Your selection: ')
+            while (selected_client != 'done' and selected_client not in clients.keys()) \
+                    or selected_client in selected_check:
+                print(f'\n{selected_client} is not a valid input or you have already selected that client.')
+                selected_client = input('Your selection: ')
             if selected_client != 'done' and selected_client in clients.keys():
                 client_keys.append(selected_client)
-            while selected_client != 'done' and selected_client not in clients.keys():
-                print(f'\n{selected_client} is not a valid input.')
-                selected_client = input('Your selection: ')
+                selected_check.append(selected_client)
         print(f'\nThe script will be run for:')
         for client in selected_profiles:
             print(f'{client}')
