@@ -14,6 +14,22 @@ def create_dataframes(for_client=False):
 
     if for_client:
         df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
-        return df_list
+        empty_unmatched_row = [
+            ['-', '-', '-', 'No resources unmatched'],
+            ['-', '-', '-', 'No resources unmatched', '-', '-'],
+            ['-', '-', '-', 'No resources unmatched', '-', '-'],
+            ['-', '-', '-', 'No resources unmatched'],
+            ['-', '-', '-', 'No resources unmatched', '-'],
+            ['-', '-', '-', 'No resources unmatched', '-']
+        ]
+        empty_excluded_row = [
+            ['-', '-', 'No resources excluded', '-', '-', '-', '-', '-', '-'],
+            ['-', '-', 'No resources excluded', '-', '-', '-', '-', '-'],
+            ['-', '-', '-', 'No resources excluded', '-', '-', '-', '-', '-'],
+            ['-', '-', '-', 'No resources excluded', '-', '-', '-', '-', '-', '-', '-'],
+            ['-', '-', 'No resources excluded', '-', '-', '-', '-', '-'],
+            ['-', '-', 'No resources excluded', '-', '-', '-', '-', '-', '-']
+        ]
+        return df_list, empty_unmatched_row, empty_excluded_row
 
     return df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps
