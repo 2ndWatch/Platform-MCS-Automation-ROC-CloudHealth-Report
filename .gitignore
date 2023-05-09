@@ -8,3 +8,4 @@ output/
 src/config
 src/credentials
 src/ui_inaccessible.txt
+src/vns.txt
