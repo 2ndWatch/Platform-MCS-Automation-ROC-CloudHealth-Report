@@ -39,7 +39,7 @@ To start the program, make sure your terminal is in the root directory of the pr
 ![img.png](src/img.png)
 _Schmancy!_
 
-Your username is what you log into My Apps with, minus the '@2ndwatch.com' part. 
+Your username is what you log into My Apps with. For many clients, this will be your 2nd Watch email address. *Access to VNS is pending, currently not working*
 
 After entering your username, you will be prompted for a password. This is the same password you use to log into My Apps.
 
