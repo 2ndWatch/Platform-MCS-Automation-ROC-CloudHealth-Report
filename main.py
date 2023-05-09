@@ -21,7 +21,7 @@ def main(clients):
     print('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
 
     # Set username and password as environment variables
-    username = input('Please enter your 2nd Watch Azure username (ex. aeversmeyer): ')
+    username = input('Please enter your 2nd Watch Azure username: ')
     password = getpass('Please enter your Azure password [input is hidden]: ')
     lcfg.export_username_password(username, password)
 

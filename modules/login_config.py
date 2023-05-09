@@ -2,7 +2,7 @@ import os
 
 
 def export_username_password(username, password):
-    os.environ['AZURE_DEFAULT_USERNAME'] = username + '@2ndwatch.com'
+    os.environ['AZURE_DEFAULT_USERNAME'] = username
     os.environ['AZURE_DEFAULT_PASSWORD'] = password
 
     print('\nUsername and password have been set.\n')
