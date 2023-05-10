@@ -21,7 +21,7 @@ def main(clients):
     print(banner)
     print('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
 
-    # Set username and password as environment variables
+    # Set username and password as environment variables - deprecated because of number matching
     # username = input('Please enter your 2nd Watch Azure username: ')
     # password = getpass('Please enter your Azure password [input is hidden]: ')
     # lcfg.export_username_password(username, password)
@@ -41,7 +41,7 @@ def main(clients):
             for profile in clients_dict[key]['profiles']:
                 lcfg.set_login_credentials(profile)
 
-                print(f'\nLogging in to {profile["profile_name"]}. Please approve the MFA push notification...')
+                print(f'\nLogging in to {profile["profile_name"]}. Enter your Azure credentials in the popup window.')
                 logged_in = aws.azure_login()
 
                 if logged_in:
