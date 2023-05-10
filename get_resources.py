@@ -24,7 +24,7 @@ def get_resources(profile, region, report_date, three_month,
     df_eips, ip_count = eips.get_old_unattached_eips(ec2, account_name, account_number, region_name, df_eips)
     print(f'   Number of unattached elastic IPs: {ip_count}')
 
-    print('Getting EC2 images older than 3 months...')
+    print('\nGetting EC2 images older than 3 months...')
     df_oldimages, valid_old, img_snaps = eold.get_old_images(ec2, account_name, account_number, region_name,
                                                              three_month, df_oldimages)
     print(f'   Number of valid old images: {len(valid_old)}')
