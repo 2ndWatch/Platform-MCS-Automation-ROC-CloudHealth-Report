@@ -5,8 +5,11 @@ def azure_login():
 
     is_logged_in = False
 
-    login = subprocess.Popen(['aws-azure-login', '--no-prompt'], shell=True,
+    login = subprocess.Popen(['aws-azure-login', '--mode', 'gui'], shell=True,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    output, errors = login.communicate()
+    print(output)
+    print(errors)
     login.wait()
 
     # Verify login status

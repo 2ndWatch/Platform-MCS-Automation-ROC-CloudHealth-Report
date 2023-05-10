@@ -12,6 +12,7 @@ with open('src/clients.txt') as cl:
     cl_txt = cl.read()
 clients_dict = json.loads(cl_txt)
 
+# TODO: make report date an input & calculate 3-month from that
 report_date = '2023-04-24'
 three_months = '2023-01-24'
 
@@ -21,9 +22,9 @@ def main(clients):
     print('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
 
     # Set username and password as environment variables
-    username = input('Please enter your 2nd Watch Azure username: ')
-    password = getpass('Please enter your Azure password [input is hidden]: ')
-    lcfg.export_username_password(username, password)
+    # username = input('Please enter your 2nd Watch Azure username: ')
+    # password = getpass('Please enter your Azure password [input is hidden]: ')
+    # lcfg.export_username_password(username, password)
 
     # Return a client name (if applicable), a list of dict keys, and a list of profile names
     selected_client, client_keys = cs.client_selection(clients)
