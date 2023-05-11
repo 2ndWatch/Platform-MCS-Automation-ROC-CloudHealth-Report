@@ -3,7 +3,6 @@ from UliPlot.XLSX import auto_adjust_xlsx_column_width as adjust
 import pandas as pd
 
 
-# TODO: date transform to proper format for files
 def create_file_list(name, date):
     file_list = [
         f'{name} Elastic IPs_Wasted Spend_unattached over 4 weeks_{date}.xlsx',
@@ -17,32 +16,33 @@ def create_file_list(name, date):
     return file_list
 
 
-def fill_empty_df(df_list, excluded_df, empty_unmatched_row, empty_excluded_row, i):
-    for df in df_list:
-        if df.empty:
-            print('   Empty dataframe, adding "No resources unmatched" entry.')
-            df.loc[len(df)] = empty_unmatched_row[i]
+def fill_empty_df(validated_df, excluded_df, empty_unmatched_row, empty_excluded_row, i):
+    if validated_df.empty:
+        print('   Empty dataframe, adding "No resources unmatched" entry.')
+        validated_df.loc[1] = empty_unmatched_row[i]
     if excluded_df.empty:
         try:
             print('   Empty dataframe, adding "No resources excluded" entry.')
-            print(excluded_df)
-            print(empty_excluded_row[i])
-            excluded_df.loc[len(excluded_df)] = empty_excluded_row[i]
+            # print(excluded_df)
+            # print(empty_excluded_row[i])
+            # TODO: eliminate the "SettingWithCopyWarning: A value is trying to be set on a copy of a slice
+            #  from a DataFrame" error
+            excluded_df.loc[1] = empty_excluded_row[i]
         except ValueError:
             print('   Empty dataframe, adding "No resources excluded" entry.')
-            excluded_df.loc[len(excluded_df)] = empty_unmatched_row[i]
-    return df_list[0], df_list[1], excluded_df
+            excluded_df.loc[1] = empty_unmatched_row[i]
+    return validated_df, excluded_df
 
 
 def compare_resources(client_name, df_list, file_list, date):
     column_names = ['Public IP', 'Image Id', 'Snapshot Id', 'Volume Id', 'Image Id', 'Snapshot Id']
-    metric_list = ['Unassociated-Elastic-IPs', 'Old-AMIs', 'Old-EBS-Snapshots', 'Unattached-Volumes',
-                   'Unused-AMIs', 'Old-RDS-Aurora-Snapshots']
+    metric_list = ['Unassociated Elastic IPs', 'Old AMIs', 'Old EBS Snapshots', 'Unattached Volumes',
+                   'Unused AMIs', 'Old RDS Snapshots']
     client_df_list, empty_unmatched_row, empty_excluded_row = cdf.create_dataframes(for_client=True)
 
     for i in range(6):
         client_df = df_list[i]
-        print(f'client df types:\n{client_df.dtypes}')
+        # print(f'client df types:\n{client_df.dtypes}')
         file = file_list[i]
         # print(file)
         column_name = column_names[i]
@@ -62,27 +62,36 @@ def compare_resources(client_name, df_list, file_list, date):
         matching_resource_ids = cloudhealth_resource_ids.intersection(client_resource_ids)
 
         # create new dataframes for matched, unmatched, and excluded resource ids
+        # matched, unmatched, & validated might be unnecessary
         matched_df = client_df[client_df[column_name].isin(matching_resource_ids)]
         unmatched_df = client_df[~client_df[column_name].isin(matching_resource_ids)]
+        validated_df = pd.concat([matched_df, unmatched_df])
         excluded_df = cloudhealth_df[~cloudhealth_df[column_name].isin(matching_resource_ids)]
 
         # Add a 'No resources' row to any empty dataframes
-        new_df_list = [matched_df, unmatched_df]
-        matched_df_checked, unmatched_df_checked, excluded_df_checked = fill_empty_df(new_df_list,
-                                                                                      excluded_df,
-                                                                                      empty_unmatched_row,
-                                                                                      empty_excluded_row,
-                                                                                      i)
+        # new_df_list = [matched_df, unmatched_df]
+        validated_df_checked, excluded_df_checked = fill_empty_df(validated_df, excluded_df, empty_unmatched_row,
+                                                                  empty_excluded_row, i)
 
-        # save the dataframes to a new Excel file
-        with pd.ExcelWriter(f'{client_name}-{resource_metric}-Matching-{date}.xlsx') as writer:
-            matched_df_checked.to_excel(writer, sheet_name='matched', index=False)
-            adjust(matched_df_checked, writer, sheet_name='matched', margin=3, index=False)
-            unmatched_df_checked.to_excel(writer, sheet_name='unmatched', index=False)
-            adjust(unmatched_df_checked, writer, sheet_name='unmatched', margin=3, index=False)
-            excluded_df_checked.to_excel(writer, sheet_name='excluded', index=False)
-            adjust(excluded_df_checked, writer, sheet_name='excluded', margin=3, index=False)
+        # save the dataframes to Excel files
+        # also ugly, should be a better way to check if the file exists and create it if it doesn't before adding sheets
+        try:
+            with pd.ExcelWriter(f'{client_name}-Validated-{date}.xlsx', mode='a', if_sheet_exists='replace') as writer:
+                validated_df_checked.to_excel(writer, sheet_name=f'{metric_list[i]}', index=False)
+                adjust(validated_df_checked, writer, sheet_name=f'{metric_list[i]}', margin=3, index=False)
+        except FileNotFoundError:
+            with pd.ExcelWriter(f'{client_name}-Validated-{date}.xlsx') as writer:
+                validated_df_checked.to_excel(writer, sheet_name=f'{metric_list[i]}', index=False)
+                adjust(validated_df_checked, writer, sheet_name=f'{metric_list[i]}', margin=3, index=False)
+        try:
+            with pd.ExcelWriter(f'{client_name}-Excluded-{date}.xlsx', mode='a', if_sheet_exists='replace') as writer:
+                excluded_df_checked.to_excel(writer, sheet_name=f'{metric_list[i]}', index=False)
+                adjust(excluded_df_checked, writer, sheet_name=f'{metric_list[i]}', margin=3, index=False)
+        except FileNotFoundError:
+            with pd.ExcelWriter(f'{client_name}-Excluded-{date}.xlsx') as writer:
+                excluded_df_checked.to_excel(writer, sheet_name=f'{metric_list[i]}', index=False)
+                adjust(excluded_df_checked, writer, sheet_name=f'{metric_list[i]}', margin=3, index=False)
 
-        print(f'\nFile created for {client_name} {resource_metric} resource.')
+        print(f'\nTab created for {client_name} {resource_metric}.')
 
     return
