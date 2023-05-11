@@ -12,21 +12,15 @@ with open('src/clients.txt') as cl:
     cl_txt = cl.read()
 clients_dict = json.loads(cl_txt)
 
-# TODO: make report date an input & calculate 3-month from that, plus transform to file date format
-# report_date = '2023-04-24'
-# three_months = '2023-01-24'
-
 
 def convert_date(date_string):
     dt_date = datetime.strptime(date_string, '%Y-%m-%d')
     three_months = timedelta(days=90)
     three_month_dt_date = dt_date - three_months
     three_month_date = datetime.strftime(three_month_dt_date, '%Y-%m-%d')
-    print(three_month_date)
     ch_file_date = datetime.strftime(dt_date, '%m-%d-%Y')
     if ch_file_date.startswith('0'):
         ch_file_date = ch_file_date[1:]
-        print(ch_file_date)
     return three_month_date, ch_file_date
 
 
@@ -34,12 +28,12 @@ def main(clients):
     print(banner)
     print('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
 
-    # Set report date
+    # Get report date; transform to three-month date and reformat to file date
     report_date = input('Please enter the date of the Cloud Health reports.\n'
                         'YYYY-MM-DD: ')
     three_months, file_date = convert_date(report_date)
 
-    # Return a client name (if applicable), a list of dict keys, and a list of profile names
+    # Return a client name (if applicable) and a list of dict keys
     selected_client, client_keys = cs.client_selection(clients)
 
     # Log into all accounts for a client and run the scripts

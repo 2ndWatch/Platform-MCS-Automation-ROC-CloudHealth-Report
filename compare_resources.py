@@ -11,7 +11,7 @@ def create_file_list(name, date):
         f'{name} EC2 Snapshots_Wasted Spend_Older than 3 months_{date}.xlsx',
         f'{name} EBS Volumes_Wasted Spend_unattached over 4 weeks_{date}.xlsx',
         f'{name} EC2 Image_Wasted Spend_not associated_{date}.xlsx',
-        f'{name} RDS Snapshots_Wasted Spend_older than 3 months_{date}.xlsx'
+        f'{name} RDS Snapshots_Wasted Spend_older than 3 months_ {date}.xlsx'
     ]
 
     return file_list
@@ -23,9 +23,14 @@ def fill_empty_df(df_list, excluded_df, empty_unmatched_row, empty_excluded_row,
             print('   Empty dataframe, adding "No resources unmatched" entry.')
             df.loc[len(df)] = empty_unmatched_row[i]
     if excluded_df.empty:
-        print('   Empty dataframe, adding "No resources excluded" entry.')
-        print(excluded_df)
-        excluded_df.loc[len(excluded_df)] = empty_excluded_row[i]
+        try:
+            print('   Empty dataframe, adding "No resources excluded" entry.')
+            print(excluded_df)
+            print(empty_excluded_row[i])
+            excluded_df.loc[len(excluded_df)] = empty_excluded_row[i]
+        except ValueError:
+            print('   Empty dataframe, adding "No resources excluded" entry.')
+            excluded_df.loc[len(excluded_df)] = empty_unmatched_row[i]
     return df_list[0], df_list[1], excluded_df
 
 
