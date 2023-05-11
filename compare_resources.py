@@ -6,12 +6,12 @@ import pandas as pd
 # TODO: date transform to proper format for files
 def create_file_list(name, date):
     file_list = [
-        f'{name} Elastic IPs_Wasted Spend_unattached over 4 weeks_4-24-2023.xlsx',
-        f'{name} EC2 Image_Wasted Spend_older than 3 months_4-24-2023.xlsx',
-        f'{name} EC2 Snapshots_Wasted Spend_Older than 3 months_4-24-2023.xlsx',
-        f'{name} EBS Volumes_Wasted Spend_unattached over 4 weeks_4-24-2023.xlsx',
-        f'{name} EC2 Image_Wasted Spend_not associated_4-24-2023.xlsx',
-        f'{name} RDS Snapshots_Wasted Spend_older than 3 months_4-24-2023.xlsx'
+        f'{name} Elastic IPs_Wasted Spend_unattached over 4 weeks_{date}.xlsx',
+        f'{name} EC2 Image_Wasted Spend_older than 3 months_{date}.xlsx',
+        f'{name} EC2 Snapshots_Wasted Spend_Older than 3 months_{date}.xlsx',
+        f'{name} EBS Volumes_Wasted Spend_unattached over 4 weeks_{date}.xlsx',
+        f'{name} EC2 Image_Wasted Spend_not associated_{date}.xlsx',
+        f'{name} RDS Snapshots_Wasted Spend_older than 3 months_{date}.xlsx'
     ]
 
     return file_list
