@@ -8,7 +8,7 @@ def create_file_list(name, date):
     file_list = [
         f'{name} Elastic IPs_Wasted Spend_unattached over 4 weeks_4-24-2023.xlsx',
         f'{name} EC2 Image_Wasted Spend_older than 3 months_4-24-2023.xlsx',
-        f'{name} EC2 Snapshots_Wasted Spend_Older than 3 months_4-24-2023xlsx',
+        f'{name} EC2 Snapshots_Wasted Spend_Older than 3 months_4-24-2023.xlsx',
         f'{name} EBS Volumes_Wasted Spend_unattached over 4 weeks_4-24-2023.xlsx',
         f'{name} EC2 Image_Wasted Spend_not associated_4-24-2023.xlsx',
         f'{name} RDS Snapshots_Wasted Spend_older than 3 months_4-24-2023.xlsx'
@@ -24,6 +24,7 @@ def fill_empty_df(df_list, excluded_df, empty_unmatched_row, empty_excluded_row,
             df.loc[len(df)] = empty_unmatched_row[i]
     if excluded_df.empty:
         print('   Empty dataframe, adding "No resources excluded" entry.')
+        print(excluded_df)
         excluded_df.loc[len(excluded_df)] = empty_excluded_row[i]
     return df_list[0], df_list[1], excluded_df
 
@@ -46,7 +47,7 @@ def compare_resources(client_name, df_list, file_list, date):
             cloudhealth_df = pd.read_excel(f'cloudhealth/{file}', "in")
             # print(f'cloudhealth df types:\n{cloudhealth_df.dtypes}')
         except FileNotFoundError:
-            # print('File not found, creating placeholder dataframe instead...')
+            print('File not found, creating placeholder dataframe instead...')
             cloudhealth_df = client_df_list[i]
 
         client_resource_ids = set(client_df[column_name])
