@@ -18,7 +18,7 @@ def create_file_list(name, date):
 
 def fill_empty_df(validated_df, excluded_df, empty_unmatched_row, empty_excluded_row, i):
     if validated_df.empty:
-        print('   Empty dataframe, adding "No resources unmatched" entry.')
+        print('   Empty dataframe, adding "No resources matched" entry.')
         validated_df.loc[1] = empty_unmatched_row[i]
     if excluded_df.empty:
         try:

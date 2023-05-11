@@ -15,7 +15,10 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
 
         for image in images:
             image_id = image['ImageId']
-            image_name = image['Name']
+            try:
+                image_name = image['Name']
+            except KeyError:
+                image_name = ''
             image_storage = image['BlockDeviceMappings']
             image_date = image['CreationDate'][:10]
             image_start = f'{image_date} {image["CreationDate"][11:19]} UTC'

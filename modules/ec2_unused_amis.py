@@ -42,7 +42,10 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
 
         for image in images:
             image_id = image['ImageId']
-            image_name = image['Name']
+            try:
+                image_name = image['Name']
+            except KeyError:
+                image_name = ''
             image_date = image['CreationDate'][:10]
             # print(f'Creation date: {image_date}')
 
