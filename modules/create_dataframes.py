@@ -16,12 +16,12 @@ def create_dataframes(for_client=False):
     if for_client:
         df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
         empty_unmatched_row = [
-            ['-', '-', '-', 'No resources unmatched'],
-            ['-', '-', '-', 'No resources unmatched', '-', '-'],
-            ['-', '-', '-', 'No resources unmatched', '-', '-', '-'],
-            ['-', '-', '-', 'No resources unmatched', '-'],
-            ['-', '-', '-', 'No resources unmatched', '-'],
-            ['-', '-', '-', 'No resources unmatched', '-', '-']
+            ['-', '-', '-', 'No resources matched'],
+            ['-', '-', '-', 'No resources matched', '-', '-'],
+            ['-', '-', '-', 'No resources matched', '-', '-', '-'],
+            ['-', '-', '-', 'No resources matched', '-'],
+            ['-', '-', '-', 'No resources matched', '-'],
+            ['-', '-', '-', 'No resources matched', '-', '-']
         ]
         empty_excluded_row = [
             ['-', '-', 'No resources excluded', '-', '-', '-', '-', '-', '-'],
