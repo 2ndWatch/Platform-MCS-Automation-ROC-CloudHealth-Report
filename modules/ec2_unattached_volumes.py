@@ -18,12 +18,15 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
 
         volumes = response['Volumes']
 
-        unatt_vols = [volume['VolumeId'] for volume in volumes if not volume['Attachments']]
+        unatt_vols = [{'name': volume['VolumeId'], 'size': volume['Size']} for volume in volumes
+                      if not volume['Attachments']]
 
         if unatt_vols:
             four_week_delta_date = (datetime.strptime(report_date, '%Y-%m-%d') - timedelta(weeks=4)).date()
             for volume in unatt_vols:
-                print(f'   Unattached volume found: {volume}')
+                volume_name = volume['name']
+                volume_size = volume['size']
+                print(f'   Unattached volume found: {volume_name}')
                 unatt_count += 1
 
                 ct_response = cloudtrail_client.lookup_events(LookupAttributes=[{'AttributeKey': 'ResourceName',
@@ -43,8 +46,8 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
 
                 if unatt_four_weeks:
                     print(f'      {volume} has been unattached for more than four weeks.')
-                    # 'Account Name', 'Account Number', 'Region Name', 'Volume Id'
-                    row = [account_name, account_number, region_name, volume]
+                    # 'Account Name', 'Account Number', 'Region Name', 'Volume Id', 'Size (GB)'
+                    row = [account_name, account_number, region_name, volume_name, volume_size]
                     df_vol.loc[len(df_vol)] = row
                     valid_count += 1
 

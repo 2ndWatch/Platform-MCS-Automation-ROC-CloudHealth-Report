@@ -19,6 +19,7 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
         for snap in snapshots:
             snap_id = snap['SnapshotId']
             snap_desc = snap['Description']
+            snap_size = snap['VolumeSize']
             snap_ami = ''
             snap_start = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d %H:%M:%S UTC')
             snap_date = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d')
@@ -33,8 +34,9 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
                     print(f'      Not associated with an AMI on the old AMIs list.')
                     if 'CreateImage' in snap_desc:
                         snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
-                    # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Create Date', 'Image Id'
-                    row = [account_name, account_number, region_name, snap_id, snap_start, snap_ami]
+                    # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id',
+                    # 'Size (GB)', 'Create Date', 'Image Id'
+                    row = [account_name, account_number, region_name, snap_id, snap_size, snap_start, snap_ami]
                     df_ebssnaps.loc[len(df_ebssnaps)] = row
                     valid_count += 1
 

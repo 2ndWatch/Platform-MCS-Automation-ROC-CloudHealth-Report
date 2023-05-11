@@ -65,7 +65,7 @@ def main(clients):
             profile = clients_dict[key]['profiles'][0]
             lcfg.set_login_credentials(profile)
 
-            print(f'\nLogging in to {profile["profile_name"]}. Please approve the MFA push notification...')
+            print(f'\nLogging in to {profile["profile_name"]}. Enter your Azure credentials in the popup window.')
             logged_in = aws.azure_login()
 
             if logged_in:

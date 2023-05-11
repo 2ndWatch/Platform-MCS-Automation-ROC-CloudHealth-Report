@@ -19,6 +19,7 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
 
         for db_snap in db_snapshots:
             db_snap_id = db_snap['DBSnapshotIdentifier']
+            db_snap_size = db_snap['AllocatedStorage']
 
             # Ignore any snapshots in 'creating' or 'deleting' state
             if db_snap['Status'] == 'available':
@@ -28,8 +29,8 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
                 if db_snap_date < cutoff:
                     print(f'   {db_snap_id} is older than 3 months.')
                     db_snap_count += 1
-                    # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Create Date'
-                    row = [account_name, account_number, region_name, db_snap_id, db_snap_start]
+                    # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Size (GB)', 'Create Date'
+                    row = [account_name, account_number, region_name, db_snap_id, db_snap_size, db_snap_start]
                     # df.loc[len(df)] = list
                     df_rdssnaps.loc[len(df_rdssnaps)] = row
 
@@ -50,6 +51,8 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
 
         for aurora_snap in aurora_snapshots:
             aurora_snap_id = aurora_snap['DBClusterSnapshotIdentifier']
+            aurora_snap_size = aurora_snap['AllocatedStorage']
+
             if 'awsbackup' not in aurora_snap_id:
                 aurora_snap_start = datetime.datetime.strftime(aurora_snap['SnapshotCreateTime'],
                                                                '%Y-%m-%d %H:%M:%S UTC')
@@ -58,8 +61,9 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
                 if aurora_snap_date < cutoff:
                     print(f'   {aurora_snap_id} is older than 3 months.')
                     aurora_snap_count += 1
-                    # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Create Date'
-                    row = [account_name, account_number, region_name, aurora_snap_id, aurora_snap_start]
+                    # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Size (GB)', 'Create Date'
+                    row = [account_name, account_number, region_name, aurora_snap_id,
+                           aurora_snap_size, aurora_snap_start]
                     df_rdssnaps.loc[len(df_rdssnaps)] = row
 
         try:
