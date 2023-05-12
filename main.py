@@ -47,8 +47,6 @@ def main(clients):
         sys.exit(0)
 
     # Create a list of clients from which to select
-    msg = ""
-    title = "Client Selection"
     choices = []
     for key, value in clients.items():
         if key == 'done' or key == 'None':
@@ -59,7 +57,7 @@ def main(clients):
     while 1:
         selected_clients = eg.multchoicebox('Select one or multiple clients by left-clicking.\n\n'
                                             'Click the <Cancel> button to exit.',
-                                            title, choices, preselect=None)
+                                            'Client Selection', choices, preselect=None)
         if selected_clients is None:
             sys.exit(0)
 
