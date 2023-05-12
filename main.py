@@ -73,18 +73,18 @@ def main(clients):
         print(f'You are running the program for: {client_names}')
 
         eg.msgbox(f'You chose: {client_names}.\n\nClick the <OK> button to begin validation.\n\n'
-                  f'You can track validation progress in the console window.',
+                  f'You can track validation progress in the console window.\n\n'
+                  f'The program will close after validation is complete.',
                   'Client Selection Result')
 
         pc.process_clients(clients_dict, client_keys, report_date, three_months, file_date)
 
-        eg.msgbox(f'Validation has been performed for {client_names}.\n\n'
-                  f'Output files can be found in the <outputs> directory.\n\n'
-                  f'If more validations are needed, please run the program again.\n\n'
+        eg.msgbox(f'Validation has completed. Files can be found in the <output> directory.\n\n'
+                  f'Please run the program again if you want to validate more clients.\n\n'
                   f'Click the <OK> button to exit the program.',
-                  'Validation Successful')
+                  'Client Selection Result')
 
-        return client_keys
+        return
 
 
-cl_keys = main(clients_dict)
+main(clients_dict)
