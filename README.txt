@@ -6,6 +6,10 @@ can NOT have any extra columns like "Notes" or other added comments (background 
 the Cloud Health reports have been checked and/or tidied up, open File Explorer and add the Cloud Health reports
 to the "cloudhealth" directory within the program's root directory (~/2wchval_vx.x.x/cloudhealth).
 
+The VNS reports from Monday may download without the client name as part of the file name. To get the reports
+to run correctly, add "VNS Health " to the start of each of those file names (i.e. "VNS Health EC2...", etc). Other
+client reports are properly named already when downloaded, but it's a good idea to verify that as well.
+
 2. Right-click the Windows Start Menu icon and open the Terminal as an Administrator.
 
 3. Navigate to the program's directory using the `cd` command.
