@@ -9,6 +9,10 @@ with open('src/clients.txt') as cl:
     cl_txt = cl.read()
 clients_dict = json.loads(cl_txt)
 
+# orig_stdout = sys.stdout
+# log_file = open(f'output/2wchval-log-{datetime.now().strftime("%Y-%m-%d-%H-%M-%S")}', 'w')
+# sys.stdout = log_file
+
 
 def convert_date(date_string):
     dt_date = datetime.strptime(date_string, '%Y-%m-%d')
@@ -49,7 +53,7 @@ def main(clients):
     for key, value in clients.items():
         if key == 'done' or key == 'None':
             continue
-        print(f'   {key} for {value["name"]}')
+        # print(f'   {key} for {value["name"]}')
         choices.append(f'{key} {value["name"]}')
 
     while 1:
@@ -88,3 +92,6 @@ def main(clients):
 
 
 main(clients_dict)
+
+# log_file.close()
+# sys.stdout = orig_stdout

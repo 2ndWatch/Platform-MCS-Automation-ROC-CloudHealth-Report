@@ -47,6 +47,8 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
             except KeyError:
                 image_name = ''
             image_date = image['CreationDate'][:10]
+            image_storage = image['BlockDeviceMappings']
+            storage_size = 0
             # print(f'Creation date: {image_date}')
 
             if image_date < cutoff:
@@ -57,8 +59,12 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
                     else:
                         print('      Valid unused image.')
                         unused_images += 1
-                        # 'Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name'
-                        row = [account_name, account_number, region_name, image_id, image_name]
+                        if image_storage:
+                            for device in image_storage:
+                                if 'Ebs' in device.keys():
+                                    storage_size += device['Ebs']['VolumeSize']
+                        # 'Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name', 'Storage Size (GB)'
+                        row = [account_name, account_number, region_name, image_id, image_name, storage_size]
                         df_unami.loc[len(df_unami)] = row
 
         try:
