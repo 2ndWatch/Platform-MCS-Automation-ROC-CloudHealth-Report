@@ -1,12 +1,9 @@
-from modules import client_selection as cs
-from modules import login_config as lcfg
-from modules import aws_azure_login as aws
-from modules import create_dataframes as cdf
-import compare_resources as cr
-from get_resources import get_resources
+from modules import process_client as pc
 from datetime import datetime, timedelta
 from src.banner import banner
+import easygui as eg
 import json
+import sys
 
 with open('src/clients.txt') as cl:
     cl_txt = cl.read()
@@ -25,80 +22,69 @@ def convert_date(date_string):
 
 
 def main(clients):
+    # Welcome message box
+    welcome = eg.msgbox('Welcome to the 2nd Watch Cloud Health resource verification program.\n\n'
+                        'Click the <OK> button to proceed.',
+                        '2nd Watch Cloud Health Validator')
     print(banner)
     print('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
+    if welcome is None:  # User closed msgbox
+        sys.exit(0)
 
     # Get report date; transform to three-month date and reformat to file date
-    report_date = input('Please enter the date of the Cloud Health reports.\n'
-                        'YYYY-MM-DD: ')
+    # TODO: validate format of date
+    date_values = eg.multenterbox('Enter the date of the Cloud Health reports.\n',
+                                  'Date Entry',
+                                  ['Year (YYYY)', 'Month (MM)', 'Day (DD)'])
+    report_date = '-'.join(date_values)
     three_months, file_date = convert_date(report_date)
+    print(f'Report date entered: {report_date}')
+    if report_date is None:  # User closed msgbox
+        sys.exit(0)
 
-    # Return a client name (if applicable) and a list of dict keys
-    selected_client, client_keys = cs.client_selection(clients)
+    # Create a list of clients from which to select
+    msg = ""
+    title = "Client Selection"
+    choices = []
+    for key, value in clients.items():
+        if key == 'done' or key == 'None':
+            continue
+        print(f'   {key} for {value["name"]}')
+        choices.append(f'{key} {value["name"]}')
 
-    # Log into all accounts for a client and run the scripts
-    # This looks awful and is not DRY. Refactor eventually. But for now, it works.
-    for key in client_keys:
+    while 1:
+        selected_clients = eg.multchoicebox('Select one or multiple clients by left-clicking.\n\n'
+                                            'Click the <Cancel> button to exit.',
+                                            title, choices, preselect=None)
+        if selected_clients is None:
+            sys.exit(0)
 
-        # Create 6 dataframes for the client
-        # Move these around as a list? but maybe hard to reference in get_resources function
-        df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = cdf.create_dataframes()
+        # Create list of client keys from client selection
+        client_keys = [choice.split(' ')[0] for choice in selected_clients]
+        client_names = []
+        for choice in selected_clients:
+            choice_split = choice.split(' ')
+            client_name = choice_split[1]
+            if len(choice_split) > 2:
+                for i in range(2, len(choice_split)):
+                    client_name += f' {choice_split[i]}'
+            client_names.append(client_name)
+        print(f'Client keys: {client_keys}')
+        print(f'You are running the program for: {client_names}')
 
-        if len(clients_dict[key]['profiles']) > 1:
-            for profile in clients_dict[key]['profiles']:
-                lcfg.set_login_credentials(profile)
+        eg.msgbox(f'You chose: {client_names}.\n\nClick the <OK> button to begin validation.\n\n'
+                  f'You can track validation progress in the console window.',
+                  'Client Selection Result')
 
-                print(f'\nLogging in to {profile["profile_name"]}. Enter your Azure credentials in the popup window.')
-                logged_in = aws.azure_login()
+        pc.process_clients(clients_dict, client_keys, report_date, three_months, file_date)
 
-                if logged_in:
-                    print(f'You are logged in to {profile["profile_name"]}.')
+        eg.msgbox(f'Validation has been performed for {client_names}.\n\n'
+                  f'Output files can be found in the <outputs> directory.\n\n'
+                  f'If more validations are needed, please run the program again.\n\n'
+                  f'Click the <OK> button to exit the program.',
+                  'Validation Successful')
 
-                if len(profile['region']) > 1:
-                    for region in profile['region']:
-                        print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                        df_eips, df_oldimages, df_ebssnaps, \
-                            df_vol, df_unami, df_rdssnaps = get_resources(profile, region, report_date, three_months,
-                                                                          df_eips, df_oldimages, df_ebssnaps, df_vol,
-                                                                          df_unami, df_rdssnaps)
-                else:
-                    region = profile['region'][0]
-                    print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                    df_eips, df_oldimages, df_ebssnaps, \
-                        df_vol, df_unami, df_rdssnaps = get_resources(profile, region, report_date, three_months,
-                                                                      df_eips, df_oldimages, df_ebssnaps, df_vol,
-                                                                      df_unami, df_rdssnaps)
-        else:
-            profile = clients_dict[key]['profiles'][0]
-            lcfg.set_login_credentials(profile)
-
-            print(f'\nLogging in to {profile["profile_name"]}. Enter your Azure credentials in the popup window.')
-            logged_in = aws.azure_login()
-
-            if logged_in:
-                print(f'You are logged in to {profile["profile_name"]}.')
-
-            if len(profile['region']) > 1:
-                for region in profile['region']:
-                    print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                    df_eips, df_oldimages, df_ebssnaps, \
-                        df_vol, df_unami, df_rdssnaps = get_resources(profile, region, report_date, three_months,
-                                                                      df_eips, df_oldimages, df_ebssnaps, df_vol,
-                                                                      df_unami, df_rdssnaps)
-            else:
-                region = profile['region'][0]
-                print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
-                df_eips, df_oldimages, df_ebssnaps, \
-                    df_vol, df_unami, df_rdssnaps = get_resources(profile, region, report_date, three_months,
-                                                                  df_eips, df_oldimages, df_ebssnaps, df_vol,
-                                                                  df_unami, df_rdssnaps)
-
-        df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
-        file_list = cr.create_file_list(clients_dict[key]['name'], file_date)
-
-        cr.compare_resources(clients_dict[key]['name'], df_list, file_list, report_date)
-
-    return selected_client, client_keys
+        return client_keys
 
 
-cl, cl_keys = main(clients_dict)
+cl_keys = main(clients_dict)

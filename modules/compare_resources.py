@@ -74,21 +74,23 @@ def compare_resources(client_name, df_list, file_list, date):
                                                                   empty_excluded_row, i)
 
         # save the dataframes to Excel files
-        # also ugly, should be a better way to check if the file exists and create it if it doesn't before adding sheets
+        # TODO: should be a better way to check if the file exists and create it if it doesn't before adding sheets
         try:
-            with pd.ExcelWriter(f'{client_name}-Validated-{date}.xlsx', mode='a', if_sheet_exists='replace') as writer:
+            with pd.ExcelWriter(f'output/{client_name}-Validated-{date}.xlsx', mode='a', if_sheet_exists='replace') \
+                    as writer:
                 validated_df_checked.to_excel(writer, sheet_name=f'{metric_list[i]}', index=False)
                 adjust(validated_df_checked, writer, sheet_name=f'{metric_list[i]}', margin=3, index=False)
         except FileNotFoundError:
-            with pd.ExcelWriter(f'{client_name}-Validated-{date}.xlsx') as writer:
+            with pd.ExcelWriter(f'output/{client_name}-Validated-{date}.xlsx') as writer:
                 validated_df_checked.to_excel(writer, sheet_name=f'{metric_list[i]}', index=False)
                 adjust(validated_df_checked, writer, sheet_name=f'{metric_list[i]}', margin=3, index=False)
         try:
-            with pd.ExcelWriter(f'{client_name}-Excluded-{date}.xlsx', mode='a', if_sheet_exists='replace') as writer:
+            with pd.ExcelWriter(f'output/{client_name}-Excluded-{date}.xlsx', mode='a', if_sheet_exists='replace') \
+                    as writer:
                 excluded_df_checked.to_excel(writer, sheet_name=f'{metric_list[i]}', index=False)
                 adjust(excluded_df_checked, writer, sheet_name=f'{metric_list[i]}', margin=3, index=False)
         except FileNotFoundError:
-            with pd.ExcelWriter(f'{client_name}-Excluded-{date}.xlsx') as writer:
+            with pd.ExcelWriter(f'output/{client_name}-Excluded-{date}.xlsx') as writer:
                 excluded_df_checked.to_excel(writer, sheet_name=f'{metric_list[i]}', index=False)
                 adjust(excluded_df_checked, writer, sheet_name=f'{metric_list[i]}', margin=3, index=False)
 
