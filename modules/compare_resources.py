@@ -16,7 +16,7 @@ def create_file_list(name, date):
     return file_list
 
 
-def fill_empty_df(validated_df, excluded_df, empty_unmatched_row, empty_excluded_row, i):
+def fill_empty_df(validated_df, excluded_df, empty_unmatched_row, empty_excluded_row, columns_list, i):
     if validated_df.empty:
         print('   Empty dataframe, adding "No resources matched" entry.')
         validated_df.loc[1] = empty_unmatched_row[i]
@@ -25,12 +25,12 @@ def fill_empty_df(validated_df, excluded_df, empty_unmatched_row, empty_excluded
             print('   Empty dataframe, adding "No resources excluded" entry.')
             # print(excluded_df)
             # print(empty_excluded_row[i])
-            # TODO: eliminate the "SettingWithCopyWarning: A value is trying to be set on a copy of a slice
-            #  from a DataFrame" error
-            excluded_df.loc[1] = empty_excluded_row[i]
+            excluded_df = pd.concat([excluded_df, pd.DataFrame([empty_excluded_row[i]], columns=columns_list[i])],
+                                    ignore_index=True)
         except ValueError:
             print('   Empty dataframe, adding "No resources excluded" entry.')
-            excluded_df.loc[1] = empty_unmatched_row[i]
+            excluded_df = pd.concat([excluded_df, pd.DataFrame([empty_unmatched_row[i]], columns=columns_list[i])],
+                                    ignore_index=True)
     return validated_df, excluded_df
 
 
@@ -38,7 +38,7 @@ def compare_resources(client_name, df_list, file_list, date):
     column_names = ['Public IP', 'Image Id', 'Snapshot Id', 'Volume Id', 'Image Id', 'Snapshot Id']
     metric_list = ['Unassociated Elastic IPs', 'Old AMIs', 'Old EBS Snapshots', 'Unattached Volumes',
                    'Unused AMIs', 'Old RDS Snapshots']
-    client_df_list, empty_unmatched_row, empty_excluded_row = cdf.create_dataframes(for_client=True)
+    client_df_list, columns_list, empty_unmatched_row, empty_excluded_row = cdf.create_dataframes(for_client=True)
 
     for i in range(6):
         client_df = df_list[i]
@@ -71,7 +71,7 @@ def compare_resources(client_name, df_list, file_list, date):
         # Add a 'No resources' row to any empty dataframes
         # new_df_list = [matched_df, unmatched_df]
         validated_df_checked, excluded_df_checked = fill_empty_df(validated_df, excluded_df, empty_unmatched_row,
-                                                                  empty_excluded_row, i)
+                                                                  empty_excluded_row, columns_list, i)
 
         # save the dataframes to Excel files
         # TODO: should be a better way to check if the file exists and create it if it doesn't before adding sheets
