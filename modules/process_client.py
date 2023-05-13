@@ -7,7 +7,7 @@ import modules.login_config as lcfg
 
 # Log into all accounts for each selected client and run the scripts
 # TODO: This looks awful and is not DRY. Refactor eventually. But for now, it works.
-def process_clients(clients_dict, client_keys, report_date, three_months, file_date):
+def process_clients(clients_dict, client_keys, report_date, three_months):
     for key in client_keys:
 
         # Create 6 dataframes for the client
@@ -65,8 +65,8 @@ def process_clients(clients_dict, client_keys, report_date, three_months, file_d
                                                                      df_unami, df_rdssnaps)
 
         df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
-        file_list = cr.create_file_list(clients_dict[key]['name'], file_date)
+        file_list_csv = cr.create_file_list(clients_dict[key]['name'], report_date)
 
-        cr.compare_resources(clients_dict[key]['name'], df_list, file_list, report_date)
+        cr.compare_resources(clients_dict[key]['name'], df_list, file_list_csv, report_date)
 
     return

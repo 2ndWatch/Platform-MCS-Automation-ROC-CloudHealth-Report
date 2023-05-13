@@ -19,10 +19,7 @@ def convert_date(date_string):
     three_months = timedelta(days=90)
     three_month_dt_date = dt_date - three_months
     three_month_date = datetime.strftime(three_month_dt_date, '%Y-%m-%d')
-    ch_file_date = datetime.strftime(dt_date, '%m-%d-%Y')
-    if ch_file_date.startswith('0'):
-        ch_file_date = ch_file_date[1:]
-    return three_month_date, ch_file_date
+    return three_month_date
 
 
 def main(clients):
@@ -41,7 +38,7 @@ def main(clients):
                                   'Date Entry',
                                   ['Year (YYYY)', 'Month (MM)', 'Day (DD)'])
     report_date = '-'.join(date_values)
-    three_months, file_date = convert_date(report_date)
+    three_months = convert_date(report_date)
     print(f'Report date entered: {report_date}')
     if report_date is None:  # User closed msgbox
         sys.exit(0)
@@ -79,7 +76,7 @@ def main(clients):
                   f'The program will close after validation is complete.',
                   'Client Selection Result')
 
-        pc.process_clients(clients_dict, client_keys, report_date, three_months, file_date)
+        pc.process_clients(clients_dict, client_keys, report_date, three_months)
 
         eg.msgbox(f'Validation has completed. Files can be found in the <output> directory.\n\n'
                   f'Please run the program again if you want to validate more clients.\n\n'
