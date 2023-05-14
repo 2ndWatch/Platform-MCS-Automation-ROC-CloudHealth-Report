@@ -1,7 +1,7 @@
 import datetime
 
 
-def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff, df_rdssnaps):
+def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff, df_rdssnaps, logger):
 
     db_snap_count = 0
     aurora_snap_count = 0
@@ -27,7 +27,7 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
                 db_snap_date = datetime.datetime.strftime(db_snap['SnapshotCreateTime'], '%Y-%m-%d')
 
                 if db_snap_date < cutoff:
-                    print(f'   {db_snap_id} is older than 3 months.')
+                    logger.debug(f'   {db_snap_id} is older than 3 months.')
                     db_snap_count += 1
                     # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Size (GB)', 'Create Date'
                     row = [account_name, account_number, region_name, db_snap_id, db_snap_size, db_snap_start]
@@ -39,7 +39,7 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
         except KeyError:
             break
 
-    print(f'   All old RDS snapshots found; getting Aurora cluster snapshots...')
+    logger.debug(f'   All old RDS snapshots found; getting Aurora cluster snapshots...')
 
     while True:
         if aurora_marker:
@@ -59,7 +59,7 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
                 aurora_snap_date = datetime.datetime.strftime(aurora_snap['SnapshotCreateTime'], '%Y-%m-%d')
 
                 if aurora_snap_date < cutoff:
-                    print(f'   {aurora_snap_id} is older than 3 months.')
+                    logger.debug(f'   {aurora_snap_id} is older than 3 months.')
                     aurora_snap_count += 1
                     # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Size (GB)', 'Create Date'
                     row = [account_name, account_number, region_name, aurora_snap_id,
@@ -71,7 +71,7 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
         except KeyError:
             break
 
-    print(f'   All old Aurora cluster snapshots found.')
+    logger.debug(f'   All old Aurora cluster snapshots found.')
 
     # print(f'\n{df_rdssnaps}\n')
 

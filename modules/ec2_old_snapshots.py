@@ -1,7 +1,7 @@
 import datetime
 
 
-def get_old_snapshots(client, account_name, account_number, region_name, snap_list, cutoff, df_ebssnaps):
+def get_old_snapshots(client, account_name, account_number, region_name, snap_list, cutoff, df_ebssnaps, logger):
 
     snap_count = 0
     valid_count = 0
@@ -25,13 +25,13 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
             snap_date = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d')
 
             if snap_date < cutoff:
-                print(f'   {snap_id} is older than 3 months.')
+                logger.debug(f'   {snap_id} is older than 3 months.')
                 snap_count += 1
 
                 if snap_id in snap_list:
-                    print(f'      Excluded from results (associated with an old AMI).')
+                    logger.debug(f'      Excluded from results (associated with an old AMI).')
                 else:
-                    print(f'      Not associated with an AMI on the old AMIs list.')
+                    logger.debug(f'      Not associated with an AMI on the old AMIs list.')
                     if 'CreateImage' in snap_desc:
                         snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
                     # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id',
@@ -44,7 +44,5 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
             is_next = response['NextToken']
         except KeyError:
             break
-
-    # print(f'\n{df_ebssnaps}\n')
 
     return df_ebssnaps, snap_count, valid_count

@@ -1,4 +1,4 @@
-def get_old_images(client, account_name, account_number, region_name, cutoff, df_oldimages):
+def get_old_images(client, account_name, account_number, region_name, cutoff, df_oldimages, logger):
 
     old_images = []
     image_snapshots = []
@@ -25,12 +25,12 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
             storage_size = 0
 
             if image_date < cutoff:
-                print(f'   {image_id} is older than 3 months.')
+                logger.debug(f'   {image_id} is older than 3 months.')
                 old_images.append(image_id)
                 if image_storage:
                     for device in image_storage:
                         if 'Ebs' in device.keys():
-                            print(f'         {device["Ebs"]["SnapshotId"]} added to list of '
+                            logger.debug(f'         {device["Ebs"]["SnapshotId"]} added to list of '
                                   f'image-associated snapshots.')
                             storage_size += device['Ebs']['VolumeSize']
                             image_snapshots.append(device['Ebs']['SnapshotId'])
@@ -44,7 +44,5 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
             is_next = response['NextToken']
         except KeyError:
             break
-
-    # print(f'\n{df_oldimages}\n')
 
     return df_oldimages, old_images, image_snapshots

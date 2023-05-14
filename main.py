@@ -4,14 +4,20 @@ from src.banner import banner
 import easygui as eg
 import json
 import sys
+import logging
+
+logger = logging.getLogger('2wchval')
+logging.basicConfig(level=logging.DEBUG,
+                    filename=f'output/2wchval_{datetime.now().strftime("%Y-%m-%d_%H%M%S")}.log',
+                    filemode='a')
+console = logging.StreamHandler(sys.stdout)
+console.setLevel(logging.INFO)
+logger.addHandler(console)
+
 
 with open('src/clients.txt') as cl:
     cl_txt = cl.read()
 clients_dict = json.loads(cl_txt)
-
-# orig_stdout = sys.stdout
-# log_file = open(f'output/2wchval-log-{datetime.now().strftime("%Y-%m-%d-%H-%M-%S")}', 'w')
-# sys.stdout = log_file
 
 
 def convert_date(date_string):
@@ -23,12 +29,12 @@ def convert_date(date_string):
 
 
 def main(clients):
+    print(banner)
+    logger.info('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
     # Welcome message box
     welcome = eg.msgbox('Welcome to the 2nd Watch Cloud Health resource verification program.\n\n'
                         'Click the <OK> button to proceed.',
                         '2nd Watch Cloud Health Validator')
-    print(banner)
-    print('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
     if welcome is None:  # User closed msgbox
         sys.exit(0)
 
@@ -39,16 +45,13 @@ def main(clients):
                                   ['Year (YYYY)', 'Month (MM)', 'Day (DD)'])
     report_date = '-'.join(date_values)
     three_months = convert_date(report_date)
-    print(f'Report date entered: {report_date}')
+    logger.info(f'Report date entered: {report_date}')
     if report_date is None:  # User closed msgbox
         sys.exit(0)
 
     # Create a list of clients from which to select
     choices = []
     for key, value in clients.items():
-        if key == 'done' or key == 'None':
-            continue
-        # print(f'   {key} for {value["name"]}')
         choices.append(f'{key} {value["name"]}')
 
     while 1:
@@ -68,17 +71,19 @@ def main(clients):
                 for i in range(2, len(choice_split)):
                     client_name += f' {choice_split[i]}'
             client_names.append(client_name)
-        print(f'Client keys: {client_keys}')
-        print(f'You are running the program for: {client_names}')
+        logger.info(f'Client keys: {client_keys}')
+        logger.info(f'You are running the program for: {client_names}')
 
         eg.msgbox(f'You chose: {client_names}.\n\nClick the <OK> button to begin validation.\n\n'
                   f'You can track validation progress in the console window.\n\n'
                   f'The program will close after validation is complete.',
                   'Client Selection Result')
 
-        pc.process_clients(clients_dict, client_keys, report_date, three_months)
+        pc.process_clients(clients_dict, client_keys, report_date, three_months, logger)
 
-        eg.msgbox(f'Validation has completed. Files can be found in the <output> directory.\n\n'
+        logger.info('\nValidation is complete. Reports and log files can be found in the <output> directory.')
+
+        eg.msgbox(f'Validation has completed. Reports and log files can be found in the <output> directory.\n\n'
                   f'Please run the program again if you want to validate more clients.\n\n'
                   f'Click the <OK> button to exit the program.',
                   'Client Selection Result')
@@ -87,6 +92,3 @@ def main(clients):
 
 
 main(clients_dict)
-
-# log_file.close()
-# sys.stdout = orig_stdout

@@ -1,15 +1,6 @@
 import os
 
 
-# def export_username_password(username, password):
-#     os.environ['AZURE_DEFAULT_USERNAME'] = username
-#     os.environ['AZURE_DEFAULT_PASSWORD'] = password
-#
-#     print('\nUsername and password have been set.\n')
-#
-#     return
-
-
 def set_login_credentials(profile):
 
     os.environ['AZURE_TENANT_ID'] = profile['tenant_id']

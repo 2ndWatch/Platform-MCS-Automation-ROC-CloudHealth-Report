@@ -1,4 +1,4 @@
-def get_unused_images(client, account_name, account_number, region_name, old_images, cutoff, df_unami):
+def get_unused_images(client, account_name, account_number, region_name, old_images, cutoff, df_unami, logger):
 
     # Create list of used AMIs from instance properties
     images_in_use = []
@@ -21,7 +21,7 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
         except KeyError:
             break
 
-    print(f'   There are {len(images_in_use)} AMIs in use.')
+    logger.debug(f'   There are {len(images_in_use)} AMIs in use.')
 
     unused_images = 0
 
@@ -53,11 +53,11 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
 
             if image_date < cutoff:
                 if image_id not in images_in_use:
-                    print(f'   {image_id} is not in use')
+                    logger.debug(f'   {image_id} is not in use')
                     if image_id in old_images:
-                        print('      Excluded from results (already listed in old images).')
+                        logger.debug('      Excluded from results (already listed in old images).')
                     else:
-                        print('      Valid unused image.')
+                        logger.debug('      Valid unused image.')
                         unused_images += 1
                         if image_storage:
                             for device in image_storage:
@@ -71,7 +71,5 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
             is_next = response['NextToken']
         except KeyError:
             break
-
-    # print(f'\n{df_unami}\n')
 
     return df_unami, unused_images

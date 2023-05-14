@@ -1,4 +1,4 @@
-def get_old_unattached_eips(ec2_client, account_name, account_number, region_name, df_eips):
+def get_old_unattached_eips(ec2_client, account_name, account_number, region_name, df_eips, logger):
 
     valid_count = 0
 
@@ -11,10 +11,9 @@ def get_old_unattached_eips(ec2_client, account_name, account_number, region_nam
             continue
         else:
             # 'Account Name', 'Account Number', 'Region Name', 'Public IP'
+            logger.debug(f'   Elastic IP {ip_public} has no associations.')
             row = [account_name, account_number, region_name, ip_public]
             df_eips.loc[len(df_eips)] = row
             valid_count += 1
-
-    # print(f'\n{df_eips}\n')
 
     return df_eips, valid_count

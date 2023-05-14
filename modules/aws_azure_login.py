@@ -1,15 +1,15 @@
 import subprocess
 
 
-def azure_login():
+def azure_login(logger):
 
     is_logged_in = False
 
     login = subprocess.Popen(['aws-azure-login', '--mode', 'gui'], shell=True,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output, errors = login.communicate()
-    print(output)
-    print(errors)
+    logger.debug(output)
+    logger.debug(errors)
     login.wait()
 
     # Verify login status

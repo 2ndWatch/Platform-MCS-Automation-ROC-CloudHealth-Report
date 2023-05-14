@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 import time
+import tqdm
 
 
 def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, account_number,
-                               region_name, report_date, df_vol):
+                               region_name, report_date, df_vol, logger):
 
     unatt_count = 0
     valid_count = 0
@@ -26,14 +27,15 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
             for volume in unatt_vols:
                 volume_name = volume['name']
                 volume_size = volume['size']
-                print(f'   Unattached volume found: {volume_name}')
+                logger.debug(f'   Unattached volume found: {volume_name}. CloudTrail request sent.')
+                logger.info(f'   Unattached volume found. CloudTrail request sent.')
                 unatt_count += 1
 
                 ct_response = cloudtrail_client.lookup_events(LookupAttributes=[{'AttributeKey': 'ResourceName',
                                                                                  'AttributeValue': f'{volume}'}])
 
                 events = ct_response['Events']
-                print(f'      There are {len(events)} event(s) for this volume.')
+                logger.debug(f'      There are {len(events)} event(s) for this volume.')
 
                 unatt_four_weeks = True
                 if events:
@@ -45,21 +47,20 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
                                 print(f'      {volume} has NOT been unattached for four weeks.')
 
                 if unatt_four_weeks:
-                    print(f'      {volume} has been unattached for more than four weeks.')
+                    logger.debug(f'      {volume} has been unattached for more than four weeks.')
                     # 'Account Name', 'Account Number', 'Region Name', 'Volume Id', 'Size (GB)'
                     row = [account_name, account_number, region_name, volume_name, volume_size]
                     df_vol.loc[len(df_vol)] = row
                     valid_count += 1
 
                 if unatt_count < len(unatt_vols):
-                    print('         Waiting 31 seconds to avoid CloudTrail API request throttling...')
-                    time.sleep(31)
+                    logger.info('      Waiting 31 seconds to avoid CloudTrail API request throttling...')
+                    for _ in tqdm.tqdm(range(31)):
+                        time.sleep(1)
 
         try:
             is_next = response['NextToken']
         except KeyError:
             break
-
-    # print(f'\n{df_vol}\n')
 
     return df_vol, unatt_count, valid_count

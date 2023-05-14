@@ -7,7 +7,7 @@ import modules.login_config as lcfg
 
 # Log into all accounts for each selected client and run the scripts
 # TODO: This looks awful and is not DRY. Refactor eventually. But for now, it works.
-def process_clients(clients_dict, client_keys, report_date, three_months):
+def process_clients(clients_dict, client_keys, report_date, three_months, logger):
     for key in client_keys:
 
         # Create 6 dataframes for the client
@@ -17,56 +17,54 @@ def process_clients(clients_dict, client_keys, report_date, three_months):
             for profile in clients_dict[key]['profiles']:
                 lcfg.set_login_credentials(profile)
 
-                print(f'\nLogging in to {profile["profile_name"]}. Enter your Azure credentials in '
-                      f'the popup window.')
-                logged_in = aws.azure_login()
+                logger.info(f'\nLogging in to {profile["profile_name"]}. Enter your Azure credentials in '
+                            f'the popup window.')
+                logged_in = aws.azure_login(logger)
 
                 if logged_in:
-                    print(f'You are logged in to {profile["profile_name"]}.')
+                    logger.info(f'You are logged in to {profile["profile_name"]}.')
 
                 if len(profile['region']) > 1:
                     for region in profile['region']:
-                        print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
                         df_eips, df_oldimages, df_ebssnaps, \
                             df_vol, df_unami, df_rdssnaps = gr.get_resources(profile, region, report_date,
                                                                              three_months, df_eips, df_oldimages,
                                                                              df_ebssnaps, df_vol, df_unami,
-                                                                             df_rdssnaps)
+                                                                             df_rdssnaps, logger)
                 else:
                     region = profile['region'][0]
-                    print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
                     df_eips, df_oldimages, df_ebssnaps, \
                         df_vol, df_unami, df_rdssnaps = gr.get_resources(profile, region, report_date, three_months,
                                                                          df_eips, df_oldimages, df_ebssnaps, df_vol,
-                                                                         df_unami, df_rdssnaps)
+                                                                         df_unami, df_rdssnaps, logger)
         else:
             profile = clients_dict[key]['profiles'][0]
             lcfg.set_login_credentials(profile)
 
-            print(f'\nLogging in to {profile["profile_name"]}. Enter your Azure credentials in the popup window.')
-            logged_in = aws.azure_login()
+            logger.info(f'\nLogging in to {profile["profile_name"]}. Enter your Azure credentials '
+                        f'in the popup window.')
+            logged_in = aws.azure_login(logger)
 
             if logged_in:
-                print(f'You are logged in to {profile["profile_name"]}.')
+                logger.info(f'You are logged in to {profile["profile_name"]}.')
 
             if len(profile['region']) > 1:
                 for region in profile['region']:
-                    print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
                     df_eips, df_oldimages, df_ebssnaps, \
                         df_vol, df_unami, df_rdssnaps = gr.get_resources(profile, region, report_date, three_months,
                                                                          df_eips, df_oldimages, df_ebssnaps, df_vol,
-                                                                         df_unami, df_rdssnaps)
+                                                                         df_unami, df_rdssnaps, logger)
             else:
                 region = profile['region'][0]
-                print(f'\nRunning resource script for {profile["profile_name"]} in {region}...')
                 df_eips, df_oldimages, df_ebssnaps, \
                     df_vol, df_unami, df_rdssnaps = gr.get_resources(profile, region, report_date, three_months,
                                                                      df_eips, df_oldimages, df_ebssnaps, df_vol,
-                                                                     df_unami, df_rdssnaps)
+                                                                     df_unami, df_rdssnaps, logger)
 
         df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
         file_list_csv = cr.create_file_list(clients_dict[key]['name'], report_date)
 
-        cr.compare_resources(clients_dict[key]['name'], df_list, file_list_csv, report_date)
+        logger.info('\nResource details collected. Running Cloud Health report validation...')
+        cr.compare_resources(clients_dict[key]['name'], df_list, file_list_csv, report_date, logger)
 
     return
