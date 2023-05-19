@@ -13,26 +13,29 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
         df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = cdf.create_dataframes()
 
         for profile in clients_dict[key]['profiles']:
-            lcfg.set_login_credentials(profile)
+            profile_name = profile['profile_name']
+            lcfg.set_login_credentials(profile, profile_name)
 
             logger.info(f'\nLogging in to {profile["profile_name"]}. Enter your Azure credentials in '
                         f'the popup window.')
-            logged_in = aws.azure_login(logger)
+            logged_in = aws.azure_login(profile_name, logger)
 
             if logged_in:
                 logger.info(f'You are logged in to {profile["profile_name"]}.')
 
-            for region in profile['region']:
-                df_eips, df_oldimages, df_ebssnaps, \
-                    df_vol, df_unami, df_rdssnaps = gr.get_resources(profile, region, report_date,
-                                                                     three_months, df_eips, df_oldimages,
-                                                                     df_ebssnaps, df_vol, df_unami,
-                                                                     df_rdssnaps, logger)
+                for region in profile['region']:
+                    df_eips, df_oldimages, df_ebssnaps, \
+                        df_vol, df_unami, df_rdssnaps = gr.get_resources(profile, region, report_date,
+                                                                         three_months, df_eips, df_oldimages,
+                                                                         df_ebssnaps, df_vol, df_unami,
+                                                                         df_rdssnaps, logger)
 
-        df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
-        file_list_csv = cr.create_file_list(clients_dict[key]['name'], report_date)
+                df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
+                file_list_csv = cr.create_file_list(clients_dict[key]['name'], report_date)
 
-        logger.info('\nResource details collected. Running Cloud Health report validation...')
-        cr.compare_resources(clients_dict[key]['name'], df_list, file_list_csv, report_date, logger)
+                logger.info('\nResource details collected. Running Cloud Health report validation...')
+                cr.compare_resources(clients_dict[key]['name'], df_list, file_list_csv, report_date, logger)
+            else:
+                return 1
 
-    return
+    return 0

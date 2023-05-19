@@ -8,12 +8,11 @@ import logging
 
 logger = logging.getLogger('2wchval')
 logging.basicConfig(level=logging.DEBUG,
-                    filename=f'output/2wchval_{datetime.now().strftime("%Y-%m-%d_%H%M%S")}.log',
+                    filename=f'log/2wchval_{datetime.now().strftime("%Y-%m-%d_%H%M%S")}.log',
                     filemode='a')
 console = logging.StreamHandler(sys.stdout)
 console.setLevel(logging.INFO)
 logger.addHandler(console)
-
 
 with open('src/clients.txt') as cl:
     cl_txt = cl.read()
@@ -33,16 +32,34 @@ def main(clients):
     logger.info('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
     # Welcome message box
     welcome = eg.msgbox('Welcome to the 2nd Watch Cloud Health resource verification program.\n\n'
-                        'Click the <OK> button to proceed.',
-                        '2nd Watch Cloud Health Validator')
+                        'Click the <Begin> button to proceed.',
+                        '2nd Watch Cloud Health Validator', ok_button='Begin')
     if welcome is None:  # User closed msgbox
         sys.exit(0)
 
     # Get report date; transform to three-month date and reformat to file date
-    # TODO: validate format of date
-    date_values = eg.multenterbox('Enter the date of the Cloud Health reports.\n',
-                                  'Date Entry',
-                                  ['Year (YYYY)', 'Month (MM)', 'Day (DD)'])
+    # TODO: validate date entry - unless we can get a Cloud Health API key
+    title = 'Date Entry'
+    field_names = ['Year (YYYY)', 'Month (MM)', 'Day (DD)']
+    date_values = eg.multenterbox(msg='Enter the date of the Cloud Health reports.\n', title=title, fields=field_names)
+    # make sure that none of the fields was left blank
+    while 1:
+        if date_values is None:
+            break
+        error = ''
+        for i in range(len(date_values)):
+            if date_values[i] == '':
+                error += f'{field_names[i]} is a required field.\n\n'
+            if field_names[i] == 'Year (YYYY)' and len(date_values[i]) != 4:
+                error += f'{field_names[i]} must be a four-digit number.\n\n'
+            if field_names[i] in ['Month (MM)', 'Day (DD)'] and len(date_values[i]) != 2:
+                error += f'{field_names[i]} must be a two-digit number.\n\n'
+        if not error:
+            break  # no problems found
+        date_values = eg.multenterbox(msg=error, title=title, fields=field_names, values=date_values)
+    if date_values is None:  # User closed msgbox
+        sys.exit(0)
+
     report_date = '-'.join(date_values)
     three_months = convert_date(report_date)
     logger.info(f'Report date entered: {report_date}')
@@ -74,19 +91,36 @@ def main(clients):
         logger.info(f'Client keys: {client_keys}')
         logger.info(f'You are running the program for: {client_names}')
 
-        eg.msgbox(f'You chose: {client_names}.\n\nClick the <OK> button to begin validation.\n\n'
-                  f'You can track validation progress in the console window.\n\n'
-                  f'The program will close after validation is complete.',
-                  'Client Selection Result')
+        ready = eg.ccbox(f'You chose to validate Cloud Health policy results for: {client_names}.\n\n'
+                         f'You can track validation progress in the console window.\n\n'
+                         f'Click the <Run> button to begin resource deletion.\n'
+                         f'Click the <Exit> button to exit the program without validating any resources.',
+                         title='Client Selection Result', choices=['Run', 'Exit'], cancel_choice='Exit')
+        if not ready:
+            sys.exit(0)
 
-        pc.process_clients(clients_dict, client_keys, report_date, three_months, logger)
+        process_code = pc.process_clients(clients_dict, client_keys, report_date, three_months, logger)
 
-        logger.info('\nValidation is complete. Reports and log files can be found in the <output> directory.')
+        if process_code != 0:
+            logger.info('\nLogin failed. The program has not deleted any resources.\n\n'
+                        f'Please report the failure and submit the log file from this run attempt. The log file can be '
+                        f'found in the <log> directory.\n\n'
+                        )
 
-        eg.msgbox(f'Validation has completed. Reports and log files can be found in the <output> directory.\n\n'
-                  f'Please run the program again if you want to validate more clients.\n\n'
-                  f'Click the <OK> button to exit the program.',
-                  'Client Selection Result')
+            eg.msgbox(f'Login failed. The program has not deleted any resources.\n\n'
+                      f'Please report the failure and submit the log file from this run attempt. The log file can be '
+                      f'found in the <log> directory.\n\n'
+                      f'Click the <Exit> button to exit the program.',
+                      'Resource Deletion Result', ok_button='Exit')
+        else:
+            logger.info('\nValidation is complete. Reports can be found in the <output> directory. The log file can be '
+                        f'found in the <log> directory.')
+
+            eg.msgbox(f'Validation has completed. Reports can be found in the <output> directory. The log file can be '
+                      f'found in the <log> directory.\n\n'
+                      f'Please run the program again if you want to validate more clients.\n\n'
+                      f'Click the <Exit> button to exit the program.',
+                      'Client Selection Result', ok_button='Exit')
 
         return
 
