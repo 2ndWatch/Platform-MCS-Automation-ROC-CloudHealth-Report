@@ -70,11 +70,6 @@ def compare_resources(client_name, df_list, file_list_csv, date, logger):
                                                                       columns_list, i, logger)
 
         # save the dataframes to Excel files
-        # TODO: should be a better way to check if the file exists and create it if it doesn't before adding sheets
-        #  because this looks pretty awful. maybe make this a function and pass variables in?
-
-        # if file doesn't exist, create it. os.path.isfile()
-
         try:
             with pd.ExcelWriter(f'output/{client_name}-Validated-{date}.xlsx', mode='a', if_sheet_exists='replace') \
                     as writer:

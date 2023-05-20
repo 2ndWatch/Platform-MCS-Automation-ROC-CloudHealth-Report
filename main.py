@@ -42,7 +42,7 @@ def main(clients):
     title = 'Date Entry'
     field_names = ['Year (YYYY)', 'Month (MM)', 'Day (DD)']
     date_values = eg.multenterbox(msg='Enter the date of the Cloud Health reports.\n', title=title, fields=field_names)
-    # make sure that none of the fields was left blank
+    # make sure that none of the fields were left blank
     while 1:
         if date_values is None:
             break
