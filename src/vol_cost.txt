@@ -1,0 +1,102 @@
+{
+    "us-east-1": {
+        "gp3": {
+            "storage": 0.08,
+            "iops_over_3k": 0.005,
+            "through_over_125": 0.04
+        },
+        "gp2": {
+            "storage": 0.1
+        },
+        "io1": {
+            "storage": 0.125,
+            "iops": 0.065
+        },
+        "io2": {
+            "storage": 0.125,
+            "iops_under_32k": 0.065,
+            "iops_over_32k": 0.046
+        },
+        "st1": {
+            "storage": 0.045
+        },
+        "sc1": {
+            "storage": 0.015
+        }
+    },
+    "us-east-2": {
+        "gp3": {
+            "storage": 0.08,
+            "iops_over_3k": 0.005,
+            "through_over_125": 0.04
+        },
+        "gp2": {
+            "storage": 0.1
+        },
+        "io1": {
+            "storage": 0.125,
+            "iops": 0.065
+        },
+        "io2": {
+            "storage": 0.125,
+            "iops_under_32k": 0.065,
+            "iops_over_32k": 0.046
+        },
+        "st1": {
+            "storage": 0.045
+        },
+        "sc1": {
+            "storage": 0.015
+        }
+    },
+    "us-west-1": {
+        "gp3": {
+            "storage": 0.096,
+            "iops_over_3k": 0.006,
+            "through_over_125": 0.048
+        },
+        "gp2": {
+            "storage": 0.12
+        },
+        "io1": {
+            "storage": 0.138,
+            "iops": 0.072
+        },
+        "io2": {
+            "storage": 0.138,
+            "iops_under_32k": 0.072,
+            "iops_over_32k": 0.050
+        },
+        "st1": {
+            "storage": 0.054
+        },
+        "sc1": {
+            "storage": 0.018
+        }
+    },
+    "us-west-2": {
+        "gp3": {
+            "storage": 0.08,
+            "iops_over_3k": 0.005,
+            "through_over_125": 0.04
+        },
+        "gp2": {
+            "storage": 0.1
+        },
+        "io1": {
+            "storage": 0.125,
+            "iops": 0.065
+        },
+        "io2": {
+            "storage": 0.125,
+            "iops_under_32k": 0.065,
+            "iops_over_32k": 0.046
+        },
+        "st1": {
+            "storage": 0.045
+        },
+        "sc1": {
+            "storage": 0.015
+        }
+    }
+}

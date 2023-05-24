@@ -8,7 +8,8 @@ def create_dataframes(for_client=False):
                                          'Image Id', 'Image Name', 'Image Age', 'Storage Size (GB)'])
     df_ebssnaps = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Snapshot Id',
                                         'Size (GB)', 'Create Date', 'Image Id'])
-    df_vol = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Volume Id', 'Size (GB)'])
+    df_vol = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Volume Id',
+                                   'Size (GB)', 'Volume Type', 'Cost Per Month'])
     df_unami = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Image Id',
                                      'Image Name', 'Storage Size (GB)'])
     df_rdssnaps = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name',
@@ -21,7 +22,8 @@ def create_dataframes(for_client=False):
             ['Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name',
              'Image Age', 'Storage Size (GB)'],
             ['Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Size (GB)', 'Create Date', 'Image Id'],
-            ['Account Name', 'Account Number', 'Region Name', 'Volume Id', 'Size (GB)'],
+            ['Account Name', 'Account Number', 'Region Name', 'Volume Id', 'Size (GB)',
+             'Volume Type', 'Cost Per Month'],
             ['Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name', 'Storage Size (GB)'],
             ['Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Allocated Storage (GB)', 'Create Date']
         ]
@@ -29,7 +31,7 @@ def create_dataframes(for_client=False):
             ['-', '-', '-', 'No resources matched'],
             ['-', '-', '-', 'No resources matched', '-', '-', '-'],
             ['-', '-', '-', 'No resources matched', '-', '-', '-'],
-            ['-', '-', '-', 'No resources matched', '-'],
+            ['-', '-', '-', 'No resources matched', '-', '-', '-'],
             ['-', '-', '-', 'No resources matched', '-', '-'],
             ['-', '-', '-', 'No resources matched', '-', '-']
         ]
