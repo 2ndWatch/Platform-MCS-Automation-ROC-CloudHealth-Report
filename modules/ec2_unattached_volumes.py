@@ -111,8 +111,4 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
         except KeyError:
             break
 
-    df_vol.style.format({
-        'Cost Per Month': "{:.2f}"
-    })
-
     return df_vol, unatt_count, valid_count
