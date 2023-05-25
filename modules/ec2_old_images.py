@@ -19,6 +19,7 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
             except KeyError:
                 image_name = ''
             image_storage = image['BlockDeviceMappings']
+            public = image['Public']
             image_date = image['CreationDate'][:10]
             image_start = f'{image_date} {image["CreationDate"][11:19]} UTC'
             storage_size = 0
@@ -43,11 +44,14 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
                             except IndexError:
                                 continue
                             image_snapshots.append(snapshot_id)
-
-                # 'Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name',
-                # 'Image Age', 'Storage Size (GB)', 'Snapshot Count', 'Cost Per Month'
-                row = [account_name, account_number, region_name, image_id, image_name,
-                       image_start, storage_size, snapshot_count, round(storage_cost, 2)]
+                if public:
+                    image_public = 'True'
+                else:
+                    image_public = 'False'
+                # 'Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name', 'Public',
+                # 'Image Age', 'Cost Per Month'
+                row = [account_name, account_number, region_name, image_id, image_name, image_public,
+                       image_start, round(storage_cost, 2)]
                 df_oldimages.loc[len(df_oldimages)] = row
 
         try:

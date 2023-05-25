@@ -93,7 +93,7 @@ def main(clients):
 
         ready = eg.ccbox(f'You chose to validate Cloud Health policy results for: {client_names}.\n\n'
                          f'You can track validation progress in the console window.\n\n'
-                         f'Click the <Run> button to begin resource deletion.\n'
+                         f'Click the <Run> button to begin resource validation.\n'
                          f'Click the <Exit> button to exit the program without validating any resources.',
                          title='Client Selection Result', choices=['Run', 'Exit'], cancel_choice='Exit')
         if not ready:
@@ -102,12 +102,12 @@ def main(clients):
         process_code = pc.process_clients(clients_dict, client_keys, report_date, three_months, logger)
 
         if process_code != 0:
-            logger.info('\nLogin failed. The program has not deleted any resources.\n\n'
+            logger.info('\nA login failed. The program will not process any more client accounts.\n\n'
                         f'Please report the failure and submit the log file from this run attempt. The log file can be '
                         f'found in the <log> directory.\n\n'
                         )
 
-            eg.msgbox(f'Login failed. The program has not deleted any resources.\n\n'
+            eg.msgbox(f'A login failed. The program will not process any more client accounts.\n\n'
                       f'Please report the failure and submit the log file from this run attempt. The log file can be '
                       f'found in the <log> directory.\n\n'
                       f'Click the <Exit> button to exit the program.',

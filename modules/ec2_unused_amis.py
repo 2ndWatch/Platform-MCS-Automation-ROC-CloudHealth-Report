@@ -49,6 +49,7 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
                 image_name = ''
             image_date = image['CreationDate'][:10]
             image_storage = image['BlockDeviceMappings']
+            public = image['Public']
             storage_size = 0
             snapshot_count = 0
             storage_cost = 0
@@ -73,10 +74,14 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
                                         storage_cost += cost
                                     except IndexError:
                                         continue
-                        # 'Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name',
-                        # 'Storage Size (GB)', 'Snapshot Count', 'Cost Per Month'
-                        row = [account_name, account_number, region_name, image_id, image_name,
-                               storage_size, snapshot_count, storage_cost]
+                        if public:
+                            image_public = 'True'
+                        else:
+                            image_public = 'False'
+                        # 'Account Name', 'Account Number', 'Region Name', 'Image Id',
+                        # 'Image Name', 'Public',  'Cost Per Month'
+                        row = [account_name, account_number, region_name, image_id,
+                               image_name, image_public, storage_cost]
                         df_unami.loc[len(df_unami)] = row
 
         try:
