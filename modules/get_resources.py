@@ -8,7 +8,7 @@ from modules import ec2_elastic_ips as eips
 
 
 def get_resources(profile, region, report_date, three_month,
-                  df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps, logger):
+                  df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps, df_ebs_cost, logger):
     account_name = profile['account_name']
     region_name = region
     account_number = profile['account_number']
@@ -26,7 +26,7 @@ def get_resources(profile, region, report_date, three_month,
 
     logger.info('\nGetting EC2 images older than 3 months...')
     df_oldimages, valid_old, img_snaps = eold.get_old_images(ec2, account_name, account_number, region_name,
-                                                             three_month, df_oldimages, logger)
+                                                             three_month, df_oldimages, df_ebs_cost, logger)
     logger.debug(f'   Number of valid old images: {len(valid_old)}')
     logger.debug(f'   Number of AMI-associated snapshots: {len(img_snaps)}')
 

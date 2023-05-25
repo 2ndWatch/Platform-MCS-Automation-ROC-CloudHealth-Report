@@ -1,5 +1,4 @@
-def get_old_images(client, account_name, account_number, region_name, cutoff, df_oldimages, logger):
-
+def get_old_images(client, account_name, account_number, region_name, cutoff, df_oldimages, df_ebs_cost, logger):
     old_images = []
     image_snapshots = []
 
@@ -23,6 +22,8 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
             image_date = image['CreationDate'][:10]
             image_start = f'{image_date} {image["CreationDate"][11:19]} UTC'
             storage_size = 0
+            snapshot_count = 0
+            storage_cost = 0
 
             if image_date < cutoff:
                 logger.debug(f'   {image_id} is older than 3 months.')
@@ -30,14 +31,23 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
                 if image_storage:
                     for device in image_storage:
                         if 'Ebs' in device.keys():
-                            logger.debug(f'         {device["Ebs"]["SnapshotId"]} added to list of '
-                                  f'image-associated snapshots.')
+                            snapshot_id = device['Ebs']['SnapshotId']
+                            logger.debug(f'         {snapshot_id} added to list of '
+                                         f'image-associated snapshots.')
                             storage_size += device['Ebs']['VolumeSize']
-                            image_snapshots.append(device['Ebs']['SnapshotId'])
+                            snapshot_count += 1
+                            try:
+                                cost = df_ebs_cost.loc[df_ebs_cost['ResourceId'] == snapshot_id,
+                                                       'Cost'].values[0].item()
+                                storage_cost += cost
+                            except IndexError:
+                                continue
+                            image_snapshots.append(snapshot_id)
 
                 # 'Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name',
-                # 'Image Age', 'Storage Size (GB)'
-                row = [account_name, account_number, region_name, image_id, image_name, image_start, storage_size]
+                # 'Image Age', 'Storage Size (GB)', 'Snapshot Count', 'Cost Per Month'
+                row = [account_name, account_number, region_name, image_id, image_name,
+                       image_start, storage_size, snapshot_count, round(storage_cost, 2)]
                 df_oldimages.loc[len(df_oldimages)] = row
 
         try:

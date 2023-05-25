@@ -5,7 +5,8 @@ def create_dataframes(for_client=False):
 
     df_eips = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Public IP'])
     df_oldimages = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name',
-                                         'Image Id', 'Image Name', 'Image Age', 'Storage Size (GB)'])
+                                         'Image Id', 'Image Name', 'Image Age', 'Storage Size (GB)',
+                                         'Snapshot Count', 'Cost Per Month'])
     df_ebssnaps = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Snapshot Id',
                                         'Size (GB)', 'Create Date', 'Image Id'])
     df_vol = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Volume Id',
@@ -20,7 +21,7 @@ def create_dataframes(for_client=False):
         columns_list = [
             ['Account Name', 'Account Number', 'Region Name', 'Public IP'],
             ['Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name',
-             'Image Age', 'Storage Size (GB)'],
+             'Image Age', 'Storage Size (GB)', 'Snapshot Count', 'Cost Per Month'],
             ['Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Size (GB)', 'Create Date', 'Image Id'],
             ['Account Name', 'Account Number', 'Region Name', 'Volume Id', 'Size (GB)',
              'Volume Type', 'Cost Per Month'],
@@ -29,7 +30,7 @@ def create_dataframes(for_client=False):
         ]
         empty_unmatched_row = [
             ['-', '-', '-', 'No resources matched'],
-            ['-', '-', '-', 'No resources matched', '-', '-', '-'],
+            ['-', '-', '-', 'No resources matched', '-', '-', '-', '-', '-'],
             ['-', '-', '-', 'No resources matched', '-', '-', '-'],
             ['-', '-', '-', 'No resources matched', '-', '-', '-'],
             ['-', '-', '-', 'No resources matched', '-', '-'],
