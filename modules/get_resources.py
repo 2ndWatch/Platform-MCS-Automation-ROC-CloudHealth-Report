@@ -34,7 +34,8 @@ def get_resources(profile, region, report_date, three_month,
     logger.info('\nGetting EBS snapshots older than 3 months...')
     df_ebssnaps, snapshot_count, valid_snapshot_count = esnap.get_old_snapshots(ec2, account_name, account_number,
                                                                                 region_name, img_snaps,
-                                                                                three_month, df_ebssnaps, logger)
+                                                                                three_month, df_ebssnaps,
+                                                                                df_ebs_cost, logger)
     logger.debug(f'   Number of old EBS snapshots: {snapshot_count}')
     logger.debug(f'   Number of valid old EBS snapshots: {valid_snapshot_count}')
 
