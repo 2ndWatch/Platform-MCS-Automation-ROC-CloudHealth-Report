@@ -1,4 +1,5 @@
-def get_unused_images(client, account_name, account_number, region_name, old_images, cutoff, df_unami, logger):
+def get_unused_images(client, account_name, account_number, region_name, old_images, cutoff,
+                      df_unami, df_ebs_cost, logger):
 
     # Create list of used AMIs from instance properties
     images_in_use = []
@@ -49,7 +50,8 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
             image_date = image['CreationDate'][:10]
             image_storage = image['BlockDeviceMappings']
             storage_size = 0
-            # print(f'Creation date: {image_date}')
+            snapshot_count = 0
+            storage_cost = 0
 
             if image_date < cutoff:
                 if image_id not in images_in_use:
@@ -62,9 +64,19 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
                         if image_storage:
                             for device in image_storage:
                                 if 'Ebs' in device.keys():
+                                    snapshot_id = device['Ebs']['SnapshotId']
                                     storage_size += device['Ebs']['VolumeSize']
-                        # 'Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name', 'Storage Size (GB)'
-                        row = [account_name, account_number, region_name, image_id, image_name, storage_size]
+                                    snapshot_count += 1
+                                    try:
+                                        cost = df_ebs_cost.loc[df_ebs_cost['ResourceId'] == snapshot_id,
+                                                               'Cost'].values[0].item()
+                                        storage_cost += cost
+                                    except IndexError:
+                                        continue
+                        # 'Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name',
+                        # 'Storage Size (GB)', 'Snapshot Count', 'Cost Per Month'
+                        row = [account_name, account_number, region_name, image_id, image_name,
+                               storage_size, snapshot_count, storage_cost]
                         df_unami.loc[len(df_unami)] = row
 
         try:

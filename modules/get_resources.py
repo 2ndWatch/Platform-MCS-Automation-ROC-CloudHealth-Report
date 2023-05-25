@@ -49,7 +49,7 @@ def get_resources(profile, region, report_date, three_month,
     # Dependent on get_old_images for valid_old input
     logger.info('\nGetting unused EC2 images...')
     df_unami, unused_image_count = euna.get_unused_images(ec2, account_name, account_number, region_name,
-                                                          valid_old, three_month, df_unami, logger)
+                                                          valid_old, three_month, df_unami, df_ebs_cost, logger)
     logger.debug(f'   Number of valid unused images: {unused_image_count}')
 
     logger.info('\nGetting RDS and Aurora snapshots older than 3 months...')
