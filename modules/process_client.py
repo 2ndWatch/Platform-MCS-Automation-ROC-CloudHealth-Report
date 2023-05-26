@@ -3,6 +3,7 @@ import modules.compare_resources as cr
 import modules.create_dataframes as cdf
 import modules.get_resources as gr
 import modules.login_config as lcfg
+import modules.generate_final_report as gen
 
 
 # Log into all accounts for each selected client and run the scripts
@@ -37,6 +38,7 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
 
                 logger.info('\nResource details collected. Running Cloud Health report validation...')
                 cr.compare_resources(clients_dict[key]['name'], df_list, file_list_csv, report_date, logger)
+                gen.generate_final_report(logger)
             else:
                 return 1
 

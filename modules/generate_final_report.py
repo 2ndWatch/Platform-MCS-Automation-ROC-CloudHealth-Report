@@ -3,8 +3,13 @@ from openpyxl import load_workbook, Workbook
 from openpyxl.utils import get_column_letter
 
 
-def generate_final_report(directory_path):
+# Called in process_client.py
+def generate_final_report(logger):
     template_file = "template.xlsx"
+    directory_path = "output"
+
+    # logger.info('something') prints to the console when the program runs
+    # logger.debug('something') only prints to the log file
 
     # Create a dictionary to map the sheet names
     sheet_mapping = {
@@ -68,12 +73,10 @@ def generate_final_report(directory_path):
             validated_wb.close()
             final_wb.close()
 
-
-# Specify the directory path where your Excel files are located
-directory_path = "C:\\Users\\awittung.2NDWATCH\\PycharmProjects\\CHscripts\\modules"
+    return
 
 # Call the function
-generate_final_report(directory_path)
+# generate_final_report(directory_path)
 
 # TODO: Overall - Script currently inputs the headers from the Validated Excel Doc. Need to remove it.
 #  All Sheets - Need to grab regions per sheet and provide a list in each sheet of each region and the total items.
