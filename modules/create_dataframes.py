@@ -13,7 +13,7 @@ def create_dataframes(for_client=False):
     df_unami = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Image Id',
                                      'Image Name', 'Public', 'Cost Per Month'])
     df_rdssnaps = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name',
-                                        'Snapshot Id', 'Allocated Storage (GB)', 'Create Date'])
+                                        'Snapshot Id', 'Instance Id', 'Allocated Storage (GB)', 'Create Date'])
 
     if for_client:
         df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
@@ -26,7 +26,7 @@ def create_dataframes(for_client=False):
             ['Account Name', 'Account Number', 'Region Name', 'Volume Id', 'Size (GB)',
              'Volume Type', 'Cost Per Month'],
             ['Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name', 'Public', 'Cost Per Month'],
-            ['Account Name', 'Account Number', 'Region Name', 'Snapshot Id',
+            ['Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Instance Id',
              'Allocated Storage (GB)', 'Create Date']
         ]
         empty_unmatched_row = [
@@ -35,7 +35,7 @@ def create_dataframes(for_client=False):
             ['-', '-', '-', 'No resources matched', '-', '-', '-', '-'],
             ['-', '-', '-', 'No resources matched', '-', '-', '-'],
             ['-', '-', '-', 'No resources matched', '-', '-', '-'],
-            ['-', '-', '-', 'No resources matched', '-', '-']
+            ['-', '-', '-', 'No resources matched', '-', '-', '-']
         ]
         empty_excluded_row = [
             ['-', '-', 'No resources excluded', '-', '-', '-', '-', '-', '-'],
