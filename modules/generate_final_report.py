@@ -1,12 +1,11 @@
 import os
-from openpyxl import load_workbook, Workbook
-from openpyxl.utils import get_column_letter
+from openpyxl import load_workbook
 
 
 # Called in process_client.py
 def generate_final_report(logger):
-    template_file = "template.xlsx"
-    directory_path = "output"
+    template_file = os.path.join("src", "template.xlsx")
+    directory_path = os.path.join("output")
 
     # logger.info('something') prints to the console when the program runs
     # logger.debug('something') only prints to the log file
@@ -19,13 +18,6 @@ def generate_final_report(logger):
         "Unattached Volumes": "Unattached EBS Volumes",
         "Unused AMIs": "EC2 Image Not Associated",
         "Old RDS Snapshots": "RDS Old Snapshots",
-        # Add more mappings as needed
-    }
-
-    # Create a dictionary to map the columns to remove from specific sheets
-    column_removal = {
-        "Old AMIs": ["Storage Size (GB)", "Snapshot Count"],
-        "Unused AMIs": ["Storage Size (GB)", "Snapshot Count"],
         # Add more mappings as needed
     }
 
@@ -55,14 +47,6 @@ def generate_final_report(logger):
                         if i > 1:  # Exclude the first row (header)
                             final_sheet.append(row)
 
-            # Remove specified columns from the final sheet
-            for sheet_name, columns_to_remove in column_removal.items():
-                if sheet_name in final_wb.sheetnames:
-                    final_sheet = final_wb[sheet_name]
-                    for column_name in columns_to_remove:
-                        column_letter = get_column_letter(final_sheet[column_name].column)
-                        final_sheet.delete_cols(final_sheet[column_name].column)
-
             # Generate the new filename by replacing "Validated" with "Final"
             new_filename = filename.replace("Validated", "Final")
 
@@ -74,15 +58,3 @@ def generate_final_report(logger):
             final_wb.close()
 
     return
-
-# Call the function
-# generate_final_report(directory_path)
-
-# TODO: Overall - Script currently inputs the headers from the Validated Excel Doc. Need to remove it.
-#  All Sheets - Need to grab regions per sheet and provide a list in each sheet of each region and the total items.
-#  All Sheets - If no info, remove sheet or update Overview Formula to say 'N/A'
-#  Overview - Formulas need to be automatically fixed with the new values.
-#  EC2 Old Snapshots - Source excel needs 'Image Id' Column replaced with 'Snapshot Age' calculation.
-#  Unattached Elastic IPs - Need 'Unattached At' Column after 'Public IP' Column
-#  RDS Old Snapshots - Need 'Instance Id' Column after 'Snapshot Id'
-#  RDS Old Snapshots - Need calculated 'Snapshot Age' column after 'Create Date'
