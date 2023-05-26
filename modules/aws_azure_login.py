@@ -1,16 +1,9 @@
 import subprocess
-import os
 
 
 def azure_login(profile_name, logger):
 
     is_logged_in = False
-
-    logger.info(os.environ['AZURE_TENANT_ID'])
-    logger.info(os.environ['AZURE_APP_ID_URI'])
-    logger.info(os.environ['AZURE_DEFAULT_ROLE_ARN'])
-    logger.info(os.environ['AZURE_DEFAULT_DURATION_HOURS'])
-    logger.info(os.environ['AWS_PROFILE'])
 
     login = subprocess.Popen(['aws-azure-login', '--profile', f'{profile_name}', '--mode', 'gui'],
                              shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
