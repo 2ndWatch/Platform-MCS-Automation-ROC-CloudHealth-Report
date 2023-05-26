@@ -38,8 +38,10 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
 
                 logger.info('\nResource details collected. Running Cloud Health report validation...')
                 cr.compare_resources(clients_dict[key]['name'], df_list, file_list_csv, report_date, logger)
-                gen.generate_final_report(logger)
             else:
                 return 1
+
+    logger.info('\nCreating final reports with overviews...')
+    gen.generate_final_report(logger)
 
     return 0
