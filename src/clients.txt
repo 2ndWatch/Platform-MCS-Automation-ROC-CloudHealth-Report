@@ -175,12 +175,28 @@
                 "app_id_uri": "aceaf30e-b195-4e20-bae3-bd8e3b91c85d"
             },
             {
+                "account_name": "MSO",
+                "profile_name": "vnsmso",
+                "account_number": "765697202555",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "d38bbf00-78ed-4dd8-a065-ba61877b4f50",
+                "app_id_uri": "b070b5e4-62e6-4d57-bd5e-5a1e8941217d"
+            },
+            {
                 "account_name": "Production",
                 "profile_name": "vnsprod",
                 "account_number": "387721966484",
                 "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
                 "tenant_id": "d38bbf00-78ed-4dd8-a065-ba61877b4f50",
                 "app_id_uri": "7d0b99c2-62d9-4194-bee2-c9bbd6e527d6"
+            },
+            {
+                "account_name": "Regulated",
+                "profile_name": "vnsreg",
+                "account_number": "059317571093",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "d38bbf00-78ed-4dd8-a065-ba61877b4f50",
+                "app_id_uri": "91478152-34df-41ec-8394-669603e2cc46"
             },
             {
                 "account_name": "Sandbox",

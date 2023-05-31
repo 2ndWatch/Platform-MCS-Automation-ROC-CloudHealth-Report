@@ -8,6 +8,9 @@ import modules.generate_final_report as gen
 
 # Log into all accounts for each selected client and run the scripts
 def process_clients(clients_dict, client_keys, report_date, three_months, logger):
+    accounts_logged_in = 0
+    accounts_not_logged_in = 0
+    accounts_not_logged_in_list = []
     for key in client_keys:
 
         # Create 6 dataframes for the client
@@ -25,6 +28,7 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
 
             if logged_in:
                 logger.info(f'You are logged in to {profile["profile_name"]}.')
+                accounts_logged_in += 1
 
                 for region in profile['region']:
                     df_eips, df_oldimages, df_ebssnaps, \
@@ -39,9 +43,17 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
                 logger.info('\nResource details collected. Running Cloud Health report validation...')
                 cr.compare_resources(clients_dict[key]['name'], df_list, file_list_csv, report_date, logger)
             else:
-                return 1
+                logger.info(f'You were not logged in, skipping {profile["profile_name"]}.')
+                accounts_not_logged_in += 1
+                accounts_not_logged_in_list.append(profile['profile_name'])
+                continue
 
-    logger.info('\nCreating final reports with overviews...')
-    gen.generate_final_report(logger)
-
-    return 0
+    logger.debug(f'Did not log into: {accounts_not_logged_in_list}')
+    if accounts_not_logged_in > 0 and accounts_logged_in == 0:
+        print(f'Not logged in: {accounts_not_logged_in}; logged in: {accounts_logged_in}')
+        logger.debug('\nNo successful logins recorded. No reports will be generated.')
+        return 1
+    else:
+        logger.info('\nCreating final reports with overviews...')
+        gen.generate_final_report(logger)
+        return accounts_not_logged_in_list

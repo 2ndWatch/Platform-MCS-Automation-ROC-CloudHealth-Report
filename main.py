@@ -99,28 +99,32 @@ def main(clients):
         if not ready:
             sys.exit(0)
 
-        process_code = pc.process_clients(clients_dict, client_keys, report_date, three_months, logger)
+        process_result = pc.process_clients(clients_dict, client_keys, report_date, three_months, logger)
 
-        if process_code != 0:
-            logger.info('\nA login failed. The program will not process any more client accounts.\n\n'
-                        f'Please report the failure and submit the log file from this run attempt. The log file can be '
-                        f'found in the <log> directory.\n\n'
+        if process_result == 1:
+            logger.info('\nNo successful logins recorded. No reports will be generated.\n'
+                        f'If you believe this message was generated incorrectly, please report the failure and submit '
+                        f'the log file from this run attempt. The log file can be found in the <log> directory.'
                         )
 
-            eg.msgbox(f'A login failed. The program will not process any more client accounts.\n\n'
-                      f'Please report the failure and submit the log file from this run attempt. The log file can be '
-                      f'found in the <log> directory.\n\n'
+            eg.msgbox(f'No successful logins recorded. No reports will be generated.\n\n'
+                      f'If you believe this message was generated incorrectly, please report the failure and submit '
+                      f'the log file from this run attempt. The log file can be found in the <log> directory.\n\n'
                       f'Click the <Exit> button to exit the program.',
-                      'Resource Deletion Result', ok_button='Exit')
+                      'Resource Validation Result', ok_button='Exit')
         else:
-            logger.info('\nValidation is complete. Reports can be found in the <output> directory. The log file can be '
+            logger.info(f'\nValidation is complete.\n'
+                        f'Accounts not validated: {process_result}\n\n'
+                        f'Reports can be found in the <output> directory. The log file can be '
                         f'found in the <log> directory.')
 
-            eg.msgbox(f'Validation has completed. Reports can be found in the <output> directory. The log file can be '
+            eg.msgbox(f'Validation has completed.\n'
+                      f'Accounts not validated: {process_result}\n\n'
+                      f'Reports can be found in the <output> directory. The log file can be '
                       f'found in the <log> directory.\n\n'
                       f'Please run the program again if you want to validate more clients.\n\n'
                       f'Click the <Exit> button to exit the program.',
-                      'Client Selection Result', ok_button='Exit')
+                      'Resource Validation Result', ok_button='Exit')
 
         return
 
