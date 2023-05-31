@@ -3,7 +3,9 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
 
     # Create list of used AMIs from instance properties
     images_in_use = []
+
     is_next = None
+
     while True:
         if is_next:
             response = client.describe_instances(MaxResults=400, NextToken=is_next)
@@ -25,6 +27,7 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
     logger.debug(f'   There are {len(images_in_use)} AMIs in use.')
 
     unused_images = 0
+    all_images = 0
 
     is_next = None
 
@@ -35,6 +38,8 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
             response = client.describe_images(Owners=[account_number], MaxResults=400)
 
         images = response['Images']
+        all_images += len(images)
+        logger.info(f'Images found: {all_images}')
 
         # filter criteria:
         # older than 3 months

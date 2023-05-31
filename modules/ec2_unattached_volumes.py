@@ -33,7 +33,7 @@ def calculate_storage_price(region_name, volume_size, volume_type, volume_iops, 
 
 def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, account_number,
                                region_name, report_date, df_vol, logger):
-
+    all_vols_count = 0
     unatt_count = 0
     valid_count = 0
 
@@ -46,6 +46,8 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
             response = ec2_client.describe_volumes(MaxResults=400)
 
         volumes = response['Volumes']
+        all_vols_count += len(volumes)
+        logger.info(f'Volumes found: {all_vols_count}')
 
         unatt_vols = []
         for volume in volumes:

@@ -2,7 +2,7 @@ import datetime
 
 
 def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff, df_rdssnaps, logger):
-
+    all_snaps_count = 0
     db_snap_count = 0
     aurora_snap_count = 0
 
@@ -16,6 +16,8 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
             rds_response = client.describe_db_snapshots()
 
         db_snapshots = rds_response['DBSnapshots']
+        all_snaps_count += len(db_snapshots)
+        logger.info(f'RDS snapshots found: {all_snaps_count}')
 
         for db_snap in db_snapshots:
             db_snap_id = db_snap['DBSnapshotIdentifier']
@@ -51,6 +53,8 @@ def get_old_rds_snaps(client, account_name, account_number, region_name, cutoff,
             aurora_response = client.describe_db_cluster_snapshots()
 
         aurora_snapshots = aurora_response['DBClusterSnapshots']
+        all_snaps_count += len(aurora_snapshots)
+        logger.info(f'Aurora snapshots found: {all_snaps_count}')
 
         for aurora_snap in aurora_snapshots:
             aurora_snap_id = aurora_snap['DBClusterSnapshotIdentifier']

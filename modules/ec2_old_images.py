@@ -1,6 +1,7 @@
 def get_old_images(client, account_name, account_number, region_name, cutoff, df_oldimages, df_ebs_cost, logger):
     old_images = []
     image_snapshots = []
+    image_count = 0
 
     is_next = None
 
@@ -11,6 +12,8 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
             response = client.describe_images(Owners=[account_number], MaxResults=400)
 
         images = response['Images']
+        image_count += len(images)
+        logger.info(f'Images found: {image_count}')
 
         for image in images:
             image_id = image['ImageId']

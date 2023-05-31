@@ -3,6 +3,7 @@ import datetime
 
 def get_old_snapshots(client, account_name, account_number, region_name, snap_list, cutoff,
                       df_ebssnaps, df_ebs_cost, logger):
+    all_snap_count = 0
     snap_count = 0
     valid_count = 0
 
@@ -15,6 +16,8 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
             response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400)
 
         snapshots = response['Snapshots']
+        all_snap_count += len(snapshots)
+        logger.info(f'Snapshots found: {all_snap_count}')
 
         for snap in snapshots:
             snap_id = snap['SnapshotId']
