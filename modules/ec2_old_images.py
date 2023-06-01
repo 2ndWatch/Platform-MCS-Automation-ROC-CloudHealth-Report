@@ -12,6 +12,7 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
             response = client.describe_images(Owners=[account_number], MaxResults=400)
 
         images = response['Images']
+
         image_count += len(images)
         logger.info(f'Images found: {image_count}')
 
@@ -29,9 +30,12 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
             snapshot_count = 0
             storage_cost = 0
 
+            # Filter for images older than 3 months
             if image_date < cutoff:
                 logger.debug(f'   {image_id} is older than 3 months.')
                 old_images.append(image_id)
+
+                # If the image has one or more associated snapshots, get the snapshot ID(s) and add them to a list
                 if image_storage:
                     for device in image_storage:
                         if 'Ebs' in device.keys():
@@ -47,10 +51,14 @@ def get_old_images(client, account_name, account_number, region_name, cutoff, df
                             except IndexError:
                                 continue
                             image_snapshots.append(snapshot_id)
+
+                # Note whether the image is public or not
                 if public:
                     image_public = 'True'
                 else:
                     image_public = 'False'
+
+                # Dataframe column names:
                 # 'Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name', 'Public',
                 # 'Image Age', 'Cost Per Month'
                 row = [account_name, account_number, region_name, image_id, image_name, image_public,

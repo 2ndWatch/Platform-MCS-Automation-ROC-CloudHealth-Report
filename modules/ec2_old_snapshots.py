@@ -16,6 +16,7 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
             response = client.describe_snapshots(OwnerIds=[account_number], MaxResults=400)
 
         snapshots = response['Snapshots']
+
         all_snap_count += len(snapshots)
         logger.info(f'Snapshots found: {all_snap_count}')
 
@@ -28,14 +29,18 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
             snap_date = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d')
             storage_cost = 0
 
+            # Filter for snapshots older than 3 months
             if snap_date < cutoff:
                 logger.debug(f'   {snap_id} is older than 3 months.')
                 snap_count += 1
 
+                # Filter for snapshots not associated with an old AMI
                 if snap_id in snap_list:
                     logger.debug(f'      Excluded from results (associated with an old AMI).')
                 else:
                     logger.debug(f'      Not associated with an AMI on the old AMIs list.')
+
+                    # If the snapshot was created by AWS Backup, get the AMI ID
                     if 'CreateImage' in snap_desc:
                         snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
                     try:
@@ -44,6 +49,8 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
                         storage_cost += cost
                     except IndexError:
                         continue
+
+                    # Dataframe column names:
                     # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id',
                     # 'Size (GB)', 'Create Date', 'Image Id', 'Cost Per Month'
                     row = [account_name, account_number, region_name, snap_id, snap_size,

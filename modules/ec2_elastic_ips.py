@@ -3,6 +3,7 @@ def get_old_unattached_eips(ec2_client, account_name, account_number, region_nam
     valid_count = 0
 
     response = ec2_client.describe_addresses()
+
     all_ips = response['Addresses']
     eip_count += len(all_ips)
     logger.info(f'EIPs found: {eip_count}')
@@ -10,9 +11,13 @@ def get_old_unattached_eips(ec2_client, account_name, account_number, region_nam
     for ip in all_ips:
         ip_public = ip['PublicIp']
         cost = 3.6
+
+        # Filter for any IPs that are not associated with an instance or a network interface
         if 'AssociationId' in ip.keys() or 'InstanceId' in ip.keys():
             continue
         else:
+
+            # Dataframe column names:
             # 'Account Name', 'Account Number', 'Region Name', 'Public IP', 'Cost Per Month'
             logger.debug(f'   Elastic IP {ip_public} has no associations.')
             row = [account_name, account_number, region_name, ip_public, cost]

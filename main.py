@@ -6,6 +6,7 @@ import json
 import sys
 import logging
 
+# Initialize the logger
 logger = logging.getLogger('2wchval')
 logging.basicConfig(level=logging.DEBUG,
                     filename=f'log/2wchval_{datetime.now().strftime("%Y-%m-%d_%H%M%S")}.log',
@@ -14,11 +15,13 @@ console = logging.StreamHandler(sys.stdout)
 console.setLevel(logging.INFO)
 logger.addHandler(console)
 
+# Read the clients.txt file into a dictionary
 with open('src/clients.txt') as cl:
     cl_txt = cl.read()
 clients_dict = json.loads(cl_txt)
 
 
+# Subtract 90 days from a given date
 def convert_date(date_string):
     dt_date = datetime.strptime(date_string, '%Y-%m-%d')
     three_months = timedelta(days=90)
@@ -27,14 +30,18 @@ def convert_date(date_string):
     return three_month_date
 
 
+# Primary user interface function
 def main(clients):
     print(banner)
     logger.info('\nWelcome to the 2nd Watch Cloud Health resource verification program.\n')
+
     # Welcome message box
     welcome = eg.msgbox('Welcome to the 2nd Watch Cloud Health resource verification program.\n\n'
                         'Click the <Begin> button to proceed.',
                         '2nd Watch Cloud Health Validator', ok_button='Begin')
-    if welcome is None:  # User closed msgbox
+
+    # User closed msgbox
+    if welcome is None:
         sys.exit(0)
 
     # Get report date; transform to three-month date and reformat to file date
@@ -42,28 +49,37 @@ def main(clients):
     title = 'Date Entry'
     field_names = ['Year (YYYY)', 'Month (MM)', 'Day (DD)']
     date_values = eg.multenterbox(msg='Enter the date of the Cloud Health reports.\n', title=title, fields=field_names)
-    # make sure that none of the fields were left blank
+
+    # Validation
     while 1:
         if date_values is None:
             break
         error = ''
         for i in range(len(date_values)):
+
+            # Fields cannot be empty
             if date_values[i] == '':
                 error += f'{field_names[i]} is a required field.\n\n'
+
+            # Year must be 4 characters long
             if field_names[i] == 'Year (YYYY)' and len(date_values[i]) != 4:
                 error += f'{field_names[i]} must be a four-digit number.\n\n'
+
+            # Month and day must be 2 characters long
             if field_names[i] in ['Month (MM)', 'Day (DD)'] and len(date_values[i]) != 2:
                 error += f'{field_names[i]} must be a two-digit number.\n\n'
+
+        # No problems found
         if not error:
-            break  # no problems found
+            break
         date_values = eg.multenterbox(msg=error, title=title, fields=field_names, values=date_values)
-    if date_values is None:  # User closed msgbox
+    if date_values is None:
         sys.exit(0)
 
     report_date = '-'.join(date_values)
     three_months = convert_date(report_date)
     logger.info(f'Report date entered: {report_date}')
-    if report_date is None:  # User closed msgbox
+    if report_date is None:
         sys.exit(0)
 
     # Create a list of clients from which to select
@@ -99,9 +115,12 @@ def main(clients):
         if not ready:
             sys.exit(0)
 
+        # Process validation procedure for each client
         process_result = pc.process_clients(clients_dict, client_keys, report_date, three_months, logger)
 
         if process_result == 1:
+
+            # No logins were successful
             logger.info('\nNo successful logins recorded. No reports will be generated.\n'
                         f'If you believe this message was generated incorrectly, please report the failure and submit '
                         f'the log file from this run attempt. The log file can be found in the <log> directory.'
@@ -112,7 +131,10 @@ def main(clients):
                       f'the log file from this run attempt. The log file can be found in the <log> directory.\n\n'
                       f'Click the <Exit> button to exit the program.',
                       'Resource Validation Result', ok_button='Exit')
+
         else:
+
+            # At least one login was successful; displays any logins that did not succeed
             logger.info(f'\nValidation is complete.\n'
                         f'Accounts not validated: {process_result}\n\n'
                         f'Reports can be found in the <output> directory. The log file can be '

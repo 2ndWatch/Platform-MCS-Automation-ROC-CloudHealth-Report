@@ -3,6 +3,7 @@ from UliPlot.XLSX import auto_adjust_xlsx_column_width as adjust
 import pandas as pd
 
 
+# Create a list of Cloud Health .csv files to look for
 def create_file_list(name, date):
     file_list_csv = [
         f'{name} eip unattached {date}.csv',
@@ -16,6 +17,7 @@ def create_file_list(name, date):
     return file_list_csv
 
 
+# Add a 'No resources matched' or 'No resources excluded' line to any empty dataframes
 def fill_empty_df(validated_df, excluded_csv_df, empty_unmatched_row, empty_excluded_row, columns_list, i, logger):
     if validated_df.empty:
         logger.debug('\nEmpty dataframe, adding "No resources matched" entry.')
@@ -34,6 +36,7 @@ def fill_empty_df(validated_df, excluded_csv_df, empty_unmatched_row, empty_excl
     return validated_df, excluded_csv_df
 
 
+# Compare resources between this program and Cloud Health
 def compare_resources(client_name, df_list, file_list_csv, date, logger):
     column_names = ['Public IP', 'Image Id', 'Snapshot Id', 'Volume Id', 'Image Id', 'Snapshot Id']
     metric_list = ['Unassociated Elastic IPs', 'Old AMIs', 'Old EBS Snapshots', 'Unattached Volumes',

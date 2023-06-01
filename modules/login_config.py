@@ -1,6 +1,7 @@
 import os
 
 
+# This may not be needed anymore
 def set_login_credentials(profile, profile_name):
 
     os.environ['AZURE_TENANT_ID'] = profile['tenant_id']

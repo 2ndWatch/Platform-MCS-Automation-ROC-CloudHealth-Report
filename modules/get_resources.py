@@ -13,6 +13,7 @@ def get_resources(profile, region, report_date, three_month,
     region_name = region
     account_number = profile['account_number']
 
+    # Create a boto3 session and boto3 clients for EC2, RDS, and CloudTrail
     session = boto3.Session(region_name=region_name)
     ec2 = session.client('ec2')
     rds = session.client('rds')

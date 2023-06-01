@@ -36,6 +36,7 @@ def generate_final_report(logger):
             # Iterate over the sheets in the validated workbook
             for validated_sheet in validated_wb.sheetnames:
                 if validated_sheet in sheet_mapping and sheet_mapping[validated_sheet] in final_wb.sheetnames:
+
                     # Get the corresponding sheet in the final workbook
                     final_sheet = final_wb[sheet_mapping[validated_sheet]]
 

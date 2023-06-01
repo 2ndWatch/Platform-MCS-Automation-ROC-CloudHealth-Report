@@ -3,11 +3,13 @@ import time
 import tqdm
 import json
 
+# Read the vol_cost.txt file into a dictionary
 with open('src/vol_cost.txt') as vc:
     vc_txt = vc.read()
 vol_cost_dict = json.loads(vc_txt)
 
 
+# Calculate the cost of a volume based on its type, size, properties, and region
 def calculate_storage_price(region_name, volume_size, volume_type, volume_iops, volume_throughput):
     cost = 0
     region_cost_dict = vol_cost_dict[region_name]
@@ -46,11 +48,14 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
             response = ec2_client.describe_volumes(MaxResults=400)
 
         volumes = response['Volumes']
+
         all_vols_count += len(volumes)
         logger.info(f'Volumes found: {all_vols_count}')
 
         unatt_vols = []
         for volume in volumes:
+
+            # Filter for volumes that are not attached and add to the unatt_vols list
             if not volume['Attachments']:
                 vol_dict = {'name': volume['VolumeId'], 'size': volume['Size'], 'type': volume['VolumeType']}
                 try:
@@ -75,6 +80,8 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
                 logger.info(f'   Unattached volume found. CloudTrail request sent.')
                 unatt_count += 1
 
+                # For any unattached volume, make a call to CloudTrail to check if it was unattached within the
+                # past four weeks
                 ct_response = cloudtrail_client.lookup_events(LookupAttributes=[{'AttributeKey': 'ResourceName',
                                                                                  'AttributeValue': f'{volume}'}])
 
@@ -92,10 +99,12 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
 
                 if unatt_four_weeks:
                     logger.debug(f'      {volume} has been unattached for more than four weeks.')
+
                     # Calculate cost per month
                     volume_cost = calculate_storage_price(region_name, volume_size, volume_type,
                                                           volume_iops, volume_throughput)
 
+                    # Dataframe column names:
                     # 'Account Name', 'Account Number', 'Region Name', 'Volume Id', 'Size (GB)',
                     # 'Volume Type', 'Cost Per Month'
                     row = [account_name, account_number, region_name, volume_name, volume_size,
@@ -103,8 +112,12 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
                     df_vol.loc[len(df_vol)] = row
                     valid_count += 1
 
+                # If there are more unattached volumes to check, pause for 31 seconds to avoid CloudTrail API
+                # throttling (max 2 requests per minute)
                 if unatt_count < len(unatt_vols):
                     logger.info('      Waiting 31 seconds to avoid CloudTrail API request throttling...')
+
+                    # Create a progress bar in the console to track each pause
                     for _ in tqdm.tqdm(range(31)):
                         time.sleep(1)
 
