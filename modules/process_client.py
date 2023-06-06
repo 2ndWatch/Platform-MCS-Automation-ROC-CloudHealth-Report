@@ -17,6 +17,14 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
         # Create 6 dataframes for the client
         df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps = cdf.create_dataframes()
 
+        # Create 6 empty dataframes for the Cloud health data
+        df_ch_eips, df_ch_oldimages, df_ch_ebssnaps, df_ch_vol, df_ch_unami, df_ch_rdssnaps, \
+            columns_ch_list, empty_excluded_ch_row = cdf.create_cloudhealth_dataframes()
+
+        # TODO: Fill Cloud Health dataframes via API calls; this only happens once per client
+
+        cloudhealth_dataframes = [df_ch_eips, df_ch_oldimages, df_ch_ebssnaps, df_ch_vol, df_ch_unami, df_ch_rdssnaps]
+
         # Create EBS cost dataframe
         df_ebs_cost = cdf.create_cost_df(clients_dict[key]['name'], report_date)
 
@@ -48,10 +56,14 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
 
                 # Create a list of dataframes and .csv files
                 df_list = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
+
+                # TODO: this list will be obsolete
                 file_list_csv = cr.create_file_list(clients_dict[key]['name'], report_date)
 
                 # Compare resources found by this program against those found by Cloud Health policies
                 logger.info('\nResource details collected. Running Cloud Health report validation...')
+
+                # TODO: pass in cloudhealth_dataframes instead of file_list_csv
                 cr.compare_resources(clients_dict[key]['name'], df_list, file_list_csv, report_date, logger)
             else:
                 logger.info(f'You were not logged in, skipping {profile["profile_name"]}.')

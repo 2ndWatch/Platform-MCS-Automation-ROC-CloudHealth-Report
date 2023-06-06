@@ -42,3 +42,5 @@ urllib3==1.26.15
 whichcraft==0.6.1
 zope.event==4.6
 zope.interface==6.0
+
+requests~=2.31.0
