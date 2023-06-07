@@ -94,8 +94,8 @@ def create_column_lists_empty_rows():
     return columns_list, empty_unmatched_row, columns_ch_list, empty_excluded_row
 
 
-def create_cost_df(name, date):
-    cost_df = pd.read_csv(f'cloudhealth/{name} ebs cost {date}.csv')
+def create_cost_df(name):
+    cost_df = pd.read_csv(f'cloudhealth/{name} ebs cost.csv')
 
     # Drop columns so df only has 'ResourceId' and 'Cost'
     cost_df.drop(['PayerAccountId', 'LinkedAccountId', 'RecordType', 'ProductName', 'UsageType', 'Operation',

@@ -28,7 +28,4 @@ def fill_cloudhealth_dataframes(client_name, logger):
             dataframe_to_fill = dataframe_to_fill.drop(columns=['Asset ID', 'AWS Account ID'])
         filled_dataframes.append(dataframe_to_fill)
 
-        # pd.set_option('display.max_columns', None)
-        # logger.info(f'\n\nFilled dataframe for {alert_keys[i]}:\n\n{dataframe_to_fill.head(3)}')
-
     return filled_dataframes

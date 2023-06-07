@@ -1,11 +1,4 @@
 import requests as req
-import json
-
-# Read the clients.txt file into a dictionary
-# # TODO: change file path to 'src/clients.txt'
-# with open('src/clients.txt') as cl:
-#     cl_txt = cl.read()
-# clients_dict = json.loads(cl_txt)
 
 headers = {
     'Authorization': 'Bearer 778e28b4-e928-4374-b608-33772d987028',
@@ -24,7 +17,6 @@ def get_client_id(client_name, logger):
 
     get_customers_response = req.get('https://chapi.cloudhealthtech.com/v1/customers', headers=headers, params=params)
     gcr_json = get_customers_response.json()
-    # print(json.dumps(gcr_json, indent=2))
     for cust in gcr_json['customers']:
         if cust['name'] == client_name:
             client_id = cust["id"]
@@ -34,15 +26,12 @@ def get_client_id(client_name, logger):
     return client_id
 
 
-# Using the 'client_api_id' parameter is the key!
 def get_wasted_spend_policy_id(client_name, client_id, logger):
     policy_id = None
 
     all_policies_response = req.get(f'https://chapi.cloudhealthtech.com/v1/policies?client_api_id={client_id}',
                                     headers=headers, params=client_params)
     apr_json = all_policies_response.json()
-    # print(json.dumps(apr_json, indent=2))
-    # ".Wasted Spend"
     for policy in apr_json['policies']:
         if policy['name'] == ".Wasted Spend":
             policy_id = policy["id"]
@@ -67,7 +56,6 @@ def get_policy_block_ids(client_id, policy_id, logger):
                                      f'policy_blocks?client_api_id={client_id}',
                                      headers=headers, params=client_params)
     pbr_json = policy_blocks_response.json()
-    # print(json.dumps(pbr_json, indent=2))
     for policy in pbr_json['policy_blocks']:
         policy_name = policy['name']
         if policy_name in block_names:
@@ -115,7 +103,6 @@ def get_alert_ids(client_id, policy_id, block_ids, logger):
                                             f'policy_blocks/{block_id}/violations?client_api_id={client_id}',
                                             headers=headers, params=client_params)
         bvr_json = block_violations_response.json()
-        # print(json.dumps(bvr_json, indent=2))
         for key, value in alerts_dict.items():
             if bvr_json['policy_violations']:
                 for violation in bvr_json['policy_violations']:
@@ -151,14 +138,13 @@ def get_violations(client_id, policy_id, alerts_list, logger):
                                                             f'{value["alert_id"]}?client_api_id={client_id}',
                                                             headers=headers, params=client_params)
 
-                    vr_json = single_violation_response.json()
-                    # print(json.dumps(vr_json, indent=2))
-                    for resource in vr_json['affected_resources']:
+                    svr_json = single_violation_response.json()
+                    for resource in svr_json['affected_resources']:
                         value['affected_resources'].append(resource)
                     logger.info(f'   {key} resource count: {len(value["affected_resources"])}')
 
                     try:
-                        is_next = vr_json['_links']['next']
+                        is_next = svr_json['_links']['next']
                     except KeyError:
                         break
             except KeyError:
@@ -168,16 +154,12 @@ def get_violations(client_id, policy_id, alerts_list, logger):
     return alerts_list
 
 
+# Primary function, returns a list of wasted spend policy alerts and associated resources
 def get_cloudhealth_resources(client_name, logger):
-
     client_id = get_client_id(client_name, logger)
-
     policy_id = get_wasted_spend_policy_id(client_name, client_id, logger)
-
     block_ids = get_policy_block_ids(client_id, policy_id, logger)
-
     alerts_list, alerts_dict = get_alert_ids(client_id, policy_id, block_ids, logger)
-
     alerts_list_with_resources = get_violations(client_id, policy_id, alerts_list, logger)
 
     return alerts_list_with_resources, alerts_dict

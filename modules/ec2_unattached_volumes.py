@@ -34,7 +34,7 @@ def calculate_storage_price(region_name, volume_size, volume_type, volume_iops, 
 
 
 def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, account_number,
-                               region_name, report_date, df_vol, logger):
+                               region_name, today, df_vol, logger):
     all_vols_count = 0
     unatt_count = 0
     valid_count = 0
@@ -69,7 +69,7 @@ def get_old_unattached_volumes(ec2_client, cloudtrail_client, account_name, acco
                 unatt_vols.append(vol_dict)
 
         if unatt_vols:
-            four_week_delta_date = (datetime.strptime(report_date, '%Y-%m-%d') - timedelta(weeks=4)).date()
+            four_week_delta_date = (datetime.strptime(today, '%Y-%m-%d') - timedelta(weeks=4)).date()
             for volume in unatt_vols:
                 volume_name = volume['name']
                 volume_size = volume['size']

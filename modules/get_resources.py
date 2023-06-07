@@ -7,7 +7,7 @@ from modules import ec2_unattached_volumes as euvo
 from modules import ec2_elastic_ips as eips
 
 
-def get_resources(profile, region, report_date, three_month,
+def get_resources(profile, region, today, three_month,
                   df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps, df_ebs_cost, logger):
     account_name = profile['account_name']
     region_name = region
@@ -43,7 +43,7 @@ def get_resources(profile, region, report_date, three_month,
     logger.info('\nGetting unattached EC2 volumes...')
     df_vol, unatt_volume_count, valid_volume_count = euvo.get_old_unattached_volumes(ec2, ct, account_name,
                                                                                      account_number, region_name,
-                                                                                     report_date, df_vol, logger)
+                                                                                     today, df_vol, logger)
     logger.info(f'   Number of unattached volumes: {unatt_volume_count}')
     logger.info(f'   Number of valid unattached volumes: {valid_volume_count}')
 

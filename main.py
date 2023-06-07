@@ -44,43 +44,9 @@ def main(clients):
     if welcome is None:
         sys.exit(0)
 
-    # Get report date; transform to three-month date and reformat to file date
-    # TODO: validate date entry - unless we can get a Cloud Health API key
-    title = 'Date Entry'
-    field_names = ['Year (YYYY)', 'Month (MM)', 'Day (DD)']
-    date_values = eg.multenterbox(msg='Enter the date of the Cloud Health reports.\n', title=title, fields=field_names)
-
-    # Validation
-    while 1:
-        if date_values is None:
-            break
-        error = ''
-        for i in range(len(date_values)):
-
-            # Fields cannot be empty
-            if date_values[i] == '':
-                error += f'{field_names[i]} is a required field.\n\n'
-
-            # Year must be 4 characters long
-            if field_names[i] == 'Year (YYYY)' and len(date_values[i]) != 4:
-                error += f'{field_names[i]} must be a four-digit number.\n\n'
-
-            # Month and day must be 2 characters long
-            if field_names[i] in ['Month (MM)', 'Day (DD)'] and len(date_values[i]) != 2:
-                error += f'{field_names[i]} must be a two-digit number.\n\n'
-
-        # No problems found
-        if not error:
-            break
-        date_values = eg.multenterbox(msg=error, title=title, fields=field_names, values=date_values)
-    if date_values is None:
-        sys.exit(0)
-
-    report_date = '-'.join(date_values)
-    three_months = convert_date(report_date)
-    logger.info(f'Report date entered: {report_date}')
-    if report_date is None:
-        sys.exit(0)
+    # Get today's date and transform to three-month date
+    today = datetime.now().strftime('%Y-%m-%d')
+    three_months = convert_date(today)
 
     # Create a list of clients from which to select
     choices = []
@@ -116,7 +82,7 @@ def main(clients):
             sys.exit(0)
 
         # Process validation procedure for each client
-        process_result = pc.process_clients(clients_dict, client_keys, report_date, three_months, logger)
+        process_result = pc.process_clients(clients_dict, client_keys, today, three_months, logger)
 
         if process_result == 1:
 

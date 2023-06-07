@@ -29,7 +29,6 @@ def compare_resources(client_name, filled_client_dataframes, filled_ch_dataframe
                    'Unused AMIs', 'Old RDS Snapshots']
 
     # Create column and row lists
-    # client_df_list, columns_list, empty_unmatched_row, empty_excluded_row = cdf.create_dataframes(for_client=True)
     columns_list, empty_unmatched_row, columns_ch_list, empty_excluded_row = cdf.create_column_lists_empty_rows()
 
     for i in range(6):
@@ -41,10 +40,10 @@ def compare_resources(client_name, filled_client_dataframes, filled_ch_dataframe
         client_resource_ids = set(client_dataframe[column_name])
         cloudhealth_csv_resource_ids = set(ch_dataframe[column_name])
 
-        # find the intersection of the two sets of resource ids (i.e. the matching ones)
+        # Find the intersection of the two sets of resource ids (i.e. the matching ones)
         matching_resource_ids = cloudhealth_csv_resource_ids.intersection(client_resource_ids)
 
-        # create new dataframes for matched, unmatched, and excluded resource ids
+        # Create new dataframes for matched, unmatched, and excluded resource ids
         matched_df = client_dataframe[client_dataframe[column_name].isin(matching_resource_ids)]
         unmatched_df = client_dataframe[~client_dataframe[column_name].isin(matching_resource_ids)]
         validated_df = pd.concat([matched_df, unmatched_df])
@@ -54,7 +53,7 @@ def compare_resources(client_name, filled_client_dataframes, filled_ch_dataframe
         validated_df_checked, excluded_df_checked = fill_empty_df(validated_df, excluded_df, empty_unmatched_row,
                                                                   empty_excluded_row, columns_list, i, logger)
 
-        # save the dataframes to Excel files
+        # Save the dataframes to Excel files
         try:
             with pd.ExcelWriter(f'output/{client_name}-Validated-{date}.xlsx', mode='a', if_sheet_exists='replace') \
                     as writer:

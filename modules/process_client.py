@@ -8,7 +8,7 @@ import modules.generate_final_report as gen
 
 
 # Log into all accounts for each selected client and run the functions to gather resources
-def process_clients(clients_dict, client_keys, report_date, three_months, logger):
+def process_clients(clients_dict, client_keys, today, three_months, logger):
     accounts_logged_in = 0
     accounts_not_logged_in = 0
     accounts_not_logged_in_list = []
@@ -23,12 +23,12 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
         filled_ch_dataframes = fcd.fill_cloudhealth_dataframes(client_name, logger)
 
         # Create EBS cost dataframe
-        df_ebs_cost = cdf.create_cost_df(client_name, report_date)
+        df_ebs_cost = cdf.create_cost_df(client_name)
 
         for profile in clients_dict[key]['profiles']:
             profile_name = profile['profile_name']
 
-            # Set certain aws-azure-login environmental variables
+            # Set certain aws-azure-login environmental variables - still needed
             lcfg.set_login_credentials(profile, profile_name)
 
             logger.info(f'\nLogging in to {profile_name}. Enter your Azure credentials in '
@@ -46,7 +46,7 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
                 # Currently this is set to all US regions for all accounts
                 for region in profile['region']:
                     df_eips, df_oldimages, df_ebssnaps, \
-                        df_vol, df_unami, df_rdssnaps = gr.get_resources(profile, region, report_date,
+                        df_vol, df_unami, df_rdssnaps = gr.get_resources(profile, region, today,
                                                                          three_months, df_eips, df_oldimages,
                                                                          df_ebssnaps, df_vol, df_unami,
                                                                          df_rdssnaps, df_ebs_cost, logger)
@@ -54,14 +54,10 @@ def process_clients(clients_dict, client_keys, report_date, three_months, logger
                 # Create a list of client dataframes
                 filled_client_dataframes = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
 
-                # TODO: this list will be obsolete
-                # file_list_csv = cr.create_file_list(client_name, report_date)
-
                 # Compare resources found by this program against those found by Cloud Health policies
                 logger.info('\nResource details collected. Running Cloud Health report validation...')
 
-                # TODO: pass in cloudhealth_dataframes instead of file_list_csv
-                cr.compare_resources(client_name, filled_client_dataframes, filled_ch_dataframes, report_date, logger)
+                cr.compare_resources(client_name, filled_client_dataframes, filled_ch_dataframes, today, logger)
             else:
                 logger.info(f'You were not logged in, skipping {profile["profile_name"]}.')
                 accounts_not_logged_in += 1
