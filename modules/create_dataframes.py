@@ -1,3 +1,5 @@
+import logging
+
 import pandas as pd
 
 
@@ -102,6 +104,12 @@ def create_cost_df(name):
                   'ItemDescription', 'UsageStartDate', 'SyntheticId'], axis='columns', inplace=True)
 
     # Reformat ResourceId so that it only displays 'snap-*'
-    cost_df['ResourceId'] = cost_df['ResourceId'].apply(lambda x: x[-22:])
+    try:
+        cost_df['ResourceId'] = cost_df['ResourceId'].apply(lambda x: x[-22:])
+    except TypeError:
+        cost_df['ResourceId'] = cost_df['ResourceId'].astype(str).apply(lambda x: x[-22:])
+    else:
+        logging.critical("Unable to Reformat ResourceId so that it only displays 'snap-*'")
+        exit()
 
     return cost_df
