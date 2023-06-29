@@ -543,8 +543,8 @@
             },
             {
                 "account_name": "Corp Functions Dev",
-                "profile_name": "SiriusPoint",
-                "account_number": "",
+                "profile_name": "SiriusPoint195596133312",
+                "account_number": "195596133312",
                 "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "2cd6d4c8-0f5a-4fc9-92de-896613896695"
@@ -800,12 +800,12 @@
         "name": "US Plate Glass Insurance Company",
         "profiles": [
             {
-                "account_name": "",
-                "profile_name": "",
-                "account_number": "",
+                "account_name": "MS Admin",
+                "profile_name": "USPlate185471771576",
+                "account_number": "185471771576",
                 "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
-                "app_id_uri": ""
+                "app_id_uri": "a20cbea8-28cd-403c-9ae4-9b4fc1cf15f5"
             }
         ]
     },

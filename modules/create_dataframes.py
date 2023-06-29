@@ -109,7 +109,7 @@ def create_cost_df(name):
     except TypeError:
         cost_df['ResourceId'] = cost_df['ResourceId'].astype(str).apply(lambda x: x[-22:])
     else:
+        cost_df['ResourceId'] = cost_df['ResourceId'].astype(str).apply(lambda x: x[-22:])
         logging.critical("Unable to Reformat ResourceId so that it only displays 'snap-*'")
-        exit()
 
     return cost_df
