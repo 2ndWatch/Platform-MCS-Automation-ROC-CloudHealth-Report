@@ -800,7 +800,7 @@
         "name": "US Plate Glass Insurance Company",
         "profiles": [
             {
-                "account_name": "MS Admin",
+                "account_name": "US Plate MS Admin",
                 "profile_name": "USPlate185471771576",
                 "account_number": "185471771576",
                 "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
@@ -938,12 +938,12 @@
         "name": "Visibility Software, LLC",
         "profiles": [
             {
-                "account_name": "",
-                "profile_name": "",
-                "account_number": "",
+                "account_name": "Visibility 841746326269",
+                "profile_name": "visibility841746326269",
+                "account_number": "841746326269",
                 "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
-                "app_id_uri": ""
+                "app_id_uri": "7e4e092c-86e1-4204-a859-e6236eda1592"
             }
         ]
     },
