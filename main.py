@@ -15,8 +15,8 @@ console = logging.StreamHandler(sys.stdout)
 console.setLevel(logging.INFO)
 logger.addHandler(console)
 
-# Read the clients.txt file into a dictionary
-with open('src/clients.txt') as cl:
+# Read the clients.json file into a dictionary
+with open('src/clients.json') as cl:
     cl_txt = cl.read()
 clients_dict = json.loads(cl_txt)
 
