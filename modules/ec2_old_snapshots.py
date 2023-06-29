@@ -40,9 +40,6 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
                 else:
                     logger.debug(f'      Not associated with an AMI on the old AMIs list.')
 
-                    # If the snapshot was created by AWS Backup, get the AMI ID
-                    if 'CreateImage' in snap_desc:
-                        snap_ami = snap_desc[snap_desc.index('ami'):snap_desc.index('ami') + 21]
                     try:
                         cost = df_ebs_cost.loc[df_ebs_cost['ResourceId'] == snap_id,
                                                'Cost'].values[0].item()
@@ -54,7 +51,7 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
                     # 'Account Name', 'Account Number', 'Region Name', 'Snapshot Id',
                     # 'Size (GB)', 'Create Date', 'Image Id', 'Cost Per Month'
                     row = [account_name, account_number, region_name, snap_id, snap_size,
-                           snap_start, snap_ami, round(storage_cost, 2)]
+                           snap_start, round(storage_cost, 2)]
                     df_ebssnaps.loc[len(df_ebssnaps)] = row
                     valid_count += 1
 

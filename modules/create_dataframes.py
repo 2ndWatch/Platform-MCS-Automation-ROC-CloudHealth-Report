@@ -9,7 +9,7 @@ def create_dataframes(for_client=False):
     df_oldimages = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name',
                                          'Image Id', 'Image Name', 'Public', 'Image Age', 'Cost Per Month'])
     df_ebssnaps = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Snapshot Id',
-                                        'Size (GB)', 'Create Date', 'Image Id', 'Cost Per Month'])
+                                        'Size (GB)', 'Create Date', 'Cost Per Month'])
     df_vol = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Volume Id',
                                    'Size (GB)', 'Volume Type', 'Cost Per Month'])
     df_unami = pd.DataFrame(columns=['Account Name', 'Account Number', 'Region Name', 'Image Id',
@@ -50,7 +50,7 @@ def create_column_lists_empty_rows():
         ['Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name', 'Public',
          'Image Age', 'Cost Per Month'],
         ['Account Name', 'Account Number', 'Region Name', 'Snapshot Id', 'Size (GB)',
-         'Create Date', 'Image Id', 'Cost Per Month'],
+         'Create Date', 'Cost Per Month'],
         ['Account Name', 'Account Number', 'Region Name', 'Volume Id', 'Size (GB)',
          'Volume Type', 'Cost Per Month'],
         ['Account Name', 'Account Number', 'Region Name', 'Image Id', 'Image Name', 'Public', 'Cost Per Month'],
@@ -62,7 +62,7 @@ def create_column_lists_empty_rows():
     empty_unmatched_row = [
         ['-', '-', '-', 'No resources matched', '-'],
         ['-', '-', '-', 'No resources matched', '-', '-', '-', '-'],
-        ['-', '-', '-', 'No resources matched', '-', '-', '-', '-'],
+        ['-', '-', '-', 'No resources matched', '-', '-', '-'],
         ['-', '-', '-', 'No resources matched', '-', '-', '-'],
         ['-', '-', '-', 'No resources matched', '-', '-', '-'],
         ['-', '-', '-', 'No resources matched', '-', '-', '-']
@@ -101,7 +101,7 @@ def create_cost_df(name):
 
     # Drop columns so df only has 'ResourceId' and 'Cost'
     cost_df.drop(['PayerAccountId', 'LinkedAccountId', 'RecordType', 'ProductName', 'UsageType', 'Operation',
-                  'ItemDescription', 'UsageStartDate', 'SyntheticId'], axis='columns', inplace=True)
+                  'ItemDescription', 'UsageStartDate', 'SyntheticId', 'BilledCost'], axis='columns', inplace=True)
 
     # Reformat ResourceId so that it only displays 'snap-*'
     try:

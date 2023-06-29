@@ -24,6 +24,8 @@ def process_clients(clients_dict, client_keys, today, three_months, logger):
 
         # Create EBS cost dataframe
         df_ebs_cost = cdf.create_cost_df(client_name)
+        # logger.info(df_ebs_cost.head())
+        # logger.info(df_ebs_cost.dtypes)
 
         for profile in clients_dict[key]['profiles']:
             profile_name = profile['profile_name']

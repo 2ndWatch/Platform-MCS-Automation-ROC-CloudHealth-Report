@@ -35,7 +35,7 @@
                 "account_name": "Sandbox",
                 "profile_name": "Coaction513847850768",
                 "account_number": "513847850768",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-1", "us-west-1", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "499ed3f7-a0bd-4eb3-9a0a-18cec5419d39"
             }
@@ -80,14 +80,6 @@
                 "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "26ffb536-3d6c-4005-89a8-cdb4bf43940e"
-            },
-            {
-                "account_name": "Assurgent_Learning",
-                "profile_name": "CypherWorx553535838391",
-                "account_number": "553535838391",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
-                "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
-                "app_id_uri": "dcaf26c5-dee5-4a2d-96ba-72e2075922d9"
             },
             {
                 "account_name": "MPA",
