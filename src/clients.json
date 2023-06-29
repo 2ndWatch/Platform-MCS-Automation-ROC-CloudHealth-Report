@@ -27,7 +27,7 @@
                 "account_name": "Main",
                 "profile_name": "Coaction922594259788",
                 "account_number": "922594259788",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-1", "us-west-1", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "5ec87a20-3535-40ba-a4e8-9541ffccfaee"
             },
