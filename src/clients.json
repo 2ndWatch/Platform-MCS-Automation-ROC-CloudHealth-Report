@@ -1,5 +1,5 @@
 {
-    "a": {
+    "ck": {
         "name": "CKE Restaurants",
         "profiles": [
             {
@@ -12,7 +12,7 @@
             }
         ]
     },
-    "b": {
+    "co": {
         "name": "Coaction",
         "profiles": [
             {
@@ -41,7 +41,7 @@
             }
         ]
     },
-    "c": {
+    "cr": {
         "name": "Crate & Barrel",
         "profiles": [
             {
@@ -70,7 +70,7 @@
             }
         ]
     },
-    "d": {
+    "cy": {
         "name": "CypherWorx",
         "profiles": [
             {
@@ -91,7 +91,7 @@
             }
         ]
     },
-    "e": {
+    "ed": {
         "name": "Edmund Optics",
         "profiles": [
             {
@@ -112,7 +112,7 @@
             }
         ]
     },
-    "f": {
+    "et": {
         "name": "eTurns",
         "profiles": [
             {
@@ -133,7 +133,7 @@
             }
         ]
     },
-    "g": {
+    "fa": {
         "name": "Fan Controlled Football",
         "profiles": [
             {
@@ -146,7 +146,7 @@
             }
         ]
     },
-    "h": {
+    "ga": {
         "name": "Gas Station TV",
         "profiles": [
             {
@@ -159,7 +159,7 @@
             }
         ]
     },
-    "i": {
+    "gr": {
         "name": "GreenFirst Forest Products",
         "profiles": [
             {
@@ -180,7 +180,7 @@
             }
         ]
     },
-    "j": {
+    "in": {
         "name": "International Air Transport  Association - IATA",
         "profiles": [
             {
@@ -201,7 +201,7 @@
             }
         ]
     },
-    "k": {
+    "kr": {
         "name": "Krispy Kreme",
         "profiles": [
             {
@@ -254,7 +254,7 @@
             }
         ]
     },
-    "l": {
+    "le": {
         "name": "Lenovo",
         "profiles": [
             {
@@ -275,7 +275,36 @@
             }
         ]
     },
-    "m": {
+    "mi": {
+        "name": "Michael Kors",
+        "profiles": [
+            {
+                "account_name": "MK API",
+                "profile_name": "MichaelKors576585942279",
+                "account_number": "576585942279",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "038a3667-b083-4493-8e73-74d7d43b42ba",
+                "app_id_uri": "955cee1f-1faa-4cf4-b1eb-260f1261a77b"
+            },
+            {
+                "account_name": "MK ECOMDEV",
+                "profile_name": "MichaelKors984854570035",
+                "account_number": "984854570035",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "038a3667-b083-4493-8e73-74d7d43b42ba",
+                "app_id_uri": "fee6548d-24a6-4342-b60c-2f3b9bd16d52"
+            },
+            {
+                "account_name": "MK ECOMDV",
+                "profile_name": "MichaelKors610518096808",
+                "account_number": "610518096808",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "038a3667-b083-4493-8e73-74d7d43b42ba",
+                "app_id_uri": "50cd5154-7048-4fb7-bf7a-dc8caeb80a42"
+            }
+        ]
+    },
+    "ne": {
         "name": "Neighborly",
         "profiles": [
             {
@@ -464,7 +493,7 @@
             }
         ]
     },
-    "n": {
+    "ra": {
         "name": "Rayonier AM",
         "profiles": [
             {
@@ -493,7 +522,7 @@
             }
         ]
     },
-    "o": {
+    "se": {
         "name": "Seattle Cancer Care Alliance",
         "profiles": [
             {
@@ -522,7 +551,7 @@
             }
         ]
     },
-    "p": {
+    "si": {
         "name": "SiriusPoint",
         "profiles": [
             {
@@ -775,7 +804,284 @@
             }
         ]
     },
-    "q": {
+    "sy": {
+        "name": "Symetra",
+        "profiles": [
+            {
+                "account_name": "Tier0",
+                "profile_name": "Symetra238823745446",
+                "account_number": "238823745446",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "84b42243-8b1e-4061-ae31-6f0342473d9a"
+            },
+            {
+                "account_name": "Mode1 - NP",
+                "profile_name": "Symetra049614664661",
+                "account_number": "049614664661",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "f33b003a-d7f3-417f-800f-8ffb4225dda8"
+            },
+            {
+                "account_name": "Mode1 - PRD",
+                "profile_name": "Symetra187776328687",
+                "account_number": "187776328687",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "a12014dc-3b60-465a-873c-b08aed623cfa"
+            },
+            {
+                "account_name": "Mode2 - DEV",
+                "profile_name": "Symetra359158632008",
+                "account_number": "359158632008",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "6a102066-4aba-490d-9027-f9cfbdd73047"
+            },
+            {
+                "account_name": "Mode2 - INT",
+                "profile_name": "Symetra907990685781",
+                "account_number": "907990685781",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "bb4b14bb-44d3-453b-add8-a79f0a05a46d"
+            },
+            {
+                "account_name": "Mode2 - PRD",
+                "profile_name": "Symetra224822315518",
+                "account_number": "224822315518",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "b8caf27d-9cf5-44c9-9b06-1d84dc233830"
+            },
+            {
+                "account_name": "HIPPA - Dev",
+                "profile_name": "Symetra380683384545",
+                "account_number": "380683384545",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "bcc7feef-832c-49fb-b918-842b4023d2e9"
+            },
+            {
+                "account_name": "HIPPA - Int",
+                "profile_name": "Symetra833769084479",
+                "account_number": "833769084479",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "c2eea966-e52e-407b-bdf3-3b737e604f07"
+            },
+            {
+                "account_name": "HIPPA - Prd",
+                "profile_name": "Symetra504968194411",
+                "account_number": "504968194411",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "2f15f08d-1b19-4682-977d-02105f25658e"
+            },
+            {
+                "account_name": "CyberArk - Prd",
+                "profile_name": "Symetra219361765369",
+                "account_number": "219361765369",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "254b91f3-ec6c-42e2-847b-653705e42dca"
+            },
+            {
+                "account_name": "CyberArk - NP",
+                "profile_name": "Symetra574245509086",
+                "account_number": "574245509086",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "e58eadf5-22b7-40ba-8b2f-2ec734912961"
+            },
+            {
+                "account_name": "EUC - NP",
+                "profile_name": "Symetra187927967475",
+                "account_number": "187927967475",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "60898804-c088-4130-9767-2a08d70ee62c"
+            },
+            {
+                "account_name": "EUC - Prd",
+                "profile_name": "Symetra382242775897",
+                "account_number": "382242775897",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "ab1be75d-1928-4d98-9f95-e5a3db51be82"
+            },
+            {
+                "account_name": "SwiftCloud DevOps Dev",
+                "profile_name": "Symetra308701666906",
+                "account_number": "308701666906",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "d8ecabf5-4f2b-4048-8866-75b927034469"
+            },
+            {
+                "account_name": "SwiftCloud DevOps Int",
+                "profile_name": "Symetra731887935032",
+                "account_number": "731887935032",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "b3185b32-9bf7-43a0-9a3c-8cea3e42f15a"
+            },
+            {
+                "account_name": "SwiftCloud DevOps Prd",
+                "profile_name": "Symetra875633491806",
+                "account_number": "875633491806",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "6c313dcd-7a53-4b36-9e08-3bb8132fa232"
+            },
+            {
+                "account_name": "SwiftCloud Leo Dev",
+                "profile_name": "Symetra301609943429",
+                "account_number": "301609943429",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "92bed2f9-7de3-488b-8da8-0c46235a0a79"
+            },
+            {
+                "account_name": "SwiftCloud Leo Int",
+                "profile_name": "Symetra782771878128",
+                "account_number": "782771878128",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "398a85d0-83b6-4fdc-8c85-2fe407451c2d"
+            },
+            {
+                "account_name": "SwiftCloud ",
+                "profile_name": "Symetra",
+                "account_number": "",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": ""
+            },
+            {
+                "account_name": "SwiftCloud ContactCenter Dev",
+                "profile_name": "Symetra810948784786",
+                "account_number": "810948784786",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "9ed1649a-29f8-4fcd-b2fd-c3de62bc12ec"
+            },
+            {
+                "account_name": "SwiftCloud ContactCenter Int",
+                "profile_name": "Symetra520159488260",
+                "account_number": "520159488260",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "3d3b72d4-7f75-480a-9d9c-8824de4111bf"
+            },
+            {
+                "account_name": "SwiftCloud PASR Dev",
+                "profile_name": "Symetra118085578789",
+                "account_number": "118085578789",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "f8401dc8-0f45-4269-8872-2bc666d061b8"
+            },
+            {
+                "account_name": "SwiftCloud PEx Dev",
+                "profile_name": "Symetra153937143779",
+                "account_number": "153937143779",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "bce99fe6-c3bc-423c-adb9-37e6ee6957e4"
+            },
+            {
+                "account_name": "SwiftCloud PEx Int",
+                "profile_name": "Symetra580717149896",
+                "account_number": "580717149896",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "6cc04198-32a4-4de5-b21b-2722b63f598b"
+            },
+            {
+                "account_name": "SwiftCloud BSD Dev",
+                "profile_name": "Symetra624313876423",
+                "account_number": "624313876423",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "9a8ade1f-4f89-4c76-a892-c2c308580ae2"
+            },
+            {
+                "account_name": "SwiftCloud Leo Prd",
+                "profile_name": "Symetra291994354727",
+                "account_number": "291994354727",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "605b32a6-50dc-4f7b-9c49-6ffbfe59edbf"
+            },
+            {
+                "account_name": "SwiftCloud PEx Prd",
+                "profile_name": "Symetra973063240846",
+                "account_number": "973063240846",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "f3abe45e-53d7-4596-a78c-9895330ebe5a"
+            },
+            {
+                "account_name": "SwiftCloud ContactCenter Prd",
+                "profile_name": "Symetra770056792498",
+                "account_number": "770056792498",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "17eb6adb-19ba-4624-8841-c23373a30d56"
+            },
+            {
+                "account_name": "SwiftCloud ICAP Dev",
+                "profile_name": "Symetra951041368678",
+                "account_number": "951041368678",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "9ae073bf-d02e-4943-8482-ad29e10a1319"
+            },
+            {
+                "account_name": "SwiftCloud ICAP Int",
+                "profile_name": "Symetra258225895978",
+                "account_number": "258225895978",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "2e50e46c-5cf9-4d3a-bd79-a6a0bced453c"
+            },
+            {
+                "account_name": "SwiftCloud ICAP Prd",
+                "profile_name": "Symetra912645735714",
+                "account_number": "912645735714",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "90c0125d-33e5-4ee0-b121-d5fd160f0a79"
+            },
+            {
+                "account_name": "SwiftCloud ICAPAPI Dev",
+                "profile_name": "Symetra890213090742",
+                "account_number": "890213090742",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "964ffcbf-4c46-472f-bb1d-94b964e235b4"
+            },
+            {
+                "account_name": "SwiftCloud ICAPAPI Int",
+                "profile_name": "Symetra452742252005",
+                "account_number": "452742252005",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "8497cedf-4dca-46cc-a75e-d586a88249c1"
+            },
+            {
+                "account_name": "SwiftCloud ICAPAPI Prd",
+                "profile_name": "Symetra809503070552",
+                "account_number": "809503070552",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "tenant_id": "65b361c7-2cab-4cd6-b61f-1a71705724e8",
+                "app_id_uri": "00fcd430-fd5a-4eec-990d-dabf8189d900"
+            }
+        ]
+    },
+    "ta": {
         "name": "Taco Bell-Intl",
         "profiles": [
             {
@@ -812,7 +1118,7 @@
             }
         ]
     },
-    "r": {
+    "us": {
         "name": "US Plate Glass Insurance Company",
         "profiles": [
             {
@@ -833,7 +1139,7 @@
             }
         ]
     },
-    "s": {
+    "ut": {
         "name": "Utilities International",
         "profiles": [
             {
@@ -958,7 +1264,7 @@
             }
         ]
     },
-    "t": {
+    "vi": {
         "name": "Visibility Software, LLC",
         "profiles": [
             {
@@ -979,7 +1285,7 @@
             }
         ]
     },
-    "u": {
+    "vn": {
         "name": "VNS Health",
         "profiles": [
             {

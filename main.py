@@ -51,7 +51,7 @@ def main(clients):
     # Create a list of clients from which to select
     choices = []
     for key, value in clients.items():
-        choices.append(f'{key} {value["name"]}')
+        choices.append(f'{key} - {value["name"]}')
 
     while 1:
         selected_clients = eg.multchoicebox('Select one or multiple clients by left-clicking.\n\n'
