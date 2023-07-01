@@ -7,14 +7,13 @@ from modules import ec2_unattached_volumes as euvo
 from modules import ec2_elastic_ips as eips
 
 
-def get_resources(profile, region, today, three_month,
+def get_resources(profile, region, session, today, three_month,
                   df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps, df_ebs_cost, logger):
     account_name = profile['account_name']
     region_name = region
     account_number = profile['account_number']
 
-    # Create a boto3 session and boto3 clients for EC2, RDS, and CloudTrail
-    session = boto3.Session(region_name=region_name)
+    # Create boto3 clients for EC2, RDS, and CloudTrail
     ec2 = session.client('ec2')
     rds = session.client('rds')
     ct = session.client('cloudtrail')

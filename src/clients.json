@@ -1,6 +1,7 @@
 {
     "ck": {
         "name": "CKE Restaurants",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "CKE Restaurants MPA/Prod",
@@ -14,6 +15,7 @@
     },
     "co": {
         "name": "Coaction",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "EDP",
@@ -43,6 +45,7 @@
     },
     "cr": {
         "name": "Crate & Barrel",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MPA",
@@ -72,6 +75,7 @@
     },
     "cy": {
         "name": "CypherWorx",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "Main",
@@ -93,6 +97,7 @@
     },
     "ed": {
         "name": "Edmund Optics",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "Edmund Optics Main account",
@@ -114,6 +119,7 @@
     },
     "et": {
         "name": "eTurns",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MPA",
@@ -135,6 +141,7 @@
     },
     "fa": {
         "name": "Fan Controlled Football",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MPA",
@@ -148,6 +155,7 @@
     },
     "ga": {
         "name": "Gas Station TV",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MPA Admin",
@@ -161,6 +169,7 @@
     },
     "gr": {
         "name": "GreenFirst Forest Products",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "GreenFirst Forest Products",
@@ -182,6 +191,7 @@
     },
     "in": {
         "name": "International Air Transport  Association - IATA",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "Ciffasbar Prod",
@@ -203,6 +213,7 @@
     },
     "kr": {
         "name": "Krispy Kreme",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MPA",
@@ -256,6 +267,7 @@
     },
     "le": {
         "name": "Lenovo",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MPA",
@@ -277,6 +289,7 @@
     },
     "mi": {
         "name": "Michael Kors",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MK API",
@@ -306,6 +319,7 @@
     },
     "ne": {
         "name": "Neighborly",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MPA",
@@ -493,8 +507,28 @@
             }
         ]
     },
+    "pa": {
+        "name": "Pathward",
+        "login": "sso",
+        "start_url": "https://d-92677ba4ac.awsapps.com/start",
+        "sso_region": "us-east-1",
+        "role_name": "2nd-Watch-PowerUser",
+        "profiles": [
+            {
+                "account_name": "pathward-aws-edp-prod",
+                "account_number": "916668926827",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-edp-qa",
+                "account_number": "267723598036",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+            }
+        ]
+    },
     "ra": {
         "name": "Rayonier AM",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MCS RYAM",
@@ -524,6 +558,7 @@
     },
     "se": {
         "name": "Seattle Cancer Care Alliance",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "DataScience DEV 2W",
@@ -553,6 +588,7 @@
     },
     "si": {
         "name": "SiriusPoint",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MPA",
@@ -806,6 +842,7 @@
     },
     "sy": {
         "name": "Symetra",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "Tier0",
@@ -1081,8 +1118,28 @@
             }
         ]
     },
+    "ss": {
+        "name": "Sysco Corporation",
+        "login": "sso",
+        "start_url": "https://sysco-sso.awsapps.com/start",
+        "sso_region": "us-east-1",
+        "role_name": "McsSupport",
+        "profiles": [
+            {
+                "account_name": "AD-Services",
+                "account_number": "587986540577",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+            },
+            {
+                "account_name": "BPC-US-ETL",
+                "account_number": "946344491085",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+            }
+        ]
+    },
     "ta": {
         "name": "Taco Bell-Intl",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "MPA",
@@ -1118,8 +1175,33 @@
             }
         ]
     },
+    "tm": {
+        "name": "TMX",
+        "login": "sso",
+        "start_url": "https://d-9067041765.awsapps.com/start",
+        "sso_region": "us-east-1",
+        "role_name": "AWSPowerUserAccess",
+        "profiles": [
+            {
+                "account_name": "Business_Services_TMX",
+                "account_number": "804446482589",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+            },
+            {
+                "account_name": "Shared_Services_TMX",
+                "account_number": "217907077227",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+            },
+            {
+                "account_name": "TMXDatabase",
+                "account_number": "236721524899",
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+            }
+        ]
+    },
     "us": {
         "name": "US Plate Glass Insurance Company",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "US Plate MS Admin",
@@ -1141,6 +1223,7 @@
     },
     "ut": {
         "name": "Utilities International",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "internal",
@@ -1266,6 +1349,7 @@
     },
     "vi": {
         "name": "Visibility Software, LLC",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "Visibility 2W",
@@ -1287,6 +1371,7 @@
     },
     "vn": {
         "name": "VNS Health",
+        "login": "aal",
         "profiles": [
             {
                 "account_name": "Dev",
