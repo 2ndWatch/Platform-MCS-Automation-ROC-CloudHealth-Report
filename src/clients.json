@@ -507,25 +507,6 @@
             }
         ]
     },
-    "pa": {
-        "name": "Pathward",
-        "login": "sso",
-        "start_url": "https://d-92677ba4ac.awsapps.com/start",
-        "sso_region": "us-east-1",
-        "role_name": "2nd-Watch-PowerUser",
-        "profiles": [
-            {
-                "account_name": "pathward-aws-edp-prod",
-                "account_number": "916668926827",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
-            },
-            {
-                "account_name": "pathward-aws-edp-qa",
-                "account_number": "267723598036",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
-            }
-        ]
-    },
     "ra": {
         "name": "Rayonier AM",
         "login": "aal",
@@ -1128,12 +1109,12 @@
             {
                 "account_name": "AD-Services",
                 "account_number": "587986540577",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+                "region": ["us-east-1", "us-east-2"]
             },
             {
                 "account_name": "BPC-US-ETL",
                 "account_number": "946344491085",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+                "region": ["us-east-1", "us-east-2"]
             }
         ]
     },
@@ -1172,30 +1153,6 @@
                 "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "4e396e5e-214f-465a-814b-2892f55836fd"
-            }
-        ]
-    },
-    "tm": {
-        "name": "TMX",
-        "login": "sso",
-        "start_url": "https://d-9067041765.awsapps.com/start",
-        "sso_region": "us-east-1",
-        "role_name": "AWSPowerUserAccess",
-        "profiles": [
-            {
-                "account_name": "Business_Services_TMX",
-                "account_number": "804446482589",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
-            },
-            {
-                "account_name": "Shared_Services_TMX",
-                "account_number": "217907077227",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
-            },
-            {
-                "account_name": "TMXDatabase",
-                "account_number": "236721524899",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
             }
         ]
     },

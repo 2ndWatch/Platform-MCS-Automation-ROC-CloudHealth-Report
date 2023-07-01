@@ -51,7 +51,7 @@ def main(clients):
     # Create a list of clients from which to select
     choices = []
     for key, value in clients.items():
-        choices.append(f'{key} - {value["name"]}')
+        choices.append(f'{key}-{value["name"]}')
 
     while 1:
         selected_clients = eg.multchoicebox('Select one or multiple clients by left-clicking.\n\n'
@@ -61,10 +61,10 @@ def main(clients):
             sys.exit(0)
 
         # Create list of client keys from client selection
-        client_keys = [choice.split(' ')[0] for choice in selected_clients]
+        client_keys = [choice.split('-')[0] for choice in selected_clients]
         client_names = []
         for choice in selected_clients:
-            choice_split = choice.split(' ')
+            choice_split = choice.split('-')
             client_name = choice_split[1]
             if len(choice_split) > 2:
                 for i in range(2, len(choice_split)):
@@ -102,12 +102,14 @@ def main(clients):
 
             # At least one login was successful; displays any logins that did not succeed
             logger.info(f'\nValidation is complete.\n'
-                        f'Accounts not validated: {process_result}\n\n'
+                        f'Accounts not validated: {process_result[0], process_result[1]}\n\n'
+                        f'Unauthorized API calls: {process_result[2]}\n\n'
                         f'Reports can be found in the <output> directory. The log file can be '
                         f'found in the <log> directory.')
 
             eg.msgbox(f'Validation has completed.\n'
-                      f'Accounts not validated: {process_result}\n\n'
+                      f'Accounts not validated: {process_result[0], process_result[1]}\n\n'
+                      f'Unauthorized API calls: {process_result[2]}\n\n'
                       f'Reports can be found in the <output> directory. The log file can be '
                       f'found in the <log> directory.\n\n'
                       f'Please run the program again if you want to validate more clients.\n\n'

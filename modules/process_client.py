@@ -24,6 +24,7 @@ def process_clients(clients_dict, client_keys, today, three_months, logger):
     accounts_not_logged_in_list = []
     clients_logged_in = 0
     clients_not_logged_in_list = []
+    unauthorized_list = []
 
     for key in client_keys:
         client_name = clients_dict[key]['name']
@@ -71,11 +72,14 @@ def process_clients(clients_dict, client_keys, today, three_months, logger):
                     # create a boto3 session
                     session = create_boto3_session(profile, login, start_url, sso_region, role_name, region)
 
-                    df_eips, df_oldimages, df_ebssnaps, \
-                        df_vol, df_unami, df_rdssnaps = gr.get_resources(profile, region, session, today,
-                                                                         three_months, df_eips, df_oldimages,
-                                                                         df_ebssnaps, df_vol, df_unami,
-                                                                         df_rdssnaps, df_ebs_cost, logger)
+                    df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, \
+                        df_rdssnaps, unauthorized = gr.get_resources(profile, region, session, today,
+                                                                     three_months, df_eips, df_oldimages,
+                                                                     df_ebssnaps, df_vol, df_unami,
+                                                                     df_rdssnaps, df_ebs_cost, logger)
+
+                    for item in unauthorized:
+                        unauthorized_list.append(item)
 
                 # Create a list of client dataframes
                 filled_client_dataframes = [df_eips, df_oldimages, df_ebssnaps, df_vol, df_unami, df_rdssnaps]
@@ -106,4 +110,4 @@ def process_clients(clients_dict, client_keys, today, three_months, logger):
 
         # Create the 'Final' report for SDMs
         gen.generate_final_report(logger)
-        return accounts_not_logged_in_list, clients_not_logged_in_list
+        return [accounts_not_logged_in_list, clients_not_logged_in_list, unauthorized_list]
