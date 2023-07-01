@@ -49,6 +49,7 @@ def process_clients(clients_dict, client_keys, today, three_months, logger):
                 sso_region = clients_dict[key]['sso_region']
                 role_name = clients_dict[key]['role_name']
 
+            # log in to the client
             if login == 'sso' or login == 'aal':
                 logged_in = aws.aws_login(login, profile, client_name, logger,
                                           start_url=start_url, sso_region=sso_region)
@@ -67,6 +68,7 @@ def process_clients(clients_dict, client_keys, today, three_months, logger):
                 for region in profile['region']:
 
                     # TODO: may need to catch an exception if an SSO session can't be made for some reason
+                    # create a boto3 session
                     session = create_boto3_session(profile, login, start_url, sso_region, role_name, region)
 
                     df_eips, df_oldimages, df_ebssnaps, \

@@ -3,8 +3,8 @@ import time
 import tqdm
 import json
 
-# Read the vol_cost.txt file into a dictionary
-with open('src/vol_cost.txt') as vc:
+# Read the vol_cost.json file into a dictionary
+with open('src/vol_cost.json') as vc:
     vc_txt = vc.read()
 vol_cost_dict = json.loads(vc_txt)
 

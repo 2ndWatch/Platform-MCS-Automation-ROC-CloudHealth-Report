@@ -1,4 +1,3 @@
-import boto3
 from modules import ec2_old_images as eold
 from modules import ec2_old_snapshots as esnap
 from modules import rds_old_snapshots as rsnap
