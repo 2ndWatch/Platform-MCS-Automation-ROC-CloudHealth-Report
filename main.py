@@ -101,14 +101,16 @@ def main(clients):
         else:
 
             # At least one login was successful; displays any logins that did not succeed
-            logger.info(f'\nValidation is complete.\n'
-                        f'Accounts not validated: {process_result[0], process_result[1]}\n\n'
+            logger.info(f'\nValidation is complete.\n\n'
+                        f'Accounts not validated: {process_result[0]}\n'
+                        f'Clients not validated: {process_result[1]}\n'
                         f'Unauthorized API calls: {process_result[2]}\n\n'
                         f'Reports can be found in the <output> directory. The log file can be '
                         f'found in the <log> directory.')
 
-            eg.msgbox(f'Validation has completed.\n'
-                      f'Accounts not validated: {process_result[0], process_result[1]}\n\n'
+            eg.msgbox(f'Validation has completed.\n\n'
+                      f'Accounts not validated: {process_result[0]}\n'
+                      f'Clients not validated: {process_result[1]}\n'
                       f'Unauthorized API calls: {process_result[2]}\n\n'
                       f'Reports can be found in the <output> directory. The log file can be '
                       f'found in the <log> directory.\n\n'

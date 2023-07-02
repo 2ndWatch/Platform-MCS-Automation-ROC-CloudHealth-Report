@@ -105,7 +105,7 @@ def get_resources(profile, region, session, today, three_month,
         logger.info(f'   Number of valid old RDS snapshots: {db_snapshot_count}')
         logger.info(f'   Number of valid old Aurora snapshots: {aurora_snapshot_count}')
     except ClientError as e:
-        if 'UnauthorizedOperation' in str(e):
+        if 'AccessDenied' in str(e):
             logger.warning(f'   The describe_db_snapshots or describe_cluster_snapshots API call is not authorized in '
                            f'account {account_number} in the {region_name} region.')
             unauthorized.append(['RDS snaps', account_number, region_name])

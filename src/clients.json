@@ -56,10 +56,10 @@
                 "app_id_uri": "27baa026-4ee2-48f9-8b75-9be8ab0ec544"
             },
             {
-                "account_name": "2WA",
+                "account_name": "2WA Ecommerce",
                 "profile_name": "CrateBarrel060480092206",
                 "account_number": "060480092206",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "eb6b4821-da9c-48af-a972-b06a4c85fe79"
             },
@@ -163,7 +163,7 @@
                 "account_number": "322672181427",
                 "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
-                "app_id_uri": "b536912e7-06cc-44f7-a6ed-dca102d00363"
+                "app_id_uri": "536912e7-06cc-44f7-a6ed-dca102d00363"
             }
         ]
     },
