@@ -96,12 +96,16 @@ def create_column_lists_empty_rows():
     return columns_list, empty_unmatched_row, columns_ch_list, empty_excluded_row
 
 
-def create_cost_df(name):
+def create_cost_df(name, logger):
     cost_df = pd.read_csv(f'cloudhealth/{name} ebs cost.csv')
 
     # Drop columns so df only has 'ResourceId' and 'Cost'
     cost_df.drop(['PayerAccountId', 'LinkedAccountId', 'RecordType', 'ProductName', 'UsageType', 'Operation',
-                  'ItemDescription', 'UsageStartDate', 'SyntheticId', 'BilledCost'], axis='columns', inplace=True)
+                  'ItemDescription', 'UsageStartDate', 'SyntheticId'], axis='columns', inplace=True)
+    try:
+        cost_df.drop(['BilledCost'], axis='columns', inplace=True)
+    except KeyError:
+        logger.debug('BilledCost not in cost_df, skipping column drop.')
 
     # Reformat ResourceId so that it only displays 'snap-*'
     try:

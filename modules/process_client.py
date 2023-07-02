@@ -37,7 +37,7 @@ def process_clients(clients_dict, client_keys, today, three_months, logger):
         filled_ch_dataframes = fcd.fill_cloudhealth_dataframes(client_name, logger)
 
         # Create EBS cost dataframe
-        df_ebs_cost = cdf.create_cost_df(client_name)
+        df_ebs_cost = cdf.create_cost_df(client_name, logger)
 
         for profile in clients_dict[key]['profiles']:
             logged_in = False

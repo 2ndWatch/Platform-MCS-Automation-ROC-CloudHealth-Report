@@ -507,6 +507,185 @@
             }
         ]
     },
+    "pa": {
+        "name": "Pathward",
+        "login": "sso",
+        "start_url": "https://d-92677ba4ac.awsapps.com/start",
+        "sso_region": "us-west-2",
+        "role_name": "2nd-Watch-PowerUser",
+        "profiles": [
+            {
+                "account_name": "pathward-aws-common-services",
+                "account_number": "801420401379",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-edp-dev",
+                "account_number": "899655396578",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-edp-pre-prod",
+                "account_number": "574210333749",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-edp-prod",
+                "account_number": "916668926827",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-edp-qa",
+                "account_number": "267723598036",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-finance-dev",
+                "account_number": "130650826489",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-finance-pre-prod",
+                "account_number": "924591250560",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-finance-prod",
+                "account_number": "427322194248",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-finance-qa",
+                "account_number": "123741411386",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-lending-dev",
+                "account_number": "907611834017",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-lending-pre-prod",
+                "account_number": "271303775735",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-lending-prod",
+                "account_number": "110457576704",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-lending-qa",
+                "account_number": "846856005637",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-payment-dev",
+                "account_number": "567012589814",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-payment-pre-prod",
+                "account_number": "514557105875",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-payment-prod",
+                "account_number": "000191458717",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-payment-qa",
+                "account_number": "472485013655",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-revenue-dev",
+                "account_number": "409433916330",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-revenue-pre-prod",
+                "account_number": "428647019649",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-revenue-prod",
+                "account_number": "241493660675",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-revenue-qa",
+                "account_number": "792418896482",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-shared-services-dev",
+                "account_number": "154858410386",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-shared-services-pre-prod",
+                "account_number": "161158414822",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-shared-services-prod",
+                "account_number": "661087311575",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-shared-services-qa",
+                "account_number": "887144397166",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-shared-services-sensitive-dev",
+                "account_number": "320844611858",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-shared-services-sensitive-pre-prod",
+                "account_number": "176908402423",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-shared-services-sensitive-prod",
+                "account_number": "863068329663",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-shared-services-sensitive-qa",
+                "account_number": "686216157624",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-tax-dev",
+                "account_number": "237200711721",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-tax-pre-prod",
+                "account_number": "793624104138",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-tax-prod",
+                "account_number": "251389675330",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-aws-tax-qa",
+                "account_number": "695769581195",
+                "region": ["us-east-1", "us-west-2"]
+            },
+            {
+                "account_name": "pathward-cloud-admin-sandbox",
+                "account_number": "240229230844",
+                "region": ["us-east-1", "us-west-2"]
+            }
+        ]
+    },
     "ra": {
         "name": "Rayonier AM",
         "login": "aal",
@@ -1109,12 +1288,382 @@
             {
                 "account_name": "AD-Services",
                 "account_number": "587986540577",
-                "region": ["us-east-1", "us-east-2"]
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "AD-Services-EU",
+                "account_number": "926539494993",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "AD-Services-NP",
+                "account_number": "301429199719",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Basis",
+                "account_number": "804990183447",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
             },
             {
                 "account_name": "BPC-US-ETL",
                 "account_number": "946344491085",
-                "region": ["us-east-1", "us-east-2"]
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "BPC-US-ETL-NP",
+                "account_number": "932436841987",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "BPCEU-NP",
+                "account_number": "781861004751",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Centrally-Managed",
+                "account_number": "707468524404",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "CyberSec",
+                "account_number": "326626592956",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "CyberSec-EU",
+                "account_number": "230080233060",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "CyberSec-NP",
+                "account_number": "618707265703",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "DIM-A2A",
+                "account_number": "572547632674",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "DIM-A2A-NP",
+                "account_number": "596205843786",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "DIM-DataSync",
+                "account_number": "481241272663",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "DIM-DataSync-NonProd",
+                "account_number": "484728675566",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "EIM",
+                "account_number": "470323947640",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "EIM-NP",
+                "account_number": "099476554548",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "FreightMgmtPortal",
+                "account_number": "951277705039",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "FreightMgmtPortal-NP",
+                "account_number": "772117473885",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "FreshPoint",
+                "account_number": "619863653711",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Freshpoint-BT",
+                "account_number": "053428694428",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Freshpoint-BT-NP",
+                "account_number": "180461023513",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "FreshPoint-NP",
+                "account_number": "940144820668",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "FTR-CoreFinancials",
+                "account_number": "902863833539",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "FTR-CoreFinancials-NP",
+                "account_number": "305443354132",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "FTR-Robotics",
+                "account_number": "690002505648",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "FTR-Robotics-NonProd",
+                "account_number": "366660147942",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "GRAIN",
+                "account_number": "027204925609",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "GRAIN-EU",
+                "account_number": "209261927533",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "GRAIN-EU-NP",
+                "account_number": "608756570184",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "GRAIN-NP",
+                "account_number": "045969618033",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Healthcare",
+                "account_number": "740457535784",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Healthcare-NP",
+                "account_number": "474241146231",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "ID-EU",
+                "account_number": "093968411650",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "ID-EU-NP",
+                "account_number": "005915983646",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "IDM",
+                "account_number": "642084586511",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "IDM-EU",
+                "account_number": "182478585118",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "IDM-NP",
+                "account_number": "006486291791",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "ImportsApp",
+                "account_number": "679288418037",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "ImportsApp-NP",
+                "account_number": "403432025122",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "LocalFlavor",
+                "account_number": "290378382140",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "LocalFlavor-NP",
+                "account_number": "149191316447",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "MDM-Platform",
+                "account_number": "641355987183",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "MDM-Platform-NP",
+                "account_number": "430210588497",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Merch-Platform",
+                "account_number": "483406420916",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Merchandising-Platform-NP",
+                "account_number": "623064507209",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "MerchCatman",
+                "account_number": "926383569375",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "ODI",
+                "account_number": "851869426924",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "ODI-NP",
+                "account_number": "782512261157",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Pallas",
+                "account_number": "698335769661",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "PCM",
+                "account_number": "246436917879",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "PCM-NP",
+                "account_number": "117613187320",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Prime",
+                "account_number": "109254241811",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Prime-NonProd",
+                "account_number": "848345576163",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "RPA-NP",
+                "account_number": "699237429155",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "SECURITY",
+                "account_number": "908318405952",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "SECURITY-EU-WEST-2",
+                "account_number": "599540560589",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "SEED-EDW",
+                "account_number": "052648356768",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "SEED-EU-HR-NP",
+                "account_number": "053940494612",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "SHAREDSERVICE",
+                "account_number": "117634630710",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "SHAREDSERVICE-NONPROD",
+                "account_number": "911149727616",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Sygma",
+                "account_number": "288830371312",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Sysco - Admin non-prod",
+                "account_number": "885523507357",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Sysco - Admin Prod",
+                "account_number": "467936237394",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Sysco - Guest Supply Non Prod",
+                "account_number": "607505244673",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Sysco - Guest Supply Prod",
+                "account_number": "197835843520",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Sysco-EU Ireland Non-Production",
+                "account_number": "526037781044",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Sysco-EU Ireland Production",
+                "account_number": "624009189359",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Sysco360-NP",
+                "account_number": "051887157634",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Telcom",
+                "account_number": "042315554715",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "Telcom-NP",
+                "account_number": "224281655478",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "VendorBrokerTies",
+                "account_number": "620960056239",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "VRFS-CIP",
+                "account_number": "793896103605",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "VRFS-CIP-NP",
+                "account_number": "037874854206",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "VRT-Platform",
+                "account_number": "715699285167",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
+            },
+            {
+                "account_name": "VRT-Platform-NP",
+                "account_number": "280765966336",
+                "region": ["us-east-1", "us-east-2", "eu-west-1", "eu-west-2"]
             }
         ]
     },
