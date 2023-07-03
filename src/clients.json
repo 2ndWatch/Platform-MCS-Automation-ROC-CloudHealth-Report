@@ -273,7 +273,7 @@
                 "account_name": "MPA",
                 "profile_name": "Lenovo161020536339",
                 "account_number": "161020536339",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ap-northeast-1", "ap-southeast-1", "eu-central-1"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "a6dbe183-7b3e-452b-afd1-72857934a651"
             },
@@ -281,7 +281,7 @@
                 "account_name": "LCE MS",
                 "profile_name": "Lenovo738478461433",
                 "account_number": "738478461433",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ap-northeast-1", "ap-southeast-1", "eu-central-1"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "d186ee7c-935c-4c97-a4fc-39ebe25c070b"
             }
@@ -325,7 +325,7 @@
                 "account_name": "MPA",
                 "profile_name": "Neighborly135866356148",
                 "account_number": "135866356148",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "7e6175e9-a950-4f90-80f3-d842647fe03e"
             },
@@ -333,7 +333,7 @@
                 "account_name": "Audit",
                 "profile_name": "Neighborly281792032418",
                 "account_number": "281792032418",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "6b31fbe6-2738-4ce8-b30e-a4daac77ae83"
             },
@@ -341,7 +341,7 @@
                 "account_name": "CoreServices",
                 "profile_name": "Neighborly150438470272",
                 "account_number": "150438470272",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "bc0c43a5-2f07-4081-8cf7-153267cf3667"
             },
@@ -349,7 +349,7 @@
                 "account_name": "CorporateProd",
                 "profile_name": "Neighborly708311264215",
                 "account_number": "708311264215",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "5ecf40da-9b50-4d4c-b3fe-b08802c77125"
             },
@@ -357,7 +357,7 @@
                 "account_name": "CorporateSandbox",
                 "profile_name": "Neighborly343259214268",
                 "account_number": "343259214268",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "6aa2be12-1e1c-4390-9f11-71c1ddd28ed6"
             },
@@ -365,7 +365,7 @@
                 "account_name": "DataAnalyticsNonprod",
                 "profile_name": "Neighborly388376058248",
                 "account_number": "388376058248",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "87472265-5e4f-438a-bf57-9aa67a91ce19"
             },
@@ -373,7 +373,7 @@
                 "account_name": "DataAnalyticsProd",
                 "profile_name": "Neighborly313899312729",
                 "account_number": "313899312729",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "37f2229e-3528-4008-92ec-a15be6a1de2f"
             },
@@ -381,7 +381,7 @@
                 "account_name": "DigitalDevelopment",
                 "profile_name": "Neighborly469082217927",
                 "account_number": "469082217927",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "1f231eeb-dea9-4e20-a2fb-0cfa90a3a2ef"
             },
@@ -389,7 +389,7 @@
                 "account_name": "DigitalProd",
                 "profile_name": "Neighborly620971565338",
                 "account_number": "620971565338",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "4943afb6-56e4-47db-980d-7934f9b15f80"
             },
@@ -397,7 +397,7 @@
                 "account_name": "DigitalQA",
                 "profile_name": "Neighborly630205603498",
                 "account_number": "630205603498",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "24633367-503b-4f0c-8378-af3832496529"
             },
@@ -405,7 +405,7 @@
                 "account_name": "DigitalSandbox",
                 "profile_name": "Neighborly145486738040",
                 "account_number": "145486738040",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "4a814095-f798-4fbb-a6a5-7c8c1f7589d4"
             },
@@ -413,7 +413,7 @@
                 "account_name": "FSMDevelopment",
                 "profile_name": "Neighborly359667321592",
                 "account_number": "359667321592",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "7b763f6c-dbb3-4146-b57e-d0937a7d05bd"
             },
@@ -421,7 +421,7 @@
                 "account_name": "FSMProd",
                 "profile_name": "Neighborly742343384113",
                 "account_number": "742343384113",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "ead81c2a-e493-41bf-90fd-5ba1628e0485"
             },
@@ -429,7 +429,7 @@
                 "account_name": "FSMQA",
                 "profile_name": "Neighborly843694397375",
                 "account_number": "843694397375",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "742dfa49-dc15-4f16-a8c8-e9acdf6f4fb4"
             },
@@ -437,31 +437,15 @@
                 "account_name": "FSMSandbox",
                 "profile_name": "Neighborly552300672585",
                 "account_number": "552300672585",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "649a4beb-9f3a-4553-92c8-1e092085c1e4"
-            },
-            {
-                "account_name": "HMS Website",
-                "profile_name": "Neighborly557689149902",
-                "account_number": "557689149902",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
-                "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
-                "app_id_uri": "2ad7fc7d-325a-4b80-a15b-ca38ea70d0c0"
-            },
-            {
-                "account_name": "Joel Lewis",
-                "profile_name": "Neighborly377433202221",
-                "account_number": "377433202221",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
-                "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
-                "app_id_uri": "27fde89c-fbe7-4fb6-b14c-059d6720acc4"
             },
             {
                 "account_name": "LogArchive",
                 "profile_name": "Neighborly140251944211",
                 "account_number": "140251944211",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "25800c4c-11a7-457d-adbb-3beb1d3cd076"
             },
@@ -469,7 +453,7 @@
                 "account_name": "Networking",
                 "profile_name": "Neighborly784938688561",
                 "account_number": "784938688561",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "f583efb0-f31f-4b8c-86e3-c5abe6bbb7dc"
             },
@@ -477,7 +461,7 @@
                 "account_name": "SharedServicesDevelopment",
                 "profile_name": "Neighborly358695950864",
                 "account_number": "358695950864",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "eb5fe360-6753-4a67-9d1e-554605732445"
             },
@@ -485,7 +469,7 @@
                 "account_name": "SharedServicesProd",
                 "profile_name": "Neighborly857842679763",
                 "account_number": "857842679763",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "0a6bbb98-c552-40c8-bb69-84ff982a901d"
             },
@@ -493,7 +477,7 @@
                 "account_name": "SharedServicesQA",
                 "profile_name": "Neighborly493341156677",
                 "account_number": "493341156677",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "9de533f7-7e66-484c-a4ec-693f9f3d0ded"
             },
@@ -501,7 +485,7 @@
                 "account_name": "SharedServicesSandbox",
                 "profile_name": "Neighborly965302211377",
                 "account_number": "965302211377",
-                "region": ["us-east-1", "us-east-2", "us-west-1", "us-west-2"],
+                "region": ["us-east-2", "us-west-2"],
                 "tenant_id": "8242a0a9-c415-4206-be39-06637ad2817a",
                 "app_id_uri": "07859f9f-59d6-451d-b869-329ab308b97f"
             }

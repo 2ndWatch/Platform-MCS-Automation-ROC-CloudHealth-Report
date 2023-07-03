@@ -40,6 +40,7 @@ def aws_login(login_type, profile, client_name, logger, start_url=None, sso_regi
             is_logged_in = True
 
     else:
+        # TODO: some sort of login check to skip this if already logged in
         logger.info(f'\nLogging in to {client_name}. Enter your credentials in the browser window.')
 
         login_response = aws_sso_lib.login(start_url, sso_region)
