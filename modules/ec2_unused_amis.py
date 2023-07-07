@@ -1,8 +1,8 @@
 def get_unused_images(client, account_name, account_number, region_name, old_images, cutoff,
                       df_unami, df_ebs_cost, logger):
-
     # Create a list of used AMIs from instance properties
     images_in_use = []
+    image_snapshots = []
 
     is_next = None
 
@@ -79,14 +79,27 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
                         if image_storage:
                             for device in image_storage:
                                 if 'Ebs' in device.keys():
-                                    snapshot_id = device['Ebs']['SnapshotId']
-                                    storage_size += device['Ebs']['VolumeSize']
-                                    snapshot_count += 1
+
+                                    # print debugging statement to see response
+                                    # logger.info(f'{image_id}: {device["Ebs"]}')
+
                                     try:
-                                        cost = df_ebs_cost.loc[df_ebs_cost['ResourceId'] == snapshot_id,
-                                                               'Cost'].values[0].item()
-                                        storage_cost += cost
-                                    except IndexError:
+                                        snapshot_id = device['Ebs']['SnapshotId']
+                                        logger.debug(f'         {snapshot_id} added to list of '
+                                                     f'image-associated snapshots.')
+                                        storage_size += device['Ebs']['VolumeSize']
+                                        snapshot_count += 1
+                                        try:
+                                            cost = df_ebs_cost.loc[df_ebs_cost['ResourceId'] == snapshot_id,
+                                                                   'Cost'].values[0].item()
+                                            # logger.info(f'         {snapshot_id} found, cost: {cost}')
+                                            storage_cost += cost
+                                        except IndexError:
+                                            # logger.info(f'            {snapshot_id} not found in EBS cost table')
+                                            continue
+                                        image_snapshots.append(snapshot_id)
+                                    except KeyError:
+                                        logger.debug(f'{image_id}: {device["Ebs"]}')
                                         continue
 
                         # Note whether the image is public or not
@@ -107,4 +120,4 @@ def get_unused_images(client, account_name, account_number, region_name, old_ima
         except KeyError:
             break
 
-    return df_unami, unused_images
+    return df_unami, unused_images, image_snapshots

@@ -1,7 +1,7 @@
 import datetime
 
 
-def get_old_snapshots(client, account_name, account_number, region_name, snap_list, cutoff,
+def get_old_snapshots(client, account_name, account_number, region_name, img_snap_list, unami_snap_list, cutoff,
                       df_ebssnaps, df_ebs_cost, logger):
     all_snap_count = 0
     snap_count = 0
@@ -22,9 +22,9 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
 
         for snap in snapshots:
             snap_id = snap['SnapshotId']
-            snap_desc = snap['Description']
+            # snap_desc = snap['Description']
             snap_size = snap['VolumeSize']
-            snap_ami = ''
+            # snap_ami = ''
             snap_start = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d %H:%M:%S UTC')
             snap_date = datetime.datetime.strftime(snap['StartTime'], '%Y-%m-%d')
             storage_cost = 0
@@ -34,11 +34,11 @@ def get_old_snapshots(client, account_name, account_number, region_name, snap_li
                 logger.debug(f'   {snap_id} is older than 3 months.')
                 snap_count += 1
 
-                # Filter for snapshots not associated with an old AMI
-                if snap_id in snap_list:
-                    logger.debug(f'      Excluded from results (associated with an old AMI).')
+                # Filter for snapshots not associated with an old or unused AMI
+                if snap_id in img_snap_list or snap_id in unami_snap_list:
+                    logger.debug(f'      Excluded from results (associated with an old or unused AMI).')
                 else:
-                    logger.debug(f'      Not associated with an AMI on the old AMIs list.')
+                    logger.debug(f'      Not associated with an old or unused AMI.')
 
                     try:
                         cost = df_ebs_cost.loc[df_ebs_cost['ResourceId'] == snap_id,

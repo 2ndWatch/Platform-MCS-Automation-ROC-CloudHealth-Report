@@ -14,6 +14,7 @@ def get_resources(profile, region, session, today, three_month,
     account_number = profile['account_number']
     valid_old = []
     img_snaps = []
+    unami_snaps = []
     unauthorized = []
 
     # Create boto3 clients for EC2, RDS, and CloudTrail
@@ -50,11 +51,26 @@ def get_resources(profile, region, session, today, three_month,
         else:
             logger.warning(e)
 
-    # Dependent on running get_old_images because of img_snaps input
+    # Dependent on get_old_images for valid_old input
+    logger.info('\nGetting unused EC2 images...')
+    try:
+        df_unami, unused_image_count, unami_snaps = euna.get_unused_images(ec2, account_name, account_number,
+                                                                           region_name, valid_old, three_month,
+                                                                           df_unami, df_ebs_cost, logger)
+        logger.info(f'   Number of valid unused images: {unused_image_count}')
+    except ClientError as e:
+        if 'UnauthorizedOperation' in str(e):
+            logger.warning(f'   The describe_images or describe_snapshots API call is not authorized in '
+                           f'account {account_number} in the {region_name} region.')
+            unauthorized.append(['unused images', account_number, region_name])
+        else:
+            logger.warning(e)
+
+    # Dependent on running get_old_images and get_unused_images for lists of associated snapshots
     logger.info('\nGetting EBS snapshots older than 3 months...')
     try:
         df_ebssnaps, snapshot_count, valid_snapshot_count = esnap.get_old_snapshots(ec2, account_name, account_number,
-                                                                                    region_name, img_snaps,
+                                                                                    region_name, img_snaps, unami_snaps,
                                                                                     three_month, df_ebssnaps,
                                                                                     df_ebs_cost, logger)
         logger.info(f'   Number of old EBS snapshots: {snapshot_count}')
@@ -79,20 +95,6 @@ def get_resources(profile, region, session, today, three_month,
             logger.warning(f'   The describe_volumes API call is not authorized in account {account_number} in '
                            f'the {region_name} region.')
             unauthorized.append(['unatt volumes', account_number, region_name])
-        else:
-            logger.warning(e)
-
-    # Dependent on get_old_images for valid_old input
-    logger.info('\nGetting unused EC2 images...')
-    try:
-        df_unami, unused_image_count = euna.get_unused_images(ec2, account_name, account_number, region_name,
-                                                              valid_old, three_month, df_unami, df_ebs_cost, logger)
-        logger.info(f'   Number of valid unused images: {unused_image_count}')
-    except ClientError as e:
-        if 'UnauthorizedOperation' in str(e):
-            logger.warning(f'   The describe_images or describe_snapshots API call is not authorized in '
-                           f'account {account_number} in the {region_name} region.')
-            unauthorized.append(['unused images', account_number, region_name])
         else:
             logger.warning(e)
 
