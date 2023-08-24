@@ -13,3 +13,4 @@ builds/
 log/
 scratch/
 .aws/
+token.txt

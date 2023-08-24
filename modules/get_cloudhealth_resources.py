@@ -1,7 +1,7 @@
 import requests as req
 
 headers = {
-    'Authorization': 'Bearer 778e28b4-e928-4374-b608-33772d987028',
+    'Authorization': 'Bearer ',
     'Content-Type': 'application/json',
 }
 params = {
